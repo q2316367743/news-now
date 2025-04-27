@@ -52,7 +52,7 @@ useUtoolsColorMode();
   width: 100vw;
   height: 100vh;
   background-image: radial-gradient(ellipse 80% 80% at 50% -30%, #f871714d, #fff0);
-  background-color: rgb(228 228 231 / 1);
+  background-color: var(--td-bg-color-container);
 
   .main-container {
     padding: 0 40px;
@@ -68,8 +68,9 @@ useUtoolsColorMode();
       top: 0;
       left: 0;
       right: 0;
-      padding-top: 8px;
+      padding: 8px 0;
       align-items: center;
+      z-index: 100;
 
       .main-header-tab {
         .main-header-tab__tag {

@@ -35,6 +35,8 @@ interface Window {
      * @param name 文件名
      * @return 文件保存的路径
      */
-    downloadFile(data: string | Blob | ArrayBuffer, name: string): Promise<string>
+    downloadFile(data: string | Blob | ArrayBuffer, name: string): Promise<string>,
+    // axios
+    axios: any;
   }
 }

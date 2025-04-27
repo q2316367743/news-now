@@ -9,17 +9,14 @@ declare module 'vue' {
   export interface GlobalComponents {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Scrollbar: typeof import('./src/components/Scrollbar/Scrollbar.vue')['default']
     TAlert: typeof import('tdesign-vue-next')['Alert']
-    TAside: typeof import('tdesign-vue-next')['Aside']
     TButton: typeof import('tdesign-vue-next')['Button']
-    TCheckTag: typeof import('tdesign-vue-next')['CheckTag']
     TCheckTagGroup: typeof import('tdesign-vue-next')['CheckTagGroup']
-    TContent: typeof import('tdesign-vue-next')['Content']
-    TLayout: typeof import('tdesign-vue-next')['Layout']
-    TMenu: typeof import('tdesign-vue-next')['Menu']
-    TMenuItem: typeof import('tdesign-vue-next')['MenuItem']
+    TCol: typeof import('tdesign-vue-next')['Col']
+    TLoading: typeof import('tdesign-vue-next')['Loading']
+    TRow: typeof import('tdesign-vue-next')['Row']
     TSpace: typeof import('tdesign-vue-next')['Space']
-    TSubmenu: typeof import('tdesign-vue-next')['Submenu']
     TTag: typeof import('tdesign-vue-next')['Tag']
   }
 }
