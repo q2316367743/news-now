@@ -1,0 +1,23 @@
+.bg-color {
+    background-color: #F4F4F5;
+
+    &.detach {
+        background-color: #DFDFDF;
+    }
+}
+
+body[arco-theme='dark'] {
+    .bg-color {
+        background-color: #303133;
+
+        &.detach {
+            background-color: #1F1F1F;
+        }
+    }
+}
+
+.ellipsis {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
