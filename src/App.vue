@@ -31,7 +31,6 @@ const checkedProps: TdTagProps = {
 };
 const uncheckedProps: TdTagProps = {
   theme: 'default',
-  variant: 'outline',
 };
 
 const options = [
@@ -71,6 +70,7 @@ useUtoolsColorMode();
       padding: 8px 0;
       align-items: center;
       z-index: 100;
+      margin: 0 8px;
 
       .main-header-tab {
         .main-header-tab__tag {

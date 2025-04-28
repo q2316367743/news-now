@@ -1,6 +1,6 @@
 import {AbsNewsInstance} from "@/sources/AbsNewsInstance";
 import {useGetJson} from "@/sources/HttpUtil";
-import {NewsInstanceRecordTag} from "@/sources/NewsInstance";
+import {NewsInstanceRecord, NewsInstanceRecordTag} from "@/sources/NewsInstance";
 
 interface Res {
   ok: number // 1 is ok
@@ -32,7 +32,7 @@ interface Res {
 export class NewsInstanceForWeibo extends AbsNewsInstance {
   id = 'weibo';
   logo = './icons/weibo.png';
-  primaryColor = '#571515';
+  primaryColor = '#E9A4A6';
   tag = {
     text: '实时热搜',
     color: 'var(--td-error-color)'
@@ -40,30 +40,35 @@ export class NewsInstanceForWeibo extends AbsNewsInstance {
   title = '微博';
   website = "https://weibo.com";
 
-  private proxyPicture(url: string): NewsInstanceRecordTag|false {
+  browser = {
+    width: 1200,
+    height: 800,
+  };
+
+  private proxyPicture(url: string): NewsInstanceRecordTag | false {
     if (url === 'https://simg.s.weibo.com/moter/flags/4_0.png') {
       return {
         text: '爆',
-        color: '#BE0103'
+        color: '#be0103'
       }
     } else if (url === 'https://simg.s.weibo.com/moter/flags/1_0.png') {
       return {
         text: '新',
-        color: '#FF6383'
+        color: '#ff6383'
       }
     } else if (url === 'https://simg.s.weibo.com/moter/flags/2_0.png') {
       return {
         text: '热',
-        color: '#FFAE1D'
+        color: '#ffae1d'
       }
     }
     return false;
   }
 
-  async refresh(): Promise<void> {
+  async getOriginRecords(): Promise<Array<NewsInstanceRecord>> {
     const url = "https://weibo.com/ajax/side/hotSearch"
     const res = await useGetJson<Res>(url)
-    this.records.value = res.data.realtime
+    return res.data.realtime
       .filter(k => !k.is_ad)
       .map((k) => {
         const keyword = k.word_scheme ? k.word_scheme : `#${k.word}#`
@@ -73,9 +78,7 @@ export class NewsInstanceForWeibo extends AbsNewsInstance {
           tag: this.proxyPicture(k.icon || ''),
           url: `https://s.weibo.com/weibo?q=${encodeURIComponent(keyword)}`,
           read: false,
-          tip: '',
         }
       })
-
   }
 }

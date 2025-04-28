@@ -1,7 +1,8 @@
 export interface NewsInstanceRecordTag {
-  color: string;
+  color?: string;
   text: string;
-  ing?: boolean
+  ing?: boolean;
+  type?: 'default' | 'outline' | 'img';
 }
 
 export interface NewsInstanceRecord {
@@ -17,10 +18,10 @@ export interface NewsInstanceRecord {
   hover?: string;
 
   // 标签
-  tag: NewsInstanceRecordTag | false;
+  tag?: NewsInstanceRecordTag | false;
 
   // 提示
-  tip: string;
+  tip?: string;
 }
 
 export interface NewsInstanceSource {
@@ -47,16 +48,24 @@ export interface NewsInstanceTag {
   color: string;
 }
 
+export interface MewsInstanceBrowser {
+  width: number;
+  height: number;
+  userAgent?: string;
+}
+
 export interface NewsInstance {
   id: string;
   logo: string;
   title: string;
   // 标签
-  tag?: NewsInstanceTag;
+  tag: NewsInstanceTag | false;
   // 主题色
   primaryColor: string;
   // 站点
   website: string;
+  // 浏览器
+  browser: MewsInstanceBrowser;
 
   // 渲染源
   renderSource(): NewsInstanceSource;

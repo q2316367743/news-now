@@ -9,8 +9,8 @@
         <span class="flex flex-col">
           <span class="flex items-center gap-2">
           <span class="text-xl font-bold">{{ source.title }}</span>
-          <t-tag class="" v-if="source.tag"
-                 :style="{backgroundColor: 'rgba(26, 27, 28, 0.5)', color: source.tag.color}">{{
+          <t-tag class="news-item-header__tag" v-if="source.tag"
+                 :style="{color: source.tag.color}">{{
               source.tag.text
             }}</t-tag>
         </span>
@@ -24,7 +24,7 @@
           <star-icon size="16px"/>
         </div>
         <div class="btn drag">
-          <menu-application-icon size="16px" />
+          <menu-application-icon size="16px"/>
         </div>
       </div>
     </div>
@@ -38,7 +38,11 @@
             <div class="news-item-record__title" :class="{read: record.read}">{{ record.title }}</div>
             <div class="news-item-record__tip" v-if="record.tip">{{ record.tip }}</div>
             <div class="news-item-record__tag" v-if="record.tag">
-              <div class="tag" :style="{backgroundColor: record.tag.color}">
+              <img v-if="record.tag.type === 'img'" :src="record.tag.text" alt="标签"/>
+              <div v-else-if="record.tag.type === 'outline'" class="tag tag-outline"
+                   :style="{borderColor: record.tag.color, color: record.tag.color}">{{ record.tag.text }}
+              </div>
+              <div v-else class="tag" :style="{backgroundColor: record.tag.color}">
                 {{ record.tag.text }}
               </div>
             </div>
@@ -81,12 +85,11 @@ const date = ref('很久很久以前');
 const renderDate = () => date.value = prettyDate(lastUpdateTime.value);
 
 useIntervalFn(renderDate, 1000 * 60, {immediate: true, immediateCallback: true});
-watch(loading, renderDate);
+watch(lastUpdateTime, renderDate);
 </script>
 <style scoped lang="less">
 .news-item {
   height: 430px;
-  color: var(--td-bg-color-component);
   display: flex;
   flex-direction: column;
   border-radius: var(--td-radius-large);
@@ -106,6 +109,11 @@ watch(loading, renderDate);
       gap: 0.5rem;
     }
 
+
+    &__tag {
+      background-color: var(--td-font-white-2);
+    }
+
     &__opt {
       display: flex;
       align-items: center;
@@ -123,8 +131,10 @@ watch(loading, renderDate);
         .spin {
           animation: spin 1s linear infinite;
         }
+
         &.drag {
           cursor: grab;
+
           &:active {
             cursor: grabbing;
           }
@@ -136,26 +146,33 @@ watch(loading, renderDate);
   .news-item-container {
     overflow: auto;
     height: 100%;
-    padding: 0.5rem;
-    border-radius: var(--td-radius-default);
+    border-radius: var(--td-radius-large);
+    background-color: var(--td-font-white-2);
 
     .news-item-record {
-      margin-bottom: 4px;
       display: flex;
-      padding: 3px;
+      padding: 3px 0.5rem;
       border-radius: var(--td-radius-default);
       transition: background-color 0.3s ease-in-out;
       cursor: pointer;
       font-size: var(--td-font-size-title-medium);
 
       &:hover {
-        background-color: rgba(103, 109, 112, 0.3);
+        background-color: var(--td-font-white-4);
+      }
+
+      &:first-child {
+        padding-top: 0.5rem;
+      }
+
+      &:last-child {
+        padding-bottom: 0.5rem;
       }
 
       &__index {
         font-size: 0.875rem;
         line-height: 1.25rem;
-        background-color: rgb(163 163 163 / 0.1) /* #a3a3a3 */;
+        background-color: var(--td-font-white-3);
         border-radius: var(--td-radius-default);
         justify-content: center;
         align-items: center;
@@ -168,14 +185,14 @@ watch(loading, renderDate);
         margin-left: 6px;
 
         &.read {
-          color: var(--td-bg-color-component-active);
+          color: var(--td-text-color-placeholder);
         }
       }
 
       &__tip {
         font-size: var(--td-font-size-title-small);
         margin-left: 4px;
-        color: var(--td-bg-color-component-active);
+        color: var(--td-text-color-placeholder);
       }
 
       &__tag {
@@ -188,6 +205,16 @@ watch(loading, renderDate);
           margin-top: 4px;
           padding: 0 2px;
           border-radius: var(--td-radius-default);
+          color: var(--td-text-color-anti);
+
+          &.tag-outline {
+            border-style: solid;
+            border-width: 1px;
+            height: 15px;
+            line-height: 14px;
+            font-size: 10px;
+            margin-top: 3px;
+          }
         }
       }
     }
