@@ -15,6 +15,22 @@ interface OpenFileOption {
   securityScopedBookmarks?: boolean
 }
 
+type HashAlgorithm =
+  | 'md5'
+  | 'sha1'
+  | 'sha224'
+  | 'sha256'
+  | 'sha384'
+  | 'sha512'
+  | 'ripemd160'
+  | 'sm3'
+  | 'sha3-224'
+  | 'sha3-256'
+  | 'sha3-384'
+  | 'sha3-512'
+  | 'blake2b'
+  | 'blake2s';
+
 interface Window {
   preload: {
     /**
@@ -38,5 +54,12 @@ interface Window {
     downloadFile(data: string | Blob | ArrayBuffer, name: string): Promise<string>,
     // axios
     axios: any;
+    util: {
+      crypto: {
+        encodeBase64: (value: string) => string,
+        md5: (value: string) => string,
+        hash(s: string, algorithm: HashAlgorithm): string
+      }
+    }
   }
 }

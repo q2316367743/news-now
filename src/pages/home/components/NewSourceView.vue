@@ -2,19 +2,18 @@
   <div :style="{transformOrigin: '50% 50%', backgroundColor: source.primaryColor}"
        class="news-item">
     <div class="news-item-header">
-      <div class="news-item-header__title">
-        <a class="w-8 h-8 rounded-full bg-cover" target="_blank"
-           :href="source.website"
-           :style="{'background-image': `url(${source.logo})`}"></a>
+      <div class="news-item-header__left">
+        <span class="w-8 h-8 rounded-full bg-cover"
+              :style="{'background-image': `url(${source.logo})`}"></span>
         <span class="flex flex-col">
           <span class="flex items-center gap-2">
-          <span class="text-xl font-bold">{{ source.title }}</span>
-          <t-tag class="news-item-header__tag" v-if="source.tag"
+          <span class="news-item-header__title" @click="openWebsite">{{ source.title }}</span>
+          <t-tag class="news-item-header__tag" v-if="source.tag" size="small"
                  :style="{color: source.tag.color}">{{
               source.tag.text
             }}</t-tag>
         </span>
-        <span class="text-xs op-70">{{ date }}</span></span>
+        <span class="news-item-header__date">{{ date }}</span></span>
       </div>
       <div class="news-item-header__opt">
         <div class="btn">
@@ -23,7 +22,7 @@
         <div class="btn">
           <star-icon size="16px"/>
         </div>
-        <div class="btn drag">
+        <div class="btn drag drag-handle">
           <menu-application-icon size="16px"/>
         </div>
       </div>
@@ -31,17 +30,18 @@
     <div class="news-item-container">
       <t-loading :loading="loading" text="加载中" class="h-full">
         <scrollbar>
-          <div v-for="(record, index) in records" :key="record.id" class="news-item-record" @click="open(index)" :title="record.hover">
+          <div v-for="(record, index) in records" :key="record.id" class="news-item-record" @click="open(index)"
+               :title="record.hover">
             <div class="news-item-record__index">
               {{ index + 1 }}
             </div>
-            <div class="ml-6px">
+            <div class="news-item-record__content">
               <span class="news-item-record__title" :class="{read: record.read}">{{ record.title }}</span>
               <span class="news-item-record__tip" v-if="record.tip">{{ record.tip }}</span>
               <span class="news-item-record__tag" v-if="record.tag">
-                <img v-if="record.tag.type === 'img'" :src="record.tag.text" alt="标签"/>
+                <img :src="record.tag.text" alt="标签" class="tag-img" v-if="record.tag.type === 'img'"/>
                 <span v-else-if="record.tag.type === 'outline'" class="tag tag-outline"
-                     :style="{borderColor: record.tag.color, color: record.tag.color}">{{ record.tag.text }}
+                      :style="{borderColor: record.tag.color, color: record.tag.color}">{{ record.tag.text }}
                 </span>
                 <span v-else class="tag" :style="{backgroundColor: record.tag.color}">
                   {{ record.tag.text }}
@@ -74,6 +74,10 @@ const renderDate = () => date.value = prettyDate(lastUpdateTime.value);
 
 useIntervalFn(renderDate, 1000 * 60, {immediate: true, immediateCallback: true});
 watch(lastUpdateTime, renderDate);
+
+function openWebsite() {
+  utools.shellOpenExternal(props.source!.website);
+}
 </script>
 <style scoped lang="less">
 .news-item {
@@ -91,15 +95,33 @@ watch(lastUpdateTime, renderDate);
     align-items: center;
     margin: 0 0.5rem 0.5rem;
 
-    &__title {
+    &__left {
       display: flex;
       align-items: center;
       gap: 0.5rem;
     }
 
+    &__title {
+      font-size: var(--td-font-size-title-large);
+      font-weight: bold;
+      line-height: 24px;
+      cursor: pointer;
+      transition: color 0.3s ease-in-out;
+
+      &:hover {
+        color: var(--td-text-color-link);
+      }
+    }
+
+    &__date {
+      font-size: var(--td-font-size-body-small);
+      color: var(--td-text-color-secondary);
+    }
+
 
     &__tag {
       background-color: var(--td-font-white-2);
+      margin-left: 4px;
     }
 
     &__opt {
@@ -144,9 +166,10 @@ watch(lastUpdateTime, renderDate);
       transition: background-color 0.3s ease-in-out;
       cursor: pointer;
       font-size: var(--td-font-size-title-medium);
+      line-height: 24px;
 
       &:hover {
-        background-color: var(--td-font-white-4);
+        background-color: var(--td-font-white-3);
       }
 
       &:first-child {
@@ -168,6 +191,11 @@ watch(lastUpdateTime, renderDate);
         min-width: 1.5rem;
       }
 
+      &__content {
+        align-items: center;
+        margin-left: 6px;
+      }
+
 
       &__title {
 
@@ -184,12 +212,13 @@ watch(lastUpdateTime, renderDate);
 
       &__tag {
         margin-left: 5px;
+        height: 16px;
         font-size: var(--td-font-size-body-small);
 
+
         .tag {
-          height: 17px;
+          height: 16px;
           line-height: 16px;
-          margin-top: 3px;
           padding: 0 2px;
           border-radius: var(--td-radius-default);
           color: var(--td-text-color-anti);
@@ -200,8 +229,12 @@ watch(lastUpdateTime, renderDate);
             height: 15px;
             line-height: 14px;
             font-size: 10px;
-            margin-top: 3px;
           }
+        }
+
+        .tag-img {
+          height: 16px;
+          vertical-align: text-top;
         }
       }
     }

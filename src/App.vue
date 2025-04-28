@@ -99,6 +99,7 @@ onUnmounted(() => {
       align-items: center;
       z-index: 100;
       margin: 0 8px;
+      background-color: var(--td-font-white-3);
 
       .main-header-tab {
         .main-header-tab__tag {

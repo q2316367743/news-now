@@ -4,6 +4,7 @@ const {URL} = require("node:url");
 const https = require("node:https");
 const http = require("node:http");
 const axios = require("axios");
+const crypto = require("crypto");
 
 /**
  * 获取一个文件
@@ -124,10 +125,28 @@ async function downloadFile(data, name) {
   })
 }
 
+
+function hash(s, algorithm) {
+  return crypto.createHash(algorithm).update(s).digest('hex');
+}
+
+function md5(value) {
+  return hash(value, 'md5');
+}
+
+function encodeBase64(value) {
+  return Buffer.from(value).toString('base64');
+}
+
 window.preload = {
   openFile, downloadFileFromUrl, downloadFile,
   axios: axios.create({
     timeout: 15000,
     adapter: 'http'
-  })
+  }),
+  util: {
+    crypto: {
+      encodeBase64, md5, hash
+    }
+  }
 }

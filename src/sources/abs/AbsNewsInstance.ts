@@ -1,6 +1,5 @@
 import {
-  MewsInstanceBrowser,
-  NewsInstance,
+  MewsInstanceBrowser, MewsInstanceBrowserType,
   NewsInstanceRecord,
   NewsInstanceRecordStore,
   NewsInstanceSource,
@@ -11,15 +10,16 @@ import {LocalNameEnum} from "@/global/LocalNameEnum";
 import {map} from "@/utils/lang/ArrayUtil";
 import {ref} from 'vue';
 import MessageUtil from "@/utils/modal/MessageUtil";
+import {AbsNewsInstanceForDb} from "@/sources/abs/AbsNewsInstanceForDb";
 
-export abstract class AbsNewsInstance implements NewsInstance {
+export abstract class AbsNewsInstance extends AbsNewsInstanceForDb {
   abstract id: string;
   abstract logo: string;
   abstract primaryColor: string;
   abstract tag: NewsInstanceTag | false;
   abstract title: string;
   abstract website: string;
-  abstract browser: MewsInstanceBrowser;
+  abstract browser: MewsInstanceBrowserType;
 
   protected lastUpdateTime = ref<number>(0);
   protected records = ref<Array<NewsInstanceRecord>>([]);
@@ -27,7 +27,6 @@ export abstract class AbsNewsInstance implements NewsInstance {
 
   private rev: string | undefined = undefined;
   private isInitialized = false;
-
 
   /**
    * 获取远程记录
@@ -65,7 +64,7 @@ export abstract class AbsNewsInstance implements NewsInstance {
         this.loading.value = false;
         this.timeoutFn();
       }, Math.max(0, 1000 * 60 * 15 - (Date.now() - this.lastUpdateTime.value)));
-      console.log(`资讯「${this.title}」下次更新时间`, (1000 * 60 * 15 - (Date.now() - this.lastUpdateTime.value)) / 1000 / 60, '分钟')
+      console.log(`「${this.title}」下次更新时间`, (1000 * 60 * 15 - (Date.now() - this.lastUpdateTime.value)) / 1000 / 60, '分钟')
     } catch (e) {
       MessageUtil.error(`新闻「${this.title}」初始化失败`, e);
     } finally {
@@ -89,7 +88,7 @@ export abstract class AbsNewsInstance implements NewsInstance {
     if (this.loading.value) return;
     this.loading.value = true;
     try {
-      console.log(`资讯「${this.title}」开始刷新，上次刷新时间：` + this.lastUpdateTime.value);
+      console.log(`「${this.title}」开始刷新，上次刷新时间：` + this.lastUpdateTime.value);
       const originRecords = await this.getOriginRecords();
       // 此处要做处理，已读信息不能丢失
       const oleRecordMap = map(this.records.value, 'id');
@@ -100,7 +99,7 @@ export abstract class AbsNewsInstance implements NewsInstance {
       this.lastUpdateTime.value = Date.now();
       // 缓存记录
       await this.saveCache();
-      console.log(`资讯「${this.title}」刷新完成，本次更新时间：` + this.lastUpdateTime.value);
+      console.log(`「${this.title}」刷新完成，本次更新时间：` + this.lastUpdateTime.value);
     } catch (e) {
       console.error(`资讯「${this.title}」刷新失败`, e);
     } finally {
@@ -113,13 +112,25 @@ export abstract class AbsNewsInstance implements NewsInstance {
 
     // 打开方法
     const open = (index: number) => {
+      let b: MewsInstanceBrowser;
+      if (this.browser  === 'pc'){
+        b= {width: 1200,height: 800}
+      }else if (this.browser === 'mobile'){
+        b= {
+          width: 414,
+          height: 896,
+          userAgent: 'Mozilla/5.0 (Linux; Android 14; SM - S918U) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Mobile Safari/537.36'
+        }
+      }else{
+        b = this.browser;
+      }
       utools.ubrowser.goto(this.records.value[index].url, {
         Referer: '',
-        userAgent: this.browser.userAgent || navigator.userAgent,
+        userAgent: b.userAgent || navigator.userAgent,
       })
         .run({
-          width: this.browser.width,
-          height: this.browser.height,
+          width: b.width,
+          height: b.height,
         })
       if (this.records.value[index].read) {
         return;

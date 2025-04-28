@@ -1,6 +1,6 @@
-import {NewsInstanceRecord} from "@/sources/NewsInstance";
+import {MewsInstanceBrowserType, NewsInstanceRecord} from "@/sources/NewsInstance";
 import {useGetText} from "@/sources/HttpUtil";
-import {AbsNewsInstance} from "@/sources/AbsNewsInstance";
+import {AbsNewsInstance} from "@/sources/abs/AbsNewsInstance";
 
 interface Res {
   cards: {
@@ -21,11 +21,7 @@ export class NewsInstanceForBaidu extends AbsNewsInstance {
   tag: false = false;
   title = '百度热搜';
   website = 'https://top.baidu.com/board'
-  browser = {
-    width: 414,
-    height: 896,
-    userAgent: 'Mozilla/5.0 (Linux; Android 14; SM - S918U) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Mobile Safari/537.36'
-  };
+  browser: MewsInstanceBrowserType = 'mobile';
 
   constructor() {
     super(); // 此时 id 已经被赋值

@@ -1,5 +1,5 @@
-import {AbsNewsInstance} from "@/sources/AbsNewsInstance";
-import {NewsInstanceRecord} from "@/sources/NewsInstance";
+import {AbsNewsInstance} from "@/sources/abs/AbsNewsInstance";
+import {MewsInstanceBrowserType, NewsInstanceRecord} from "@/sources/NewsInstance";
 import {useGetJson} from "@/sources/HttpUtil";
 
 interface Res {
@@ -13,10 +13,7 @@ interface Res {
 
 
 export class NewsInstanceHuPu extends AbsNewsInstance {
-  browser = {
-    width: 1200,
-    height: 800,
-  };
+  browser: MewsInstanceBrowserType = 'pc';
   id = 'hupu';
   logo = './icons/hupu.png';
   primaryColor = '#EA9C9D';

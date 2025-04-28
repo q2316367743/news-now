@@ -1,6 +1,11 @@
-import {AbsNewsInstance} from "@/sources/AbsNewsInstance";
+import {AbsNewsInstance} from "@/sources/abs/AbsNewsInstance";
 import {useGetJson} from "@/sources/HttpUtil";
-import {NewsInstanceRecord, NewsInstanceRecordTag} from "@/sources/NewsInstance";
+import {
+  MewsInstanceBrowser,
+  MewsInstanceBrowserType,
+  NewsInstanceRecord,
+  NewsInstanceRecordTag
+} from "@/sources/NewsInstance";
 
 interface Res {
   ok: number // 1 is ok
@@ -40,10 +45,7 @@ export class NewsInstanceForWeibo extends AbsNewsInstance {
   title = '微博';
   website = "https://weibo.com";
 
-  browser = {
-    width: 1200,
-    height: 800,
-  };
+  browser: MewsInstanceBrowserType = 'pc';
 
   private proxyPicture(url: string): NewsInstanceRecordTag | false {
     if (url === 'https://simg.s.weibo.com/moter/flags/4_0.png') {

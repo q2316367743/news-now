@@ -54,6 +54,8 @@ export interface MewsInstanceBrowser {
   userAgent?: string;
 }
 
+export type MewsInstanceBrowserType = MewsInstanceBrowser | 'pc' | 'mobile';
+
 export interface NewsInstance {
   id: string;
   logo: string;
@@ -65,7 +67,7 @@ export interface NewsInstance {
   // 站点
   website: string;
   // 浏览器
-  browser: MewsInstanceBrowser;
+  browser: MewsInstanceBrowserType;
 
   // 渲染源
   renderSource(): NewsInstanceSource;
