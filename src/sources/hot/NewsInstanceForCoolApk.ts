@@ -1,6 +1,6 @@
 import {AbsNewsInstance} from "@/sources/abs/AbsNewsInstance";
 import {
-  MewsInstanceBrowserType,
+  MewsInstanceBrowserType, MewsInstanceType,
   NewsInstanceRecord,
   NewsInstanceTag
 } from "@/sources/NewsInstance";
@@ -33,6 +33,7 @@ export class NewsInstanceForCoolApk extends AbsNewsInstance {
   tag: NewsInstanceTag | false = false;
   title: string = '酷安';
   website: string = 'https://coolapk.com/';
+  type: MewsInstanceType = 'hot';
 
   // https://github.com/DIYgod/RSSHub/blob/master/lib/routes/coolapk/utils.ts
   private getRandomDEVICE_ID() {

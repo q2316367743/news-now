@@ -1,5 +1,5 @@
 import {AbsNewsInstance} from "@/sources/abs/AbsNewsInstance";
-import {MewsInstanceBrowserType, NewsInstanceRecord, NewsInstanceTag} from "@/sources/NewsInstance";
+import {MewsInstanceBrowserType, MewsInstanceType, NewsInstanceRecord, NewsInstanceTag} from "@/sources/NewsInstance";
 import {useGetJson} from "@/sources/HttpUtil";
 import {parseHtml} from "@/utils/lang/HtmlUtil";
 
@@ -14,6 +14,7 @@ export class NewsInstanceForGithub extends AbsNewsInstance {
   };
   title: string = 'Github';
   website: string = 'https://github.com';
+  type: MewsInstanceType = 'hot';
 
   async getOriginRecords(): Promise<Array<NewsInstanceRecord>> {
     const baseURL = "https://github.com"

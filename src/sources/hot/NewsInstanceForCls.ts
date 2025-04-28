@@ -1,5 +1,5 @@
 import {AbsNewsInstance} from "@/sources/abs/AbsNewsInstance";
-import {MewsInstanceBrowserType, NewsInstanceRecord, NewsInstanceTag} from "@/sources/NewsInstance";
+import {MewsInstanceBrowserType, MewsInstanceType, NewsInstanceRecord, NewsInstanceTag} from "@/sources/NewsInstance";
 import {useGetJson} from "@/sources/HttpUtil";
 
 interface Item {
@@ -13,23 +13,9 @@ interface Item {
   is_ad: number
 }
 
-interface TelegraphRes {
-  data: {
-    roll_data: Item[]
-  }
-}
-
-interface Depthes {
-  data: {
-    top_article: Item[]
-    depth_list: Item[]
-  }
-}
-
 interface Hot {
   data: Item[]
 }
-
 
 export class NewsInstanceForCls extends AbsNewsInstance {
   browser: MewsInstanceBrowserType = 'pc';
@@ -37,11 +23,12 @@ export class NewsInstanceForCls extends AbsNewsInstance {
   logo: string = './icons/cls.png';
   primaryColor: string = '#eaa0a1';
   tag: NewsInstanceTag | false = {
-    text: '人们',
+    text: '电报',
     color: '#f38587'
   };
   title: string = '财联社';
   website: string = 'https://www.cls.cn';
+  type: MewsInstanceType = 'hot';
 
   // https://github.com/DIYgod/RSSHub/blob/master/lib/routes/cls/utils.ts
   private readonly params = {

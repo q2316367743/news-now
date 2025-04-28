@@ -1,4 +1,5 @@
 import {NewsInstance} from "@/sources/NewsInstance";
+import {focusSortMap, hotSortMap, myFocus, realtimeSortMap} from "@/store/AppStore";
 import {NewsInstanceForBaidu} from "@/sources/hot/NewsInstanceForBaidu";
 import {NewsInstanceForWeibo} from "@/sources/hot/NewsInstanceForWeibo";
 import {NewsInstanceForZhiHu} from "@/sources/hot/NewsInstanceForZhiHu";
@@ -6,7 +7,6 @@ import {NewsInstanceHuPu} from "@/sources/hot/NewsInstanceHuPu";
 import {NewsInstanceForDouYin} from "@/sources/hot/NewsInstanceForDouYin";
 import {NewsInstanceForCoolApk} from "@/sources/hot/NewsInstanceForCoolApk";
 import {NewsInstanceForStreetwalker} from "@/sources/hot/NewsInstanceForStreetwalker";
-import {hotSortMap} from "@/store/AppStore";
 import {NewsInstanceForTeiBa} from "@/sources/hot/NewsInstanceForTeiBa";
 import {NewsInstanceTouTiao} from "@/sources/hot/NewsInstanceTouTiao";
 import {NewsInstanceForThepaper} from "@/sources/hot/NewsInstanceForThepaper";
@@ -19,8 +19,9 @@ import {NewsInstanceForSspai} from "@/sources/hot/NewsInstanceForSspai";
 import {NewsInstanceForJueJin} from "@/sources/hot/NewsInstanceForJueJin";
 import {NewsInstanceForIFeng} from "@/sources/hot/NewsInstanceForIFeng";
 import {NewsInstanceForChongBuLuo} from "@/sources/hot/NewsInstanceForChongBuLuo";
+import {NewsRealtimeForZaoBao} from "@/sources/realtime/NewsRealtimeForZaoBao";
 
-export const HOT_SOURCES = shallowRef<Array<NewsInstance>>([
+export const SOURCES: Array<NewsInstance> = [
   new NewsInstanceForBaidu(),
   new NewsInstanceForWeibo(),
   new NewsInstanceForZhiHu(),
@@ -40,8 +41,19 @@ export const HOT_SOURCES = shallowRef<Array<NewsInstance>>([
   new NewsInstanceForSspai(),
   new NewsInstanceForJueJin(),
   new NewsInstanceForIFeng(),
-  new NewsInstanceForChongBuLuo()
+  new NewsInstanceForChongBuLuo(),
+
+  // 实时
+  new NewsRealtimeForZaoBao()
+];
+
+export const HOT_SOURCES = shallowRef(SOURCES.filter(source => source.type === 'hot'));
+export const REALTIME_SOURCES = shallowRef(SOURCES.filter(source => source.type === 'realtime'));
+export const FOCUS_SOURCE = shallowRef([
+  ...SOURCES.filter(e => myFocus.value.indexOf(e.id) > -1)
 ]);
 
 // 排序
 HOT_SOURCES.value.sort((a, b) => (hotSortMap.value[a.id] || 0) - (hotSortMap.value[b.id] || 0));
+FOCUS_SOURCE.value.sort((a, b) => (focusSortMap.value[a.id] || 0) - (focusSortMap.value[b.id] || 0));
+REALTIME_SOURCES.value.sort((a, b) => (realtimeSortMap.value[a.id] || 0) - (realtimeSortMap.value[b.id] || 0));

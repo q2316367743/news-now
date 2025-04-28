@@ -38,6 +38,10 @@ export function setItem<T = any>(key: string, value: T) {
     utools.dbStorage.setItem(key, toRaw(value));
 }
 
+export function removeItem(key: string){
+    utools.dbStorage.removeItem(key);
+}
+
 // --------------------------------------- 基础对象 ---------------------------------------
 
 export interface DbList<T> {

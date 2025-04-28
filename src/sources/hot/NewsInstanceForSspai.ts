@@ -1,5 +1,5 @@
 import {AbsNewsInstance} from "@/sources/abs/AbsNewsInstance";
-import {MewsInstanceBrowserType, NewsInstanceRecord, NewsInstanceTag} from "@/sources/NewsInstance";
+import {MewsInstanceBrowserType, MewsInstanceType, NewsInstanceRecord, NewsInstanceTag} from "@/sources/NewsInstance";
 import {useGetJson} from "@/sources/HttpUtil";
 
 interface Res {
@@ -17,6 +17,7 @@ export class NewsInstanceForSspai extends AbsNewsInstance {
   tag: NewsInstanceTag | false = false;
   title: string = '少数派';
   website: string = 'https://sspai.com';
+  type: MewsInstanceType = 'hot';
 
   async getOriginRecords(): Promise<Array<NewsInstanceRecord>> {
     const timestamp = Date.now()

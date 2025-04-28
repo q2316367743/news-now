@@ -13,6 +13,8 @@
     "@vueuse/core": "^10.11.1",
     "@vueuse/integrations": "^13.1.0",
     "axios": "1.8.2",
+    "dayjs": "^1.11.13",
+    "fast-xml-parser": "^5.2.1",
     "less": "^4.2.1",
     "less-loader": "^11.1.4",
     "pinia": "^2.3.0",

@@ -1,5 +1,5 @@
 import {AbsNewsInstance} from "@/sources/abs/AbsNewsInstance";
-import {MewsInstanceBrowserType, NewsInstanceRecord, NewsInstanceTag} from "@/sources/NewsInstance";
+import {MewsInstanceBrowserType, MewsInstanceType, NewsInstanceRecord, NewsInstanceTag} from "@/sources/NewsInstance";
 import {useGetText} from "@/sources/HttpUtil";
 import {parseHtml} from "@/utils/lang/HtmlUtil";
 
@@ -11,6 +11,7 @@ export class NewsInstanceForChongBuLuo extends AbsNewsInstance {
   tag: NewsInstanceTag | false = false;
   title: string = '虫部落';
   website: string = 'https://www.chongbuluo.com/forum.php?mod=guide&view=hot';
+  type: MewsInstanceType = 'hot';
 
   async getOriginRecords(): Promise<Array<NewsInstanceRecord>> {
     const baseUrl = "https://www.chongbuluo.com/"

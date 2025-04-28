@@ -5,6 +5,7 @@ const https = require("node:https");
 const http = require("node:http");
 const axios = require("axios");
 const crypto = require("crypto");
+const iconv = require('iconv-lite');
 
 /**
  * 获取一个文件
@@ -147,6 +148,11 @@ window.preload = {
   util: {
     crypto: {
       encodeBase64, md5, hash
+    },
+    iconv: {
+      transferToUtf8(s, charset) {
+        return iconv.decode(Buffer.from(s), charset)
+      }
     }
   }
 }

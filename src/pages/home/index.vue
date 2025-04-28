@@ -34,11 +34,4 @@ useSortable(el, HOT_SOURCES, {
 })
 </script>
 <style scoped lang="less">
-.home {
-  padding: 8px;
-
-  .card {
-    margin-top: 8px;
-  }
-}
 </style>

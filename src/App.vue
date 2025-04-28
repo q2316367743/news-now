@@ -29,9 +29,12 @@
 import {useUtoolsColorMode} from "@/hooks/ColorMode";
 import {BacktopIcon} from "tdesign-icons-vue-next";
 import { ref, onMounted, onUnmounted } from 'vue';
+import {useRssStore} from "@/store";
 
 // 颜色模式
 useUtoolsColorMode();
+// rss初始化
+useRssStore().load();
 
 // 返回顶部功能
 const containerRef = ref<HTMLElement | null>(null);
@@ -98,7 +101,6 @@ onUnmounted(() => {
       padding: 8px 0;
       align-items: center;
       z-index: 100;
-      margin: 0 8px;
       background-color: var(--td-font-white-3);
 
       .main-header-tab {

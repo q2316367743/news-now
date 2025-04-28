@@ -1,4 +1,4 @@
-import {MewsInstanceBrowserType, NewsInstanceRecord} from "@/sources/NewsInstance";
+import {MewsInstanceBrowserType, MewsInstanceType, NewsInstanceRecord} from "@/sources/NewsInstance";
 import {useGetText} from "@/sources/HttpUtil";
 import {AbsNewsInstance} from "@/sources/abs/AbsNewsInstance";
 
@@ -17,11 +17,12 @@ export class NewsInstanceForBaidu extends AbsNewsInstance {
 
   id = 'baidu';
   logo = './icons/baidu.png';
-  primaryColor = '#A1BCEB';
+  primaryColor = '#a1bceb';
   tag: false = false;
   title = '百度热搜';
   website = 'https://top.baidu.com/board'
   browser: MewsInstanceBrowserType = 'mobile';
+  type: MewsInstanceType = 'hot';
 
   constructor() {
     super(); // 此时 id 已经被赋值

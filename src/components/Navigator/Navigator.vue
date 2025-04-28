@@ -25,7 +25,7 @@ const activeKey = ref("/tab/hot");
 const options = [
   { label: "关注", value: "/tab/focus" },
   { label: "最热", value: "/tab/hot" },
-  { label: "实时", value: "/tab/now" },
+  { label: "实时", value: "/tab/realtime" },
   { label: "RSS", value: "/tab/rss" },
 ];
 

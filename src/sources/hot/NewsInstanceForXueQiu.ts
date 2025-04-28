@@ -1,5 +1,5 @@
 import {AbsNewsInstance} from "@/sources/abs/AbsNewsInstance";
-import {MewsInstanceBrowserType, NewsInstanceRecord, NewsInstanceTag} from "@/sources/NewsInstance";
+import {MewsInstanceBrowserType, MewsInstanceType, NewsInstanceRecord, NewsInstanceTag} from "@/sources/NewsInstance";
 import {useGetJson, useGetResponse} from "@/sources/HttpUtil";
 
 interface StockRes {
@@ -25,6 +25,7 @@ export class NewsInstanceForXueQiu extends AbsNewsInstance {
   tag: NewsInstanceTag | false = false;
   title: string = '雪球';
   website: string = 'https://xueqiu.com/';
+  type: MewsInstanceType = 'hot';
 
   async getOriginRecords(): Promise<Array<NewsInstanceRecord>> {
     const url = "https://stock.xueqiu.com/v5/stock/hot_stock/list.json?size=30&_type=10&type=10"

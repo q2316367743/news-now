@@ -1,5 +1,5 @@
 import {AbsNewsInstance} from "@/sources/abs/AbsNewsInstance";
-import {MewsInstanceBrowserType, NewsInstanceRecord, NewsInstanceTag} from "@/sources/NewsInstance";
+import {MewsInstanceBrowserType, MewsInstanceType, NewsInstanceRecord, NewsInstanceTag} from "@/sources/NewsInstance";
 import {useGetJson} from "@/sources/HttpUtil";
 
 interface Res {
@@ -21,6 +21,7 @@ export class NewsInstanceForNowCoder extends AbsNewsInstance {
   tag: NewsInstanceTag | false = false;
   title: string = '牛客网';
   website: string = 'https://www.nowcoder.com';
+  type: MewsInstanceType = 'hot';
 
   async getOriginRecords(): Promise<Array<NewsInstanceRecord>> {
     const timestamp = Date.now()

@@ -1,5 +1,5 @@
 import {AbsNewsInstance} from "@/sources/abs/AbsNewsInstance";
-import {MewsInstanceBrowserType, NewsInstanceRecord} from "@/sources/NewsInstance";
+import {MewsInstanceBrowserType, MewsInstanceType, NewsInstanceRecord} from "@/sources/NewsInstance";
 import {useGetJson} from "@/sources/HttpUtil";
 
 interface Res {
@@ -23,6 +23,7 @@ export class NewsInstanceHuPu extends AbsNewsInstance {
   };
   title = '虎扑';
   website = 'https://www.hupu.com/';
+  type: MewsInstanceType = 'hot';
 
  async getOriginRecords(): Promise<Array<NewsInstanceRecord>> {
    const r: Res = await useGetJson(`https://api.vvhan.com/api/hotlist/huPu`)

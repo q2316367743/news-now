@@ -19,8 +19,9 @@
         <div class="btn">
           <refresh-icon size="16px" :class="{spin: loading}" @click="refresh"/>
         </div>
-        <div class="btn">
-          <star-icon size="16px"/>
+        <div class="btn" @click="toggleFocus">
+          <star-filled-icon v-if="hasFocus" size="16px" style="color: var(--td-error-color)"/>
+          <star-icon v-else size="16px"/>
         </div>
         <div class="btn drag drag-handle">
           <menu-application-icon size="16px"/>
@@ -30,34 +31,55 @@
     <div class="news-item-container">
       <t-loading :loading="loading" text="加载中" class="h-full">
         <scrollbar>
-          <div v-for="(record, index) in records" :key="record.id" class="news-item-record" @click="open(index)"
-               :title="record.hover">
-            <div class="news-item-record__index">
-              {{ index + 1 }}
-            </div>
-            <div class="news-item-record__content">
-              <span class="news-item-record__title" :class="{read: record.read}">{{ record.title }}</span>
-              <span class="news-item-record__tip" v-if="record.tip">{{ record.tip }}</span>
-              <span class="news-item-record__tag" v-if="record.tag">
-                <img :src="record.tag.text" alt="标签" class="tag-img" v-if="record.tag.type === 'img'"/>
-                <span v-else-if="record.tag.type === 'outline'" class="tag tag-outline"
-                      :style="{borderColor: record.tag.color, color: record.tag.color}">{{ record.tag.text }}
+          <template v-for="(record, index) in records" :key="record.id">
+            <div class="news-item-time" v-if="record.date">
+              <div class="news-item-time__date">
+                <span class="split">- </span>
+                <span class="date">{{ prettyDate(record.date) }}</span>
+              </div>
+              <div class="news-item-time__content" @click="open(index)">
+                <span class="news-item-time__title">{{ record.title }}</span>
+                <span class="news-item-time__tip" v-if="record.tip">{{ record.tip }}</span>
+                <span class="news-item-time__tag" v-if="record.tag">
+                  <img :src="record.tag.text" alt="标签" class="tag-img" v-if="record.tag.type === 'img'"/>
+                  <span v-else-if="record.tag.type === 'outline'" class="tag tag-outline"
+                        :style="{borderColor: record.tag.color, color: record.tag.color}">{{ record.tag.text }}
+                  </span>
+                  <span v-else class="tag" :style="{backgroundColor: record.tag.color}">
+                    {{ record.tag.text }}
+                  </span>
                 </span>
-                <span v-else class="tag" :style="{backgroundColor: record.tag.color}">
-                  {{ record.tag.text }}
-                </span>
-              </span>
+              </div>
             </div>
-          </div>
+            <div class="news-item-record" @click="open(index)" :title="record.hover" v-else>
+              <div class="news-item-record__index">
+                {{ index + 1 }}
+              </div>
+              <div class="news-item-record__content">
+                <span class="news-item-record__title" :class="{read: record.read}">{{ record.title }}</span>
+                <span class="news-item-record__tip" v-if="record.tip">{{ record.tip }}</span>
+                <span class="news-item-record__tag" v-if="record.tag">
+                  <img :src="record.tag.text" alt="标签" class="tag-img" v-if="record.tag.type === 'img'"/>
+                  <span v-else-if="record.tag.type === 'outline'" class="tag tag-outline"
+                        :style="{borderColor: record.tag.color, color: record.tag.color}">{{ record.tag.text }}
+                  </span>
+                  <span v-else class="tag" :style="{backgroundColor: record.tag.color}">
+                    {{ record.tag.text }}
+                  </span>
+                </span>
+              </div>
+            </div>
+          </template>
         </scrollbar>
       </t-loading>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
-import {MenuApplicationIcon, RefreshIcon, StarIcon} from "tdesign-icons-vue-next";
+import {MenuApplicationIcon, RefreshIcon, StarFilledIcon, StarIcon} from "tdesign-icons-vue-next";
 import {NewsInstance, NewsInstanceSource} from "@/sources/NewsInstance";
 import {prettyDate} from "@/utils/lang/FormatUtil";
+import {myFocus} from "@/store/AppStore";
 
 const props = defineProps({
   source: {
@@ -68,6 +90,8 @@ const props = defineProps({
 
 const {records, lastUpdateTime, loading, refresh, open} = props.source!.renderSource() as NewsInstanceSource;
 
+const hasFocus = computed(() => myFocus.value.indexOf(props.source!.id) > -1);
+
 const date = ref('很久很久以前');
 
 const renderDate = () => date.value = prettyDate(lastUpdateTime.value);
@@ -77,6 +101,15 @@ watch(lastUpdateTime, renderDate);
 
 function openWebsite() {
   utools.shellOpenExternal(props.source!.website);
+}
+
+function toggleFocus() {
+  const index = myFocus.value.findIndex(id => id === props.source!.id);
+  if (index > -1) {
+    myFocus.value.splice(index, 1);
+  } else {
+    myFocus.value.push(props.source!.id);
+  }
 }
 </script>
 <style scoped lang="less">
@@ -194,6 +227,93 @@ function openWebsite() {
       &__content {
         align-items: center;
         margin-left: 6px;
+      }
+
+
+      &__title {
+
+        &.read {
+          color: var(--td-text-color-placeholder);
+        }
+      }
+
+      &__tip {
+        font-size: var(--td-font-size-title-small);
+        margin-left: 4px;
+        color: var(--td-text-color-placeholder);
+      }
+
+      &__tag {
+        margin-left: 5px;
+        height: 16px;
+        font-size: var(--td-font-size-body-small);
+
+
+        .tag {
+          height: 16px;
+          line-height: 16px;
+          padding: 0 2px;
+          border-radius: var(--td-radius-default);
+          color: var(--td-text-color-anti);
+
+          &.tag-outline {
+            border-style: solid;
+            border-width: 1px;
+            height: 15px;
+            line-height: 14px;
+            font-size: 10px;
+          }
+        }
+
+        .tag-img {
+          height: 16px;
+          vertical-align: text-top;
+        }
+      }
+    }
+
+    .news-item-time {
+      display: flex;
+      flex-direction: column;
+      border-radius: var(--td-radius-default);
+      transition: background-color 0.3s ease-in-out;
+      cursor: pointer;
+      font-size: var(--td-font-size-title-medium);
+      line-height: 24px;
+      border-left: 1px solid var(--td-border-level-1-color);
+      margin-left: 8px;
+      padding: 3px 0.5rem 3px 0;
+
+      &:first-child {
+        margin-top: 0.5rem;
+      }
+
+      &:last-child {
+        margin-bottom: 0.5rem;
+      }
+
+      &__date {
+        font-size: var(--td-font-size-body-small);
+        color: var(--td-text-color-placeholder);
+
+        .split {
+          color: var(--td-border-level-1-color);
+        }
+        .date {
+          margin-left: 4px;
+        }
+      }
+
+      &__content {
+        align-items: center;
+        margin-left: 6px;
+        transition: background-color 0.3s ease-in-out;
+        padding: 4px;
+        border-radius: var(--td-radius-default);
+
+        &:hover {
+          background-color: var(--td-font-white-3);
+        }
       }
 
 

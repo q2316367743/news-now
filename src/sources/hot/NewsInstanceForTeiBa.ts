@@ -1,6 +1,6 @@
 import {AbsNewsInstance} from "@/sources/abs/AbsNewsInstance";
 import {
-  MewsInstanceBrowserType,
+  MewsInstanceBrowserType, MewsInstanceType,
   NewsInstanceRecord,
   NewsInstanceTag
 } from "@/sources/NewsInstance";
@@ -32,6 +32,7 @@ export class NewsInstanceForTeiBa extends AbsNewsInstance {
   };
   title: string = '百度贴吧';
   website: string = 'https://tieba.baidu.com/';
+  type: MewsInstanceType = 'hot';
 
   async getOriginRecords(): Promise<Array<NewsInstanceRecord>> {
     const url = "https://tieba.baidu.com/hottopic/browse/topicList"

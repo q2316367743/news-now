@@ -1,6 +1,6 @@
 import {AbsNewsInstance} from "@/sources/abs/AbsNewsInstance";
 import {
-  MewsInstanceBrowserType,
+  MewsInstanceBrowserType, MewsInstanceType,
   NewsInstanceRecord,
   NewsInstanceRecordTag,
   NewsInstanceTag
@@ -30,6 +30,7 @@ export class NewsInstanceTouTiao extends AbsNewsInstance {
   tag: NewsInstanceTag | false = false;
   title: string = '今日头条';
   website: string = 'https://www.toutiao.com/';
+  type: MewsInstanceType = 'hot';
 
   private renderTag(url?: string): NewsInstanceRecordTag | false {
     if (!url) return false

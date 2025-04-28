@@ -59,6 +59,9 @@ interface Window {
         encodeBase64: (value: string) => string,
         md5: (value: string) => string,
         hash(s: string, algorithm: HashAlgorithm): string
+      },
+      iconv: {
+        transferToUtf8(s: string | ArrayBuffer, charset: string): string;
       }
     }
   }

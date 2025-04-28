@@ -13,9 +13,12 @@ export interface NewsInstanceRecord {
   // 链接
   url: string;
   // 是否已读
-  read: boolean;
+  read?: boolean;
   // 提示
   hover?: string;
+
+  // 更新日期
+  date?: string | number;
 
   // 标签
   tag?: NewsInstanceRecordTag | false;
@@ -55,6 +58,7 @@ export interface MewsInstanceBrowser {
 }
 
 export type MewsInstanceBrowserType = MewsInstanceBrowser | 'pc' | 'mobile';
+export type MewsInstanceType = 'hot' | 'realtime';
 
 export interface NewsInstance {
   id: string;
@@ -68,6 +72,8 @@ export interface NewsInstance {
   website: string;
   // 浏览器
   browser: MewsInstanceBrowserType;
+
+  type: MewsInstanceType
 
   // 渲染源
   renderSource(): NewsInstanceSource;

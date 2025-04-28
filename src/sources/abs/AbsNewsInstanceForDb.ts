@@ -1,5 +1,5 @@
 import {
-  MewsInstanceBrowserType,
+  MewsInstanceBrowserType, MewsInstanceType,
   NewsInstance,
   NewsInstanceSource,
   NewsInstanceTag
@@ -18,6 +18,7 @@ export abstract class AbsNewsInstanceForDb implements NewsInstance {
   abstract tag: NewsInstanceTag | false;
   abstract title: string;
   abstract website: string;
+  abstract type: MewsInstanceType;
 
   abstract renderSource(): NewsInstanceSource;
 

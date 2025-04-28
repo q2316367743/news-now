@@ -1,6 +1,6 @@
 import {AbsNewsInstance} from "@/sources/abs/AbsNewsInstance";
 import {
-  MewsInstanceBrowserType,
+  MewsInstanceBrowserType, MewsInstanceType,
   NewsInstanceRecord,
   NewsInstanceTag
 } from "@/sources/NewsInstance";
@@ -14,22 +14,6 @@ interface Item {
   content_short: string
   display_time: number
   type?: string
-}
-
-interface LiveRes {
-  data: {
-    items: Item[]
-  }
-}
-
-interface NewsRes {
-  data: {
-    items: {
-      // ad
-      resource_type?: string
-      resource: Item
-    }[]
-  }
 }
 
 interface HotRes {
@@ -46,6 +30,7 @@ export class NewsInstanceForStreetwalker extends AbsNewsInstance {
   tag: NewsInstanceTag | false = false;
   title: string = '华尔街见闻';
   website: string = 'https://wallstreetcn.com/';
+  type: MewsInstanceType = 'hot';
 
   async getOriginRecords(): Promise<Array<NewsInstanceRecord>> {
     const apiUrl = `https://api-one.wallstcn.com/apiv1/content/articles/hot?period=all`

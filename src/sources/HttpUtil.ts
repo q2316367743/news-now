@@ -1,7 +1,7 @@
 import {AxiosInstance, AxiosRequestConfig, AxiosResponse} from "axios";
 
-export async function useGetResponse(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse> {
-  return (window.preload.axios as AxiosInstance).get(url, config);
+export async function useGetResponse<T>(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
+  return (window.preload.axios as AxiosInstance).get<T>(url, config);
 }
 
 export async function useGetText(url: string, config?: AxiosRequestConfig): Promise<string> {

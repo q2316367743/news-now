@@ -1,5 +1,5 @@
 import {
-  MewsInstanceBrowser, MewsInstanceBrowserType,
+  MewsInstanceBrowser, MewsInstanceBrowserType, MewsInstanceType,
   NewsInstanceRecord,
   NewsInstanceRecordStore,
   NewsInstanceSource,
@@ -20,6 +20,7 @@ export abstract class AbsNewsInstance extends AbsNewsInstanceForDb {
   abstract title: string;
   abstract website: string;
   abstract browser: MewsInstanceBrowserType;
+  abstract type: MewsInstanceType;
 
   protected lastUpdateTime = ref<number>(0);
   protected records = ref<Array<NewsInstanceRecord>>([]);

@@ -1,6 +1,6 @@
 import {AbsNewsInstance} from "@/sources/abs/AbsNewsInstance";
 import {
-  MewsInstanceBrowserType,
+  MewsInstanceBrowserType, MewsInstanceType,
   NewsInstanceRecord,
   NewsInstanceTag
 } from "@/sources/NewsInstance";
@@ -24,6 +24,7 @@ export class NewsInstanceForThepaper extends AbsNewsInstance {
   tag: NewsInstanceTag | false = false;
   title: string = '澎湃新闻';
   website: string = 'https://www.thepaper.cn/';
+  type: MewsInstanceType = 'hot';
 
   async getOriginRecords(): Promise<Array<NewsInstanceRecord>> {
     const url = "https://cache.thepaper.cn/contentapi/wwwIndex/rightSidebar"

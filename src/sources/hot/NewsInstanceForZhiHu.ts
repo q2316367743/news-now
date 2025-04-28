@@ -1,6 +1,6 @@
 import {AbsNewsInstance} from "@/sources/abs/AbsNewsInstance";
 import {
-  MewsInstanceBrowserType,
+  MewsInstanceBrowserType, MewsInstanceType,
   NewsInstanceRecord,
   NewsInstanceRecordTag
 } from "@/sources/NewsInstance";
@@ -35,6 +35,7 @@ export class NewsInstanceForZhiHu extends AbsNewsInstance {
   tag: false = false;
   title = '知乎';
   website = 'https://www.zhihu.com/';
+  type: MewsInstanceType = 'hot';
 
   private renderTag(url?:string): NewsInstanceRecordTag | false {
     if (!url)return false;

@@ -1,8 +1,7 @@
 import {AbsNewsInstance} from "@/sources/abs/AbsNewsInstance";
 import {useGetJson} from "@/sources/HttpUtil";
 import {
-  MewsInstanceBrowser,
-  MewsInstanceBrowserType,
+  MewsInstanceBrowserType, MewsInstanceType,
   NewsInstanceRecord,
   NewsInstanceRecordTag
 } from "@/sources/NewsInstance";
@@ -44,6 +43,7 @@ export class NewsInstanceForWeibo extends AbsNewsInstance {
   };
   title = '微博';
   website = "https://weibo.com";
+  type: MewsInstanceType = 'hot';
 
   browser: MewsInstanceBrowserType = 'pc';
 

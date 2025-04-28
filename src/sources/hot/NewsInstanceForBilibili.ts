@@ -1,6 +1,6 @@
 import {AbsNewsInstance} from "@/sources/abs/AbsNewsInstance";
 import {
-  MewsInstanceBrowserType,
+  MewsInstanceBrowserType, MewsInstanceType,
   NewsInstanceRecord,
   NewsInstanceRecordTag,
   NewsInstanceTag
@@ -44,60 +44,6 @@ interface WapRes {
   total_count: number
 }
 
-// Interface for Bilibili Hot Video response
-interface HotVideoRes {
-  code: number
-  message: string
-  ttl: number
-  data: {
-    list: {
-      aid: number
-      videos: number
-      tid: number
-      tname: string
-      copyright: number
-      pic: string
-      title: string
-      pubdate: number
-      ctime: number
-      desc: string
-      state: number
-      duration: number
-      owner: {
-        mid: number
-        name: string
-        face: string
-      }
-      stat: {
-        view: number
-        danmaku: number
-        reply: number
-        favorite: number
-        coin: number
-        share: number
-        now_rank: number
-        his_rank: number
-        like: number
-        dislike: number
-      }
-      dynamic: string
-      cid: number
-      dimension: {
-        width: number
-        height: number
-        rotate: number
-      }
-      short_link: string
-      short_link_v2: string
-      bvid: string
-      rcmd_reason: {
-        content: string
-        corner_mark: number
-      }
-    }[]
-  }
-}
-
 export class NewsInstanceForBilibili extends AbsNewsInstance {
   browser: MewsInstanceBrowserType = 'pc';
   id: string = 'bilibili';
@@ -109,6 +55,7 @@ export class NewsInstanceForBilibili extends AbsNewsInstance {
   };
   title: string = '哔哩哔哩';
   website: string = 'https://www.bilibili.com';
+  type: MewsInstanceType = 'hot';
 
   private renderTag(icon?: string): NewsInstanceRecordTag | false {
     return icon ? {
