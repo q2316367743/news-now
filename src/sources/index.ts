@@ -14,6 +14,11 @@ import {NewsInstanceForXueQiu} from "@/sources/hot/NewsInstanceForXueQiu";
 import {NewsInstanceForGithub} from "@/sources/hot/NewsInstanceForGithub";
 import {NewsInstanceForBilibili} from "@/sources/hot/NewsInstanceForBilibili";
 import {NewsInstanceForCls} from "@/sources/hot/NewsInstanceForCls";
+import {NewsInstanceForNowCoder} from "@/sources/hot/NewsInstanceForNowCoder";
+import {NewsInstanceForSspai} from "@/sources/hot/NewsInstanceForSspai";
+import {NewsInstanceForJueJin} from "@/sources/hot/NewsInstanceForJueJin";
+import {NewsInstanceForIFeng} from "@/sources/hot/NewsInstanceForIFeng";
+import {NewsInstanceForChongBuLuo} from "@/sources/hot/NewsInstanceForChongBuLuo";
 
 export const HOT_SOURCES = shallowRef<Array<NewsInstance>>([
   new NewsInstanceForBaidu(),
@@ -29,7 +34,13 @@ export const HOT_SOURCES = shallowRef<Array<NewsInstance>>([
   new NewsInstanceForXueQiu(),
   new NewsInstanceForGithub(),
   new NewsInstanceForBilibili(),
-  new NewsInstanceForCls()
+  new NewsInstanceForCls(),
+  // new NewsInstanceForSmzdm()
+  new NewsInstanceForNowCoder(),
+  new NewsInstanceForSspai(),
+  new NewsInstanceForJueJin(),
+  new NewsInstanceForIFeng(),
+  new NewsInstanceForChongBuLuo()
 ]);
 
 // 排序

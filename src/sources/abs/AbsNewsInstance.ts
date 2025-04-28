@@ -27,6 +27,7 @@ export abstract class AbsNewsInstance extends AbsNewsInstanceForDb {
 
   private rev: string | undefined = undefined;
   private isInitialized = false;
+  private readonly maxRefreshTime = 1000 * 60 * 15;
 
   /**
    * 获取远程记录
@@ -34,12 +35,14 @@ export abstract class AbsNewsInstance extends AbsNewsInstanceForDb {
   abstract getOriginRecords(): Promise<Array<NewsInstanceRecord>>;
 
   private async timeoutFn() {
-    // 刷新
-    await this.refresh();
+    if (Date.now() - this.lastUpdateTime.value >= this.maxRefreshTime) {
+      // 刷新
+      await this.refresh();
+    }
     // 设置下一个更新任务
     setTimeout(() => {
       this.timeoutFn();
-    }, 1000 * 60 * 15)
+    }, this.maxRefreshTime)
   }
 
   /**
@@ -63,8 +66,8 @@ export abstract class AbsNewsInstance extends AbsNewsInstanceForDb {
       setTimeout(() => {
         this.loading.value = false;
         this.timeoutFn();
-      }, Math.max(0, 1000 * 60 * 15 - (Date.now() - this.lastUpdateTime.value)));
-      console.log(`「${this.title}」下次更新时间`, (1000 * 60 * 15 - (Date.now() - this.lastUpdateTime.value)) / 1000 / 60, '分钟')
+      }, Math.max(0, this.maxRefreshTime - (Date.now() - this.lastUpdateTime.value)));
+      console.log(`「${this.title}」下次更新时间`, (this.maxRefreshTime - (Date.now() - this.lastUpdateTime.value)) / 1000 / 60, '分钟')
     } catch (e) {
       MessageUtil.error(`新闻「${this.title}」初始化失败`, e);
     } finally {
@@ -113,15 +116,15 @@ export abstract class AbsNewsInstance extends AbsNewsInstanceForDb {
     // 打开方法
     const open = (index: number) => {
       let b: MewsInstanceBrowser;
-      if (this.browser  === 'pc'){
-        b= {width: 1200,height: 800}
-      }else if (this.browser === 'mobile'){
-        b= {
+      if (this.browser === 'pc') {
+        b = {width: 1200, height: 800}
+      } else if (this.browser === 'mobile') {
+        b = {
           width: 414,
           height: 896,
           userAgent: 'Mozilla/5.0 (Linux; Android 14; SM - S918U) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Mobile Safari/537.36'
         }
-      }else{
+      } else {
         b = this.browser;
       }
       utools.ubrowser.goto(this.records.value[index].url, {
