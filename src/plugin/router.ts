@@ -3,8 +3,8 @@ import {HomeIcon} from 'tdesign-icons-vue-next';
 // 引入路由
 
 export const routes: Array<RouteRecordRaw> = [{
-  name: "主页",
-  path: '/home',
+  name: "最热",
+  path: '/tab/hot',
   alias: ['/'],
   component: () => import('@/pages/home/index.vue'),
   meta: {

@@ -31,38 +31,26 @@
     <div class="news-item-container">
       <t-loading :loading="loading" text="加载中" class="h-full">
         <scrollbar>
-          <div v-for="(record, index) in records" :key="record.id" class="news-item-record" @click="open(index)">
+          <div v-for="(record, index) in records" :key="record.id" class="news-item-record" @click="open(index)" :title="record.hover">
             <div class="news-item-record__index">
               {{ index + 1 }}
             </div>
-            <div class="news-item-record__title" :class="{read: record.read}">{{ record.title }}</div>
-            <div class="news-item-record__tip" v-if="record.tip">{{ record.tip }}</div>
-            <div class="news-item-record__tag" v-if="record.tag">
-              <img v-if="record.tag.type === 'img'" :src="record.tag.text" alt="标签"/>
-              <div v-else-if="record.tag.type === 'outline'" class="tag tag-outline"
-                   :style="{borderColor: record.tag.color, color: record.tag.color}">{{ record.tag.text }}
-              </div>
-              <div v-else class="tag" :style="{backgroundColor: record.tag.color}">
-                {{ record.tag.text }}
-              </div>
+            <div class="ml-6px">
+              <span class="news-item-record__title" :class="{read: record.read}">{{ record.title }}</span>
+              <span class="news-item-record__tip" v-if="record.tip">{{ record.tip }}</span>
+              <span class="news-item-record__tag" v-if="record.tag">
+                <img v-if="record.tag.type === 'img'" :src="record.tag.text" alt="标签"/>
+                <span v-else-if="record.tag.type === 'outline'" class="tag tag-outline"
+                     :style="{borderColor: record.tag.color, color: record.tag.color}">{{ record.tag.text }}
+                </span>
+                <span v-else class="tag" :style="{backgroundColor: record.tag.color}">
+                  {{ record.tag.text }}
+                </span>
+              </span>
             </div>
           </div>
         </scrollbar>
       </t-loading>
-    </div>
-    <div
-      class="os-scrollbar os-scrollbar-horizontal os-theme-dark os-scrollbar-auto-hide os-scrollbar-auto-hide-hidden os-scrollbar-handle-interactive os-scrollbar-cornerless os-scrollbar-unusable"
-      style="--os-viewport-percent: 1; --os-scroll-direction: 0;">
-      <div class="os-scrollbar-track">
-        <div class="os-scrollbar-handle"></div>
-      </div>
-    </div>
-    <div
-      class="os-scrollbar os-scrollbar-vertical os-theme-dark os-scrollbar-auto-hide os-scrollbar-auto-hide-hidden os-scrollbar-handle-interactive os-scrollbar-cornerless os-scrollbar-visible"
-      style="--os-viewport-percent: 0.3688; --os-scroll-direction: 0;">
-      <div class="os-scrollbar-track">
-        <div class="os-scrollbar-handle"></div>
-      </div>
     </div>
   </div>
 </template>
@@ -162,11 +150,11 @@ watch(lastUpdateTime, renderDate);
       }
 
       &:first-child {
-        padding-top: 0.5rem;
+        margin-top: 0.5rem;
       }
 
       &:last-child {
-        padding-bottom: 0.5rem;
+        margin-bottom: 0.5rem;
       }
 
       &__index {
@@ -182,7 +170,6 @@ watch(lastUpdateTime, renderDate);
 
 
       &__title {
-        margin-left: 6px;
 
         &.read {
           color: var(--td-text-color-placeholder);
@@ -202,7 +189,7 @@ watch(lastUpdateTime, renderDate);
         .tag {
           height: 17px;
           line-height: 16px;
-          margin-top: 4px;
+          margin-top: 3px;
           padding: 0 2px;
           border-radius: var(--td-radius-default);
           color: var(--td-text-color-anti);

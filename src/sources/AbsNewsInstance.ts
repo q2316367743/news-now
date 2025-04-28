@@ -54,7 +54,6 @@ export abstract class AbsNewsInstance implements NewsInstance {
     // 获取缓存
     try {
       this.loading.value = true;
-      console.log(LocalNameEnum.CACHE_NEWS + this.id)
       const cache = await getFromOneByAsync<NewsInstanceRecordStore>(LocalNameEnum.CACHE_NEWS + this.id)
       this.rev = cache.rev;
       if (cache.record) {
@@ -66,7 +65,7 @@ export abstract class AbsNewsInstance implements NewsInstance {
         this.loading.value = false;
         this.timeoutFn();
       }, Math.max(0, 1000 * 60 * 15 - (Date.now() - this.lastUpdateTime.value)));
-      console.log('下次更新时间', (1000 * 60 * 15 - (Date.now() - this.lastUpdateTime.value)) / 1000 / 60, '分钟')
+      console.log(`资讯「${this.title}」下次更新时间`, (1000 * 60 * 15 - (Date.now() - this.lastUpdateTime.value)) / 1000 / 60, '分钟')
     } catch (e) {
       MessageUtil.error(`新闻「${this.title}」初始化失败`, e);
     } finally {
@@ -80,10 +79,6 @@ export abstract class AbsNewsInstance implements NewsInstance {
    * @returns 无返回值
    */
   private async saveCache(): Promise<void> {
-    console.log(LocalNameEnum.CACHE_NEWS + this.id, {
-      lastUpdateTime: this.lastUpdateTime.value,
-      records: toRaw(this.records.value)
-    })
     this.rev = await saveOneByAsync<NewsInstanceRecordStore>(LocalNameEnum.CACHE_NEWS + this.id, {
       lastUpdateTime: this.lastUpdateTime.value,
       records: toRaw(this.records.value)

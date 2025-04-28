@@ -1,15 +1,23 @@
 <template>
   <div class="main">
-    <div class="main-container">
+    <div class="main-container" ref="containerRef">
       <header class="main-header">
         <div class="logo">NewsNow</div>
-        <div class="main-header-tab flex justify-center items-center">
-          <div class="main-header-tab__tag">
-            <t-check-tag-group v-model="activeKey" :options="options" :checked-props="checkedProps"
-                               :unchecked-props="uncheckedProps"/>
-          </div>
+        <navigator />
+        <div>
+          <t-button 
+            theme="primary"
+            variant="text" 
+            shape="square"
+            @click="scrollToTop"
+            class="back-top-btn"
+            :style="{opacity: showBackTop ? 1 : 0}"
+          >
+            <template #icon>
+              <backtop-icon />
+            </template>
+          </t-button>
         </div>
-        <div>操作</div>
       </header>
       <main>
         <router-view/>
@@ -19,31 +27,46 @@
 </template>
 <script lang="ts" setup>
 import {useUtoolsColorMode} from "@/hooks/ColorMode";
-import {useRoute, useRouter} from "vue-router";
-import {TdTagProps} from "tdesign-vue-next";
-
-const route = useRoute();
-const router = useRouter();
-
-const activeKey = ref(['/tab/hot']);
-const checkedProps: TdTagProps = {
-  theme: 'primary',
-};
-const uncheckedProps: TdTagProps = {
-  theme: 'default',
-};
-
-const options = [
-  {label: '关注', value: '/tab/focus'},
-  {label: '最热', value: '/tab/hot'},
-  {label: '实时', value: '/tab/now'},
-  {label: 'RSS', value: '/tab/rss'},
-];
+import {BacktopIcon} from "tdesign-icons-vue-next";
+import { ref, onMounted, onUnmounted } from 'vue';
 
 // 颜色模式
 useUtoolsColorMode();
 
+// 返回顶部功能
+const containerRef = ref<HTMLElement | null>(null);
+const showBackTop = ref(false);
 
+// 监听滚动事件
+const handleScroll = () => {
+  if (containerRef.value) {
+    showBackTop.value = containerRef.value.scrollTop > 50;
+  }
+};
+
+// 返回顶部
+const scrollToTop = () => {
+  if (containerRef.value) {
+    containerRef.value?.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }
+};
+
+// 组件挂载时添加滚动监听
+onMounted(() => {
+  if (containerRef.value) {
+    containerRef.value.addEventListener('scroll', handleScroll);
+  }
+});
+
+// 组件卸载时移除滚动监听
+onUnmounted(() => {
+  if (containerRef.value) {
+    containerRef.value.removeEventListener('scroll', handleScroll);
+  }
+});
 </script>
 <style scoped lang="less">
 .main {
@@ -58,6 +81,11 @@ useUtoolsColorMode();
     height: 100%;
     overflow-x: hidden;
     overflow-y: auto;
+    
+    .back-top-btn {
+      transition: opacity 0.3s ease;
+      opacity: 1;
+    }
 
     .main-header {
       backdrop-filter: blur(12px);

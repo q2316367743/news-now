@@ -7,9 +7,11 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    Navigator: typeof import('./src/components/Navigator/Navigator.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Scrollbar: typeof import('./src/components/Scrollbar/Scrollbar.vue')['default']
+    TButton: typeof import('tdesign-vue-next')['Button']
     TCheckTagGroup: typeof import('tdesign-vue-next')['CheckTagGroup']
     TCol: typeof import('tdesign-vue-next')['Col']
     TLoading: typeof import('tdesign-vue-next')['Loading']
