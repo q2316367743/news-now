@@ -8,6 +8,7 @@ export interface NewsInstanceForRssProps {
   primaryColor: string;
   title: string;
   website: string;
+  source: string;
   browser: MewsInstanceBrowserType;
 }
 
@@ -18,8 +19,10 @@ export class NewsInstanceForRss extends AbsNewsInstance {
   primaryColor: string;
   tag: NewsInstanceTag | false = false
   title: string;
-  type: MewsInstanceType = 'hot';
+  type: MewsInstanceType = 'rss';
   website: string;
+
+  private readonly source: string
 
   constructor(props: NewsInstanceForRssProps) {
     super();
@@ -29,17 +32,19 @@ export class NewsInstanceForRss extends AbsNewsInstance {
     this.title = props.title;
     this.website = props.website;
     this.browser = props.browser;
+    this.source = props.source;
   }
 
   async getOriginRecords(): Promise<Array<NewsInstanceRecord>> {
-    const info = await rss2json(this.website);
+    const info = await rss2json(this.source);
     return info?.items?.map((item) => {
       return {
-        id: item.link,
+        id: item.id || item.link,
         title: item.title,
         url: item.link,
         read: false,
-        hover: item.description
+        hover: item.description,
+        date: item.created
       }
     }) || [];
   }

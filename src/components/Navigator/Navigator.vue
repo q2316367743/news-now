@@ -71,12 +71,12 @@ onMounted(() => {
     gap: 16px;
     background-color: var(--td-font-white-4);
     border-radius: var(--td-radius-large);
-    padding: 4px 12px;
+    padding: 4px 8px;
     box-shadow: var(--td-shadow-1);
   }
   
   .nav-item {
-    padding: 6px 16px;
+    padding: 6px 8px;
     border-radius: var(--td-radius-default);
     cursor: pointer;
     font-size: var(--td-font-size-body-medium);
@@ -88,7 +88,6 @@ onMounted(() => {
     }
     
     &--active {
-      background-color: var(--td-brand-color-light);
       color: var(--td-brand-color);
       font-weight: 500;
     }

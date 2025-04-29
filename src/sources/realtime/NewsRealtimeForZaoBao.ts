@@ -8,7 +8,7 @@ export class NewsRealtimeForZaoBao extends AbsNewsInstance {
   browser: MewsInstanceBrowserType = 'pc';
   id: string = 'zaobao';
   logo: string = './icons/zaobao.png';
-  primaryColor: string = '#b43f3f';
+  primaryColor: string = '#e45353';
   tag: NewsInstanceTag | false = false;
   title: string = '联合早报';
   type: MewsInstanceType = 'realtime';

@@ -1,23 +1,20 @@
-.bg-color {
-    background-color: #F4F4F5;
-
-    &.detach {
-        background-color: #DFDFDF;
-    }
+:root{
+  --nn-app-header-bg-color: rgba(255, 255, 255, 0.35);
+  --nn-news-container-bg-color: rgba(255, 255, 255, 0.55);
+  --nn-news-item-bg-color-hover: rgba(255, 255, 255, 0.35);
+  --nn-news-item-bg-color-index: rgba(255, 255, 255, 0.35);
+  --nn-news-tag-bg-color: rgba(255, 255, 255, 0.55);
 }
-
-body[arco-theme='dark'] {
-    .bg-color {
-        background-color: #303133;
-
-        &.detach {
-            background-color: #1F1F1F;
-        }
-    }
+:root[theme-mode="dark"] {
+  --nn-app-header-bg-color: rgba(0, 0, 0, 0.35);
+  --nn-news-container-bg-color: rgba(0, 0, 0, 0.55);
+  --nn-news-item-bg-color-hover: rgba(0, 0, 0, 0.35);
+  --nn-news-item-bg-color-index: rgba(0, 0, 0, 0.35);
+  --nn-news-tag-bg-color: rgba(0, 0, 0, 0.55);
 }
 
 .ellipsis {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }

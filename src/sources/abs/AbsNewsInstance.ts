@@ -22,13 +22,20 @@ export abstract class AbsNewsInstance extends AbsNewsInstanceForDb {
   abstract browser: MewsInstanceBrowserType;
   abstract type: MewsInstanceType;
 
-  protected lastUpdateTime = ref<number>(0);
-  protected records = ref<Array<NewsInstanceRecord>>([]);
-  protected loading = ref<boolean>(false);
+  private readonly lastUpdateTime: Ref<number>
+  private readonly records: Ref<Array<NewsInstanceRecord>>;
+  private readonly loading: Ref<boolean>;
 
   private rev: string | undefined = undefined;
   private isInitialized = false;
   private readonly maxRefreshTime = 1000 * 60 * 15;
+
+  constructor() {
+    super();
+    this.lastUpdateTime = ref<number>(0);
+    this.records = ref<Array<NewsInstanceRecord>>([]);
+    this.loading = ref<boolean>(false);
+  }
 
   /**
    * 获取远程记录

@@ -13,8 +13,12 @@ declare module 'vue' {
     Scrollbar: typeof import('./src/components/Scrollbar/Scrollbar.vue')['default']
     TButton: typeof import('tdesign-vue-next')['Button']
     TCol: typeof import('tdesign-vue-next')['Col']
+    TDropdown: typeof import('tdesign-vue-next')['Dropdown']
+    TDropdownItem: typeof import('tdesign-vue-next')['DropdownItem']
+    TDropdownMenu: typeof import('tdesign-vue-next')['DropdownMenu']
     TLoading: typeof import('tdesign-vue-next')['Loading']
     TRow: typeof import('tdesign-vue-next')['Row']
+    TSpace: typeof import('tdesign-vue-next')['Space']
     TTag: typeof import('tdesign-vue-next')['Tag']
   }
 }

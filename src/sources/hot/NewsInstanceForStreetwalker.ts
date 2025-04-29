@@ -29,7 +29,7 @@ export class NewsInstanceForStreetwalker extends AbsNewsInstance {
   primaryColor: string = '#a2b7e7';
   tag: NewsInstanceTag | false = false;
   title: string = '华尔街见闻';
-  website: string = 'https://wallstreetcn.com/';
+  website: string = 'https://wallstreetcn.com';
   type: MewsInstanceType = 'hot';
 
   async getOriginRecords(): Promise<Array<NewsInstanceRecord>> {

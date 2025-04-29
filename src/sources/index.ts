@@ -20,6 +20,11 @@ import {NewsInstanceForJueJin} from "@/sources/hot/NewsInstanceForJueJin";
 import {NewsInstanceForIFeng} from "@/sources/hot/NewsInstanceForIFeng";
 import {NewsInstanceForChongBuLuo} from "@/sources/hot/NewsInstanceForChongBuLuo";
 import {NewsRealtimeForZaoBao} from "@/sources/realtime/NewsRealtimeForZaoBao";
+import {NewsRealtimeForStreetwalker} from "@/sources/realtime/NewsRealtimeForStreetwalker";
+import {NewsRealtimeForItHome} from "@/sources/realtime/NewsRealtimeForItHome";
+import {NewsRealtimeForClsTelegraph} from "@/sources/realtime/NewsRealtimeForClsTelegraph";
+import {NewsRealtimeForGeLongHui} from "@/sources/realtime/NewsRealtimeForGeLongHui";
+import {NewsRealtimeForJin10} from "@/sources/realtime/NewsRealtimeForJin10";
 
 export const SOURCES: Array<NewsInstance> = [
   new NewsInstanceForBaidu(),
@@ -44,7 +49,12 @@ export const SOURCES: Array<NewsInstance> = [
   new NewsInstanceForChongBuLuo(),
 
   // 实时
-  new NewsRealtimeForZaoBao()
+  new NewsRealtimeForZaoBao(),
+  new NewsRealtimeForStreetwalker(),
+  new NewsRealtimeForItHome(),
+  new NewsRealtimeForClsTelegraph(),
+  new NewsRealtimeForGeLongHui(),
+  new NewsRealtimeForJin10()
 ];
 
 export const HOT_SOURCES = shallowRef(SOURCES.filter(source => source.type === 'hot'));

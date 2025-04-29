@@ -3,9 +3,10 @@ type ColorModeType = 'auto' | 'light' | 'dark';
 interface ColorModeResult {
   colorMode: Ref<ColorModeType>;
   isDark: ComputedRef<boolean>;
+  toggleColorMode: (type: ColorModeType) => void;
 }
 
-export const useUtoolsColorMode = (): ColorModeResult => {
+export const useColorMode = (): ColorModeResult => {
   const colorMode = ref<ColorModeType>(utools.dbStorage.getItem('/key/color-mode') || 'auto');
   const isDark = computed(() => {
     if (colorMode.value === 'dark') {
@@ -28,11 +29,11 @@ export const useUtoolsColorMode = (): ColorModeResult => {
 
   function renderColorMode() {
     if (colorMode.value === 'light') {
-      document.body.setAttribute('arco-theme', 'light');
+      document.documentElement.removeAttribute('theme-mode');
     } else if (colorMode.value === 'dark') {
-      document.body.setAttribute('arco-theme', 'dark');
+      document.documentElement.setAttribute('theme-mode', 'dark');
     } else {
-      document.body.setAttribute('arco-theme', utools.isDarkColors() ? 'dark' : 'light');
+      document.documentElement.setAttribute('theme-mode', utools.isDarkColors() ? 'dark' : 'light');
     }
   }
 
@@ -43,6 +44,10 @@ export const useUtoolsColorMode = (): ColorModeResult => {
     renderColorMode();
   });
 
-  return {colorMode, isDark}
+  const toggleColorMode = (type: ColorModeType) => {
+    colorMode.value = type;
+  }
+
+  return {colorMode, isDark, toggleColorMode}
 
 }

@@ -2,6 +2,7 @@ import {AbsNewsInstance} from "@/sources/abs/AbsNewsInstance";
 import {MewsInstanceBrowserType, MewsInstanceType, NewsInstanceRecord, NewsInstanceTag} from "@/sources/NewsInstance";
 import {useGetJson} from "@/sources/HttpUtil";
 
+
 interface Item {
   id: number
   title?: string
@@ -12,23 +13,24 @@ interface Item {
   // 1
   is_ad: number
 }
-
-interface Hot {
-  data: Item[]
+interface TelegraphRes {
+  data: {
+    roll_data: Item[]
+  }
 }
 
-export class NewsInstanceForCls extends AbsNewsInstance {
+export class NewsRealtimeForClsTelegraph extends AbsNewsInstance {
   browser: MewsInstanceBrowserType = 'pc';
-  id: string = 'cls';
+  id: string = 'cls-telegraph';
   logo: string = './icons/cls.png';
-  primaryColor: string = '#eaa0a1';
+  primaryColor: string = '#ed7576';
   tag: NewsInstanceTag | false = {
-    text: '热门',
-    color: '#f38587'
+    text: '电报',
+    color: '#ef363a'
   };
-  title: string = '财联社';
+  title: string ='财联社';
+  type: MewsInstanceType = 'realtime';
   website: string = 'https://www.cls.cn';
-  type: MewsInstanceType = 'hot';
 
   // https://github.com/DIYgod/RSSHub/blob/master/lib/routes/cls/utils.ts
   private readonly params = {
@@ -37,7 +39,7 @@ export class NewsInstanceForCls extends AbsNewsInstance {
     sv: "7.7.5",
   }
 
-  private getSearchParams(moreParams?: any): Record<string, any> {
+  private getParams(moreParams?: any): Record<string, any> {
     const searchParams = new URLSearchParams({...this.params, ...moreParams})
     searchParams.sort()
     searchParams.append("sign", window.preload.util.crypto.md5(window.preload.util.crypto.hash(searchParams.toString(), "sha1")))
@@ -48,18 +50,17 @@ export class NewsInstanceForCls extends AbsNewsInstance {
     return r
   }
 
-
   async getOriginRecords(): Promise<Array<NewsInstanceRecord>> {
-    const apiUrl = `https://www.cls.cn/v2/article/hot/list`
-    const res: Hot = await useGetJson(apiUrl, {
-      params: this.getSearchParams(),
+    const apiUrl = `https://www.cls.cn/nodeapi/updateTelegraphList`
+    const res: TelegraphRes = await useGetJson(apiUrl, {
+      params: this.getParams(),
     })
-    return res.data.map((k) => {
+    return res.data.roll_data.filter(k => !k.is_ad).map((k) => {
       return {
         id: k.id + '',
         title: k.title || k.brief,
+        date: k.ctime * 1000,
         url: `https://www.cls.cn/detail/${k.id}`,
-        read: false
       }
     })
   }

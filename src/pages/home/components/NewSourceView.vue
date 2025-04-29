@@ -19,7 +19,10 @@
         <div class="btn">
           <refresh-icon size="16px" :class="{spin: loading}" @click="refresh"/>
         </div>
-        <div class="btn" @click="toggleFocus">
+        <div class="btn" v-if="source.type === 'rss'">
+          <edit-icon size="16px"/>
+        </div>
+        <div class="btn" @click="toggleFocus" v-else>
           <star-filled-icon v-if="hasFocus" size="16px" style="color: var(--td-error-color)"/>
           <star-icon v-else size="16px"/>
         </div>
@@ -34,11 +37,11 @@
           <template v-for="(record, index) in records" :key="record.id">
             <div class="news-item-time" v-if="record.date">
               <div class="news-item-time__date">
-                <span class="split">- </span>
+                <span class="split">— </span>
                 <span class="date">{{ prettyDate(record.date) }}</span>
               </div>
               <div class="news-item-time__content" @click="open(index)">
-                <span class="news-item-time__title">{{ record.title }}</span>
+                <span class="news-item-time__title" :class="{read: record.read}">{{ record.title }}</span>
                 <span class="news-item-time__tip" v-if="record.tip">{{ record.tip }}</span>
                 <span class="news-item-time__tag" v-if="record.tag">
                   <img :src="record.tag.text" alt="标签" class="tag-img" v-if="record.tag.type === 'img'"/>
@@ -76,7 +79,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import {MenuApplicationIcon, RefreshIcon, StarFilledIcon, StarIcon} from "tdesign-icons-vue-next";
+import {EditIcon, MenuApplicationIcon, RefreshIcon, StarFilledIcon, StarIcon} from "tdesign-icons-vue-next";
 import {NewsInstance, NewsInstanceSource} from "@/sources/NewsInstance";
 import {prettyDate} from "@/utils/lang/FormatUtil";
 import {myFocus} from "@/store/AppStore";
@@ -92,9 +95,9 @@ const {records, lastUpdateTime, loading, refresh, open} = props.source!.renderSo
 
 const hasFocus = computed(() => myFocus.value.indexOf(props.source!.id) > -1);
 
-const date = ref('很久很久以前');
+const date = ref('很久很久以前更新');
 
-const renderDate = () => date.value = prettyDate(lastUpdateTime.value);
+const renderDate = () => date.value = (prettyDate(lastUpdateTime.value) + '更新');
 
 useIntervalFn(renderDate, 1000 * 60, {immediate: true, immediateCallback: true});
 watch(lastUpdateTime, renderDate);
@@ -127,6 +130,7 @@ function toggleFocus() {
     justify-content: space-between;
     align-items: center;
     margin: 0 0.5rem 0.5rem;
+    user-select: none;
 
     &__left {
       display: flex;
@@ -153,7 +157,7 @@ function toggleFocus() {
 
 
     &__tag {
-      background-color: var(--td-font-white-2);
+      background-color: var(--nn-news-tag-bg-color);
       margin-left: 4px;
     }
 
@@ -190,7 +194,7 @@ function toggleFocus() {
     overflow: auto;
     height: 100%;
     border-radius: var(--td-radius-large);
-    background-color: var(--td-font-white-2);
+    background-color: var(--nn-news-container-bg-color);
 
     .news-item-record {
       display: flex;
@@ -202,7 +206,7 @@ function toggleFocus() {
       line-height: 24px;
 
       &:hover {
-        background-color: var(--td-font-white-3);
+        background-color: var(--nn-news-item-bg-color-hover);
       }
 
       &:first-child {
@@ -216,7 +220,7 @@ function toggleFocus() {
       &__index {
         font-size: 0.875rem;
         line-height: 1.25rem;
-        background-color: var(--td-font-white-3);
+        background-color: var(--nn-news-item-bg-color-index);
         border-radius: var(--td-radius-default);
         justify-content: center;
         align-items: center;
@@ -295,10 +299,12 @@ function toggleFocus() {
       &__date {
         font-size: var(--td-font-size-body-small);
         color: var(--td-text-color-placeholder);
+        user-select: none;
 
         .split {
           color: var(--td-border-level-1-color);
         }
+
         .date {
           margin-left: 4px;
         }
@@ -308,11 +314,11 @@ function toggleFocus() {
         align-items: center;
         margin-left: 6px;
         transition: background-color 0.3s ease-in-out;
-        padding: 4px;
+        padding: 0 4px;
         border-radius: var(--td-radius-default);
 
         &:hover {
-          background-color: var(--td-font-white-3);
+          background-color: var(--nn-news-item-bg-color-hover);
         }
       }
 

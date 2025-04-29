@@ -84,3 +84,10 @@ export function subStr(str: string, len: number): string {
   }
   return str.substring(0, len);
 }
+
+/**
+ * 生成随机颜色
+ */
+export function randomColor(): string {
+  return '#' + Math.floor(Math.random() * 16777215).toString(16);
+}

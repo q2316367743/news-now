@@ -58,7 +58,7 @@ export interface MewsInstanceBrowser {
 }
 
 export type MewsInstanceBrowserType = MewsInstanceBrowser | 'pc' | 'mobile';
-export type MewsInstanceType = 'hot' | 'realtime';
+export type MewsInstanceType = 'hot' | 'realtime' | 'rss';
 
 export interface NewsInstance {
   id: string;

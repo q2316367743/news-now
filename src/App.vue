@@ -2,39 +2,93 @@
   <div class="main">
     <div class="main-container" ref="containerRef">
       <header class="main-header">
-        <div class="logo">NewsNow</div>
-        <navigator />
-        <div>
-          <t-button 
+        <div class="logo flex">
+          <img alt="logo" src="/logo.png" class="w-36px h-36px"/>
+          <div class="ml-4px">
+            <span>您的</span>
+            <br/>
+            <span style="color: var(--td-error-color)">专属</span>
+            <span>资讯管家</span>
+          </div>
+        </div>
+        <navigator/>
+        <t-space size="small">
+          <t-button
             theme="primary"
-            variant="text" 
-            shape="square"
+            variant="text"
+            shape="circle"
             @click="scrollToTop"
             class="back-top-btn"
             :style="{opacity: showBackTop ? 1 : 0}"
           >
             <template #icon>
-              <backtop-icon />
+              <backtop-icon/>
             </template>
           </t-button>
-        </div>
+          <t-dropdown placement="bottom" trigger="click">
+            <t-button theme="primary" variant="text" shape="circle" style="margin-bottom: 7px;">
+              <template #icon>
+                <moon-icon v-if="isDark"/>
+                <sunny-icon v-else/>
+              </template>
+            </t-button>
+            <t-dropdown-menu>
+              <t-dropdown-item @click="toggleColorMode('dark')">
+                <template #prefix-icon>
+                  <moon-icon/>
+                </template>
+                暗黑
+              </t-dropdown-item>
+              <t-dropdown-item @click="toggleColorMode('light')">
+                <template #prefix-icon>
+                  <sunny-icon/>
+                </template>
+                明亮
+              </t-dropdown-item>
+              <t-dropdown-item @click="toggleColorMode('auto')">
+                跟随系统
+              </t-dropdown-item>
+            </t-dropdown-menu>
+          </t-dropdown>
+          <t-dropdown placement="bottom-right" trigger="click" :min-column-width="144">
+            <t-button
+              theme="primary"
+              variant="text"
+              shape="circle"
+              class="back-top-btn"
+            >
+              <template #icon>
+                <more-icon/>
+              </template>
+            </t-button>
+            <t-dropdown-menu>
+              <t-dropdown-item>
+                <template #prefix-icon>
+                  <logo-github-icon/>
+                </template>
+                Star on Github
+              </t-dropdown-item>
+              <t-dropdown-item>
+                <template #prefix-icon>
+                  <heart-icon style="color: var(--td-error-color
+                  )"/>
+                </template>
+                赏赞
+              </t-dropdown-item>
+            </t-dropdown-menu>
+          </t-dropdown>
+        </t-space>
       </header>
-      <main>
+      <main class="py-16px">
         <router-view/>
       </main>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
-import {useUtoolsColorMode} from "@/hooks/ColorMode";
-import {BacktopIcon} from "tdesign-icons-vue-next";
-import { ref, onMounted, onUnmounted } from 'vue';
-import {useRssStore} from "@/store";
+import {BacktopIcon, HeartIcon, LogoGithubIcon, MoonIcon, MoreIcon, SunnyIcon} from "tdesign-icons-vue-next";
+import {isDark, toggleColorMode} from '@/store'
 
-// 颜色模式
-useUtoolsColorMode();
-// rss初始化
-useRssStore().load();
 
 // 返回顶部功能
 const containerRef = ref<HTMLElement | null>(null);
@@ -70,21 +124,24 @@ onUnmounted(() => {
     containerRef.value.removeEventListener('scroll', handleScroll);
   }
 });
+
+const options = []
 </script>
 <style scoped lang="less">
 .main {
   position: relative;
   width: 100vw;
   height: 100vh;
-  background-image: radial-gradient(ellipse 80% 80% at 50% -30%, #f871714d, #fff0);
+  background-image: radial-gradient(ellipse 80% 80% at 50% -30%, #f871714d, var(--td-bg-color-container));
   background-color: var(--td-bg-color-container);
+  color: var(--td-text-color-primary);
 
   .main-container {
     padding: 0 40px;
     height: 100%;
     overflow-x: hidden;
     overflow-y: auto;
-    
+
     .back-top-btn {
       transition: opacity 0.3s ease;
       opacity: 1;
@@ -101,7 +158,7 @@ onUnmounted(() => {
       padding: 8px 0;
       align-items: center;
       z-index: 100;
-      background-color: var(--td-font-white-3);
+      background-color: var(--nn-app-header-bg);
 
       .main-header-tab {
         .main-header-tab__tag {

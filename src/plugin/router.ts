@@ -2,14 +2,14 @@ import {createRouter, createWebHashHistory, RouteRecordRaw} from 'vue-router';
 // 引入路由
 
 export const routes: Array<RouteRecordRaw> = [{
-  name: "最热",
-  path: '/tab/hot',
-  alias: ['/'],
-  component: () => import('@/pages/home/index.vue'),
-}, {
   name: '关注',
   path: '/tab/focus',
+  alias: ['/'],
   component: () => import('@/pages/focus/index.vue'),
+}, {
+  name: "最热",
+  path: '/tab/hot',
+  component: () => import('@/pages/home/index.vue'),
 }, {
   name: '实时',
   path: '/tab/realtime',
