@@ -1,0 +1,39 @@
+{
+  "$schema": "https://focusany.com/sdk/config.schema.json",
+  "name": "NewsNow",
+  "version": "1.0.0",
+  "platform": [
+    "win",
+    "osx",
+    "linux"
+  ],
+  "versionRequire": "*",
+  "title": "新闻资讯",
+  "logo": "public/logo.png",
+  "description": "新闻、资讯、阅读。功能参考自Github项目NewsNow",
+  "main": "dist/index.html",
+  "mainView": "dist/index.html",
+  "preload": "preload.cjs",
+  "author": "落雨不悔",
+  "homepage": "https://github.com/q2316367743/news-now",
+  "actions": [
+    {
+      "name": "text-simple",
+      "title": "新闻资讯",
+      "matches": [
+        "新闻资讯",
+        "news-now"
+      ]
+    }
+  ],
+  "setting": {
+    "autoDetach": false,
+    "detachPosition": "center",
+    "detachAlwaysOnTop": false,
+    "height": "620",
+    "width": "800",
+    "heightView": 100,
+    "singleton": true,
+    "zoom": 100
+  }
+}

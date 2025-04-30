@@ -2,7 +2,7 @@ export enum LocalNameEnum {
 
   KEY_APP_COLLAPSED = '/key/app/collapsed',
 
-  CACHE_NEWS = '/cache/news/',
+  CACHE_NEWS = '/cache/news',
 
   DB_NEWS = '/db/news',
 
