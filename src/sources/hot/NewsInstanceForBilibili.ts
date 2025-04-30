@@ -46,7 +46,7 @@ interface WapRes {
 
 export class NewsInstanceForBilibili extends AbsNewsInstance {
   browser: MewsInstanceBrowserType = 'pc';
-  id: string = 'bilibili';
+  id: string = '/hot/bilibili';
   logo: string = './icons/bilibili.png';
   primaryColor: string = '#a1b9e8';
   tag: NewsInstanceTag | false = {

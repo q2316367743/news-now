@@ -14,7 +14,7 @@ interface Res {
 
 export class NewsInstanceHuPu extends AbsNewsInstance {
   browser: MewsInstanceBrowserType = 'pc';
-  id = 'hupu';
+  id = '/hot/hupu';
   logo = './icons/hupu.png';
   primaryColor = '#EA9C9D';
   tag = {

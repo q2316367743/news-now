@@ -20,7 +20,7 @@ interface LiveRes {
 
 export class NewsRealtimeForStreetwalker extends AbsNewsInstance {
   browser: MewsInstanceBrowserType = 'pc';
-  id: string = 'wallstreetcn-live';
+  id: string = '/realtime/wallstreetcn/live';
   logo: string = './icons/wallstreetcn.png';
   primaryColor: string = '#7499ed';
   tag: NewsInstanceTag | false = {

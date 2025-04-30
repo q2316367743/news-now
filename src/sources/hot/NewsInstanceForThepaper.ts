@@ -18,7 +18,7 @@ interface Res {
 
 export class NewsInstanceForThepaper extends AbsNewsInstance {
   browser: MewsInstanceBrowserType = 'pc';
-  id: string = 'thepaper';
+  id: string = '/hot/thepaper';
   logo: string = './icons/thepaper.png';
   primaryColor: string = '#b4b3b9';
   tag: NewsInstanceTag | false = false;

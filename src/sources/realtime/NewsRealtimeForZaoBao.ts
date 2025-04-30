@@ -6,7 +6,7 @@ import {parseRelativeDate} from "@/utils/lang/DateUtil";
 
 export class NewsRealtimeForZaoBao extends AbsNewsInstance {
   browser: MewsInstanceBrowserType = 'pc';
-  id: string = 'zaobao';
+  id: string = '/realtime/zaobao';
   logo: string = './icons/zaobao.png';
   primaryColor: string = '#e45353';
   tag: NewsInstanceTag | false = false;

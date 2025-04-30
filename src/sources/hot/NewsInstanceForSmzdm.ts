@@ -5,7 +5,7 @@ import {parseHtml} from "@/utils/lang/HtmlUtil";
 
 export class NewsInstanceForSmzdm extends AbsNewsInstance {
   browser: MewsInstanceBrowserType = 'pc';
-  id: string = 'smzdm';
+  id: string = '/hot/smzdm';
   logo: string = './icons/smzdm.png';
   primaryColor: string = '#E9A3A4';
   tag: NewsInstanceTag | false = false;

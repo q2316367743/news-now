@@ -21,7 +21,7 @@ interface TelegraphRes {
 
 export class NewsRealtimeForClsTelegraph extends AbsNewsInstance {
   browser: MewsInstanceBrowserType = 'pc';
-  id: string = 'cls-telegraph';
+  id: string = '/realtime/cls/telegraph';
   logo: string = './icons/cls.png';
   primaryColor: string = '#ed7576';
   tag: NewsInstanceTag | false = {

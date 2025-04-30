@@ -13,7 +13,7 @@ interface Res {
 
 export class NewsInstanceForJueJin extends AbsNewsInstance {
   browser: MewsInstanceBrowserType = 'pc';
-  id: string = 'juejin';
+  id: string = '/hot/juejin';
   logo: string = './icons/juejin.png';
   primaryColor: string = '#518bd7';
   tag: NewsInstanceTag | false = false;

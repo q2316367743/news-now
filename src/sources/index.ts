@@ -57,13 +57,17 @@ export const SOURCES: Array<NewsInstance> = [
   new NewsRealtimeForJin10()
 ];
 
-export const HOT_SOURCES = shallowRef(SOURCES.filter(source => source.type === 'hot'));
-export const REALTIME_SOURCES = shallowRef(SOURCES.filter(source => source.type === 'realtime'));
-export const FOCUS_SOURCE = shallowRef([
-  ...SOURCES.filter(e => myFocus.value.indexOf(e.id) > -1)
-]);
+export const HOT_SOURCES = shallowRef<Array<NewsInstance>>([]);
+export const REALTIME_SOURCES = shallowRef<Array<NewsInstance>>([]);
+export const FOCUS_SOURCE = shallowRef<Array<NewsInstance>>([]);
 
-// 排序
-HOT_SOURCES.value.sort((a, b) => (hotSortMap.value[a.id] || 0) - (hotSortMap.value[b.id] || 0));
-FOCUS_SOURCE.value.sort((a, b) => (focusSortMap.value[a.id] || 0) - (focusSortMap.value[b.id] || 0));
-REALTIME_SOURCES.value.sort((a, b) => (realtimeSortMap.value[a.id] || 0) - (realtimeSortMap.value[b.id] || 0));
+export function initialize() {
+  HOT_SOURCES.value = SOURCES.filter(source => source.type === 'hot');
+  REALTIME_SOURCES.value = SOURCES.filter(source => source.type === 'realtime');
+  FOCUS_SOURCE.value = SOURCES.filter(e => myFocus.value.indexOf(e.id) > -1);
+  // 排序
+  HOT_SOURCES.value.sort((a, b) => (hotSortMap.value[a.id] || 0) - (hotSortMap.value[b.id] || 0));
+  FOCUS_SOURCE.value.sort((a, b) => (focusSortMap.value[a.id] || 0) - (focusSortMap.value[b.id] || 0));
+  REALTIME_SOURCES.value.sort((a, b) => (realtimeSortMap.value[a.id] || 0) - (realtimeSortMap.value[b.id] || 0));
+
+}

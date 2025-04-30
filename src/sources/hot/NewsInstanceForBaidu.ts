@@ -15,7 +15,7 @@ interface Res {
 
 export class NewsInstanceForBaidu extends AbsNewsInstance {
 
-  id = 'baidu';
+  id = '/hot/baidu';
   logo = './icons/baidu.png';
   primaryColor = '#a1bceb';
   tag: false = false;

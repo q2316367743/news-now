@@ -34,7 +34,7 @@ interface Res {
 }
 
 export class NewsInstanceForWeibo extends AbsNewsInstance {
-  id = 'weibo';
+  id = '/hot/weibo';
   logo = './icons/weibo.png';
   primaryColor = '#E9A4A6';
   tag = {

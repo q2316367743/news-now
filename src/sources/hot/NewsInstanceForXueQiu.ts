@@ -19,7 +19,7 @@ interface StockRes {
 
 export class NewsInstanceForXueQiu extends AbsNewsInstance {
   browser: MewsInstanceBrowserType = 'pc';
-  id: string = 'xueqiu';
+  id: string = '/hot/xueqiu';
   logo: string = './icons/xueqiu.png';
   primaryColor: string = '#a1bded';
   tag: NewsInstanceTag | false = false;

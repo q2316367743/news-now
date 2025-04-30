@@ -6,7 +6,7 @@ import {parseRelativeDate} from "@/utils/lang/DateUtil";
 
 export class NewsRealtimeForItHome extends AbsNewsInstance {
   browser: MewsInstanceBrowserType = 'pc';
-  id: string = 'ithome-live';
+  id: string = '/realtime/ithome';
   logo: string = './icons/ithome.png';
   primaryColor: string = '#eb9b9c';
   tag: NewsInstanceTag | false = false;

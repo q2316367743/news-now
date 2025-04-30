@@ -17,6 +17,9 @@ export enum LocalNameEnum {
   // 实时排序
   KEY_REALTIME_SORT = '/key/realtime/sort',
 
+  // RSS排序
+  KEY_RSS_SORT = '/key/rss/sort',
+
   /**
    * 关注列表
    */

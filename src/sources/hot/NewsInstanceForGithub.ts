@@ -5,7 +5,7 @@ import {parseHtml} from "@/utils/lang/HtmlUtil";
 
 export class NewsInstanceForGithub extends AbsNewsInstance {
   browser: MewsInstanceBrowserType = 'pc';
-  id: string = 'github';
+  id: string = '/hot/github';
   logo: string = './icons/github.png';
   primaryColor: string = '#b4b5bc';
   tag: NewsInstanceTag | false = {

@@ -11,7 +11,7 @@ interface Res {
 
 export class NewsInstanceForSspai extends AbsNewsInstance {
   browser: MewsInstanceBrowserType = 'pc';
-  id: string = 'sspai';
+  id: string = '/hot/sspai';
   logo: string = './icons/sspai.png';
   primaryColor: string = '#e9a0a1';
   tag: NewsInstanceTag | false = false;

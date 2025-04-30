@@ -15,7 +15,7 @@ interface Res {
 
 export class NewsInstanceForDouYin extends AbsNewsInstance {
   browser: MewsInstanceBrowserType = 'pc';
-  id = 'douyin';
+  id = '/hot/douyin';
   logo = './icons/douyin.png';
   primaryColor = '#b4b7be';
   tag: false = false;

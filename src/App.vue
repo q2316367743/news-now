@@ -62,13 +62,13 @@
               </template>
             </t-button>
             <t-dropdown-menu>
-              <t-dropdown-item>
+              <t-dropdown-item @click="openGithub">
                 <template #prefix-icon>
                   <logo-github-icon/>
                 </template>
                 Star on Github
               </t-dropdown-item>
-              <t-dropdown-item>
+              <t-dropdown-item @click="openRewardDialog">
                 <template #prefix-icon>
                   <heart-icon style="color: var(--td-error-color
                   )"/>
@@ -88,7 +88,11 @@
 <script lang="ts" setup>
 import {BacktopIcon, HeartIcon, LogoGithubIcon, MoonIcon, MoreIcon, SunnyIcon} from "tdesign-icons-vue-next";
 import {isDark, toggleColorMode} from '@/store'
+import {openRewardDialog} from "@/pages/components/RewardDialog";
+import {initialize} from "@/sources";
 
+const route = useRoute();
+const router = useRouter();
 
 // 返回顶部功能
 const containerRef = ref<HTMLElement | null>(null);
@@ -116,6 +120,15 @@ onMounted(() => {
   if (containerRef.value) {
     containerRef.value.addEventListener('scroll', handleScroll);
   }
+  initialize();
+  // 跳转
+  nextTick(() => {
+    if (route.path === '/') {
+      router.push({
+        path: "/tab/hot"
+      })
+    }
+  })
 });
 
 // 组件卸载时移除滚动监听
@@ -125,7 +138,7 @@ onUnmounted(() => {
   }
 });
 
-const options = []
+const openGithub = () => utools.shellOpenExternal('https://github.com/q2316367743/utools-news-now')
 </script>
 <style scoped lang="less">
 .main {

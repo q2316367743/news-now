@@ -26,7 +26,7 @@ interface Jin10Item {
 
 export class NewsRealtimeForJin10 extends AbsNewsInstance {
   browser: MewsInstanceBrowserType = 'pc';
-  id: string = 'jin10-realtime';
+  id: string = '/realtime/jin10';
   logo: string = './icons/jin10.png';
   primaryColor: string = '#88a3e6';
   tag: NewsInstanceTag | false = false;

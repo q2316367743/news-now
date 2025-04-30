@@ -6,7 +6,7 @@ import {parseRelativeDate} from "@/utils/lang/DateUtil";
 
 export class NewsRealtimeForGeLongHui extends AbsNewsInstance {
   browser: MewsInstanceBrowserType = 'pc';
-  id: string = 'gelonghui-realtime';
+  id: string = '/realtime/gelonghui/event';
   logo: string = './icons/gelonghui.png';
   primaryColor: string = '#5995e8';
   tag: NewsInstanceTag | false = {

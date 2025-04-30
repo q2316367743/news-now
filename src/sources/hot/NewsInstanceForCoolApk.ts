@@ -27,7 +27,7 @@ interface Res {
 
 export class NewsInstanceForCoolApk extends AbsNewsInstance {
   browser: MewsInstanceBrowserType = 'mobile';
-  id = 'coolapk';
+  id = '/hot/coolapk';
   logo = './icons/coolapk.png';
   primaryColor: string = '#99d0a8';
   tag: NewsInstanceTag | false = false;

@@ -4,7 +4,7 @@ import {useGetText} from "@/sources/HttpUtil";
 
 export class NewsInstanceForIFeng extends AbsNewsInstance {
   browser: MewsInstanceBrowserType = 'pc';
-  id: string = 'ifeng';
+  id: string = '/hot/ifeng';
   logo: string = './icons/ifeng.png';
   primaryColor: string = '#f87b7b';
   tag: NewsInstanceTag | false = false;

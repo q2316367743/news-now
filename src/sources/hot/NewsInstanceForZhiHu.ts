@@ -29,7 +29,7 @@ interface Res {
 
 export class NewsInstanceForZhiHu extends AbsNewsInstance {
   browser: MewsInstanceBrowserType = 'pc';
-  id = 'zhihu';
+  id = '/hot/zhihu';
   logo = './icons/zhihu.png';
   primaryColor = '#A1BCEB';
   tag: false = false;

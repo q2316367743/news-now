@@ -5,7 +5,7 @@ import {parseHtml} from "@/utils/lang/HtmlUtil";
 
 export class NewsInstanceForChongBuLuo extends AbsNewsInstance {
   browser: MewsInstanceBrowserType = 'pc';
-  id: string = 'chongbuluo';
+  id: string = '/hot/chongbuluo';
   logo: string = './icons/chongbuluo.png';
   primaryColor: string = '#96c97b';
   tag: NewsInstanceTag | false = false;

@@ -10,7 +10,7 @@
 <script lang="ts" setup>
 import {FOCUS_SOURCE, REALTIME_SOURCES, SOURCES} from "@/sources";
 import {focusSortMap, myFocus} from "@/store/AppStore";
-import NewSourceView from "@/pages/home/components/NewSourceView.vue";
+import NewSourceView from "@/pages/components/NewSourceView.vue";
 // @ts-ignore
 import {moveArrayElement, useSortable} from "@vueuse/integrations/useSortable";
 import {SortableEvent} from "sortablejs";

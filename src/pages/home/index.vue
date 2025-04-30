@@ -1,37 +1,31 @@
 <template>
   <div class="home">
-    <t-row :gutter="[16, 16]" ref="el">
-      <t-col :xs="12" :sm="6" :md="6" :lg="4" :xl="3" :xxl="3" v-for="s in HOT_SOURCES" :key="s.id">
-        <new-source-view :source="s"/>
-      </t-col>
-    </t-row>
+    <home-loading/>
   </div>
 </template>
 <script lang="ts" setup>
-import {HOT_SOURCES} from "@/sources";
-import NewSourceView from "@/pages/home/components/NewSourceView.vue";
-// @ts-ignore
-import {useSortable, moveArrayElement} from "@vueuse/integrations/useSortable";
-import {SortableEvent} from "sortablejs";
-import {hotSortMap} from "@/store/AppStore";
+import HomeLoading from "@/pages/home/components/HomeLoading.vue";
 
+const route = useRoute();
+const router = useRouter();
 
-const el = ref();
-
-useSortable(el, HOT_SOURCES, {
-  animation: 300,
-  handle: '.drag-handle',
-  onUpdate: (e: SortableEvent) => {
-    moveArrayElement(HOT_SOURCES, e.oldIndex, e.newIndex, e)
-    nextTick(() => {
-      const newSort: Record<string, number> = {}
-      HOT_SOURCES.value.map(s => s.id).forEach((id, index) => {
-        newSort[id] = index;
-      })
-      hotSortMap.value = newSort;
-    })
+onMounted(() => {
+  if (route.query.redirect) {
+    router.replace(route.query.redirect as string);
   }
 })
 </script>
 <style scoped lang="less">
+.home {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--td-bg-color-container);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 </style>

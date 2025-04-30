@@ -5,7 +5,7 @@
         <new-source-view :source="s"/>
       </t-col>
       <t-col :xs="12" :sm="6" :md="6" :lg="4" :xl="3" :xxl="3">
-      <div class="vertical-box" @click="openAddRssSourceDialog">
+      <div class="vertical-box" @click="openPostRssSourceDialog()">
         <plus-icon size="96px"/>
       </div>
       </t-col>
@@ -13,13 +13,34 @@
   </div>
 </template>
 <script lang="ts" setup>
-import {loadRss, RSS_SOURCES} from "@/store";
 import {PlusIcon} from "tdesign-icons-vue-next";
-import {openAddRssSourceDialog} from "@/pages/rss/dialog/AddRssSource";
-import NewSourceView from "@/pages/home/components/NewSourceView.vue";
+// @ts-ignore
+import {moveArrayElement, useSortable} from "@vueuse/integrations/useSortable";
+import {SortableEvent} from "sortablejs";
+import {loadRss, rssSortMap, RSS_SOURCES} from "@/store";
+import {openPostRssSourceDialog} from "@/pages/rss/dialog/PostRssSource";
+import NewSourceView from "@/pages/components/NewSourceView.vue";
 
 // rss初始化
 loadRss();
+
+const el = ref();
+
+useSortable(el, RSS_SOURCES, {
+  animation: 300,
+  handle: '.drag-handle',
+  filter: '.vertical-box',
+  onUpdate: (e: SortableEvent) => {
+    moveArrayElement(RSS_SOURCES, e.oldIndex, e.newIndex, e)
+    nextTick(() => {
+      const newSort: Record<string, number> = {}
+      RSS_SOURCES.value.map(s => s.id).forEach((id, index) => {
+        newSort[id] = index;
+      })
+      rssSortMap.value = newSort;
+    })
+  }
+})
 </script>
 <style scoped lang="less">
 .vertical-box {

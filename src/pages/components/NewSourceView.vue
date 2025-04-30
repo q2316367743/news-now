@@ -19,9 +19,25 @@
         <div class="btn">
           <refresh-icon size="16px" :class="{spin: loading}" @click="refresh"/>
         </div>
-        <div class="btn" v-if="source.type === 'rss'">
-          <edit-icon size="16px"/>
-        </div>
+        <t-dropdown v-if="source.type === 'rss'" trigger="click" placement="bottom">
+          <div class="btn">
+            <edit-icon size="16px"/>
+          </div>
+          <t-dropdown-menu>
+            <t-dropdown-item @click="openPostRssSourceDialog(source.props)">
+              <template #prefix-icon>
+                <edit-icon/>
+              </template>
+              编辑
+            </t-dropdown-item>
+            <t-dropdown-item class="color-td-error-color" @click="openDeleteRssSourceDialog(source.props)">
+              <template #prefix-icon>
+                <delete-icon/>
+              </template>
+              删除
+            </t-dropdown-item>
+          </t-dropdown-menu>
+        </t-dropdown>
         <div class="btn" @click="toggleFocus" v-else>
           <star-filled-icon v-if="hasFocus" size="16px" style="color: var(--td-error-color)"/>
           <star-icon v-else size="16px"/>
@@ -79,14 +95,16 @@
   </div>
 </template>
 <script lang="ts" setup>
-import {EditIcon, MenuApplicationIcon, RefreshIcon, StarFilledIcon, StarIcon} from "tdesign-icons-vue-next";
+import {DeleteIcon, EditIcon, MenuApplicationIcon, RefreshIcon, StarFilledIcon, StarIcon} from "tdesign-icons-vue-next";
 import {NewsInstance, NewsInstanceSource} from "@/sources/NewsInstance";
 import {prettyDate} from "@/utils/lang/FormatUtil";
 import {myFocus} from "@/store/AppStore";
+import {openDeleteRssSourceDialog, openPostRssSourceDialog} from "@/pages/rss/dialog/PostRssSource";
+import {NewsInstanceForRss} from "@/sources/abs/NewsInstanceForRss";
 
 const props = defineProps({
   source: {
-    type: Object as PropType<NewsInstance>,
+    type: Object as PropType<NewsInstanceForRss>,
     required: true
   }
 });

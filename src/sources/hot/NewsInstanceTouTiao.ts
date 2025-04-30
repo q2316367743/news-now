@@ -24,7 +24,7 @@ interface Res {
 
 export class NewsInstanceTouTiao extends AbsNewsInstance {
   browser: MewsInstanceBrowserType = 'pc';
-  id: string = 'toutiao';
+  id: string = '/hot/toutiao';
   logo: string = './icons/toutiao.png';
   primaryColor: string = '#e9a3a5';
   tag: NewsInstanceTag | false = false;

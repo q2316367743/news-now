@@ -23,7 +23,7 @@ interface Res {
 
 export class NewsInstanceForTeiBa extends AbsNewsInstance {
   browser: MewsInstanceBrowserType = 'pc';
-  id: string = 'tieba';
+  id: string = '/hot/tieba';
   logo: string = './icons/tieba.png';
   primaryColor: string = '#8abdf2';
   tag: NewsInstanceTag | false = {

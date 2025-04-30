@@ -24,7 +24,7 @@ interface HotRes {
 
 export class NewsInstanceForStreetwalker extends AbsNewsInstance {
   browser:MewsInstanceBrowserType = 'pc';
-  id: string = 'wallstreetcn';
+  id: string = '/hot/wallstreetcn';
   logo: string = './icons/wallstreetcn.png';
   primaryColor: string = '#a2b7e7';
   tag: NewsInstanceTag | false = false;

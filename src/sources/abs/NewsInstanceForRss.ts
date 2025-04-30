@@ -22,6 +22,8 @@ export class NewsInstanceForRss extends AbsNewsInstance {
   type: MewsInstanceType = 'rss';
   website: string;
 
+  public readonly props: NewsInstanceForRssProps;
+
   private readonly source: string
 
   constructor(props: NewsInstanceForRssProps) {
@@ -33,6 +35,7 @@ export class NewsInstanceForRss extends AbsNewsInstance {
     this.website = props.website;
     this.browser = props.browser;
     this.source = props.source;
+    this.props = props;
   }
 
   async getOriginRecords(): Promise<Array<NewsInstanceRecord>> {
