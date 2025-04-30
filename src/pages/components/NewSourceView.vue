@@ -24,13 +24,14 @@
             <edit-icon size="16px"/>
           </div>
           <t-dropdown-menu>
-            <t-dropdown-item @click="openPostRssSourceDialog(source.props)">
+            <t-dropdown-item @click="openPostRssSourceDialog((source as NewsInstanceForRss).props)">
               <template #prefix-icon>
                 <edit-icon/>
               </template>
               编辑
             </t-dropdown-item>
-            <t-dropdown-item class="color-td-error-color" @click="openDeleteRssSourceDialog(source.props)">
+            <t-dropdown-item class="color-td-error-color"
+                             @click="openDeleteRssSourceDialog((source as NewsInstanceForRss).props)">
               <template #prefix-icon>
                 <delete-icon/>
               </template>
@@ -104,7 +105,7 @@ import {NewsInstanceForRss} from "@/sources/abs/NewsInstanceForRss";
 
 const props = defineProps({
   source: {
-    type: Object as PropType<NewsInstanceForRss>,
+    type: Object as PropType<NewsInstance>,
     required: true
   }
 });
