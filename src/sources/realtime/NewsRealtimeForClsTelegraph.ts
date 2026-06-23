@@ -2,10 +2,10 @@ import { AbsNewsInstance } from "@/sources/abs/AbsNewsInstance";
 import {
   MewsInstanceBrowserType,
   MewsInstanceType,
+  NewsApi,
   NewsInstanceRecord,
   NewsInstanceTag,
 } from "@/sources/NewsInstance";
-import { useGetJson } from "@/sources/HttpUtil";
 
 interface Item {
   id: number;
@@ -59,12 +59,13 @@ export class NewsRealtimeForClsTelegraph extends AbsNewsInstance {
     return r;
   }
 
-  async getOriginRecords(): Promise<Array<NewsInstanceRecord>> {
+  async getOriginRecords(api: NewsApi): Promise<Array<NewsInstanceRecord>> {
     const apiUrl = `https://www.cls.cn/nodeapi/updateTelegraphList`;
-    const res: TelegraphRes = await useGetJson(apiUrl, {
+    const resp = await api.http.json<TelegraphRes>({
+      url: apiUrl,
       params: this.getParams(),
     });
-    return res.data.roll_data
+    return resp.data.data.roll_data
       .filter((k) => !k.is_ad)
       .map((k) => {
         return {

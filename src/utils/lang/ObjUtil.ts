@@ -88,3 +88,14 @@ export function assignDeep<T extends Record<string, any>>(initial: T, source?: a
   }
   return initial;
 }
+
+export function nonNullObj(obj: Record<string, any>) {
+  Object.keys(obj).forEach((key) => {
+    if (obj[key] === null || obj[key] === undefined) {
+      delete obj[key];
+    }
+    if (typeof obj[key] === "object") {
+      nonNullObj(obj[key] as Record<string, any>);
+    }
+  });
+}

@@ -2,19 +2,16 @@ import { AbsNewsInstance } from "@/sources/abs/AbsNewsInstance";
 import {
   MewsInstanceBrowserType,
   MewsInstanceType,
+  NewsApi,
   NewsInstanceRecord,
-  NewsInstanceTag,
 } from "@/sources/NewsInstance";
-import { useGetText } from "@/sources/HttpUtil";
-import { parseHtml } from "@/utils/lang";
-import { parseRelativeDate } from "@/utils/lang";
 
 export class NewsRealtimeForGeLongHui extends AbsNewsInstance {
   browser: MewsInstanceBrowserType = "pc";
-  id: string = "/realtime/gelonghui/event";
-  logo: string = "./icons/gelonghui.png";
-  primaryColor: string = "#5995e8";
-  tag: NewsInstanceTag | false = {
+  id = "/realtime/gelonghui/event";
+  logo = "./icons/gelonghui.png";
+  primaryColor = "#5995e8";
+  tag = {
     text: "事件",
     color: "#0d66ea",
   };
@@ -22,10 +19,12 @@ export class NewsRealtimeForGeLongHui extends AbsNewsInstance {
   type: MewsInstanceType = "realtime";
   website: string = "https://www.gelonghui.com";
 
-  async getOriginRecords(): Promise<Array<NewsInstanceRecord>> {
+  async getOriginRecords(api: NewsApi): Promise<Array<NewsInstanceRecord>> {
     const baseURL = "https://www.gelonghui.com";
-    const html: any = await useGetText("https://www.gelonghui.com/news/");
-    const $ = parseHtml(html);
+    const response = await api.http.text({
+      url: "https://www.gelonghui.com/news/",
+    });
+    const $ = api.html.parse(response.data);
     const $main = $.querySelectorAll(".article-content");
     const news: NewsInstanceRecord[] = [];
     $main.forEach((el) => {
@@ -43,7 +42,7 @@ export class NewsRealtimeForGeLongHui extends AbsNewsInstance {
           url: baseURL + url,
           title,
           id: url,
-          date: parseRelativeDate(relativeTime, "Asia/Shanghai").valueOf(),
+          date: api.util.parseRelativeDate(relativeTime, "Asia/Shanghai").valueOf(),
           tip: info || "",
         });
       }

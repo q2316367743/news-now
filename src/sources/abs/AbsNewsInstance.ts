@@ -1,7 +1,9 @@
 import {
+  HashAlgorithm,
   MewsInstanceBrowser,
   MewsInstanceBrowserType,
   MewsInstanceType,
+  NewsApi,
   NewsInstanceRecord,
   NewsInstanceRecordStore,
   NewsInstanceSource,
@@ -15,12 +17,22 @@ import { LocalNameEnum } from "@/global/LocalNameEnum";
 import { map } from "@/utils/lang/ArrayUtil";
 import MessageUtil from "@/utils/modal/MessageUtil";
 import { AbsNewsInstanceForDb } from "@/sources/abs/AbsNewsInstanceForDb";
+import {
+  requestJson,
+  requestText,
+  useGet,
+  useHead,
+  usePost,
+  useRequest,
+} from "@/plugin/http";
+import { parseHtml, parseRelativeDate } from "@/utils/lang";
+import { proxyPicture } from "@/plugin/server";
 
 export abstract class AbsNewsInstance extends AbsNewsInstanceForDb {
   abstract id: string;
   abstract logo: string;
   abstract primaryColor: string;
-  abstract tag: NewsInstanceTag | false;
+  abstract tag: NewsInstanceTag | boolean;
   abstract title: string;
   abstract website: string;
   abstract browser: MewsInstanceBrowserType;
@@ -34,17 +46,45 @@ export abstract class AbsNewsInstance extends AbsNewsInstanceForDb {
   private isInitialized = false;
   private readonly maxRefreshTime = 1000 * 60 * 15;
 
+  private readonly api: NewsApi;
+
   constructor() {
     super();
     this.lastUpdateTime = ref<number>(0);
     this.records = ref<Array<NewsInstanceRecord>>([]);
     this.loading = ref<boolean>(false);
+    // TODO: 此处有错误
+    this.api = {
+      http: {
+        request: useRequest,
+        get: useGet,
+        post: usePost,
+        json: requestJson,
+        text: requestText,
+        head: useHead
+      },
+      html: {
+        parse: parseHtml,
+        proxyPicture: proxyPicture,
+      },
+      crypto: {
+        md5: async (value: string) => {
+          return window.preload.util.crypto.md5(value);
+        },
+        hash: async (s: string, algorithm: HashAlgorithm) => {
+          return window.preload.util.crypto.hash(s, algorithm);
+        },
+      },
+      util: {
+        parseRelativeDate: parseRelativeDate,
+      },
+    };
   }
 
   /**
    * 获取远程记录
    */
-  abstract getOriginRecords(): Promise<Array<NewsInstanceRecord>>;
+  abstract getOriginRecords(api: NewsApi): Promise<Array<NewsInstanceRecord>>;
 
   private async timeoutFn() {
     if (Date.now() - this.lastUpdateTime.value >= this.maxRefreshTime) {
@@ -124,7 +164,7 @@ export abstract class AbsNewsInstance extends AbsNewsInstanceForDb {
       console.log(
         `「${this.title}」开始刷新，上次刷新时间：` + this.lastUpdateTime.value,
       );
-      const originRecords = await this.getOriginRecords();
+      const originRecords = await this.getOriginRecords(this.api);
       // 此处要做处理，已读信息不能丢失
       const oleRecordMap = map(this.records.value, "id");
       this.records.value = originRecords.map((e) => ({

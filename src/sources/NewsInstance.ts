@@ -1,3 +1,7 @@
+import HttpRequest from "@/domain/HttpRequest";
+import HttpResponse from "@/domain/HttpResponse";
+import { parseRelativeDate } from "@/utils/lang";
+
 export interface NewsInstanceRecordTag {
   color?: string;
   text: string;
@@ -60,12 +64,69 @@ export interface MewsInstanceBrowser {
 export type MewsInstanceBrowserType = MewsInstanceBrowser | "pc" | "mobile";
 export type MewsInstanceType = "hot" | "realtime" | "rss";
 
+export type HashAlgorithm =
+  | "md5"
+  | "sha1"
+  | "sha224"
+  | "sha256"
+  | "sha384"
+  | "sha512"
+  | "ripemd160"
+  | "sm3"
+  | "sha3-224"
+  | "sha3-256"
+  | "sha3-384"
+  | "sha3-512"
+  | "blake2b"
+  | "blake2s";
+export interface NewsApi {
+  http: {
+    request: (
+      url: string,
+      config?: Omit<HttpRequest, "url">,
+    ) => Promise<HttpResponse<string | Record<string, any>>>;
+    text: (config: HttpRequest) => Promise<HttpResponse<string>>;
+    json: <T = Record<string, any>>(
+      config: HttpRequest,
+    ) => Promise<HttpResponse<T>>;
+    head: (
+      url: string,
+      params?: Record<string, unknown>,
+      config?: HttpRequest,
+    ) => Promise<HttpResponse>;
+    get: (
+      url: string,
+      params?: Record<string, unknown>,
+      config?: HttpRequest,
+    ) => Promise<HttpResponse<string | Record<string, any>>>;
+    post: (
+      url: string,
+      data?: Record<string, unknown> | FormData,
+      config?: HttpRequest,
+    ) => Promise<HttpResponse<string | Record<string, any>>>;
+  };
+  html: {
+    parse: (html: string) => Document;
+    proxyPicture: (url: string, type?: string) => string;
+  };
+  crypto: {
+    md5: (value: string) => Promise<string>;
+    hash(s: string, algorithm: HashAlgorithm): Promise<string>;
+  };
+  util: {
+    parseRelativeDate: (date: string, timezone?: string) => string | Date;
+  };
+}
+
+/**
+ * 资讯实例
+ */
 export interface NewsInstance {
   id: string;
   logo: string;
   title: string;
   // 标签
-  tag: NewsInstanceTag | false;
+  tag: NewsInstanceTag | boolean;
   // 主题色
   primaryColor: string;
   // 站点

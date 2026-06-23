@@ -2,11 +2,10 @@ import { AbsNewsInstance } from "@/sources/abs/AbsNewsInstance";
 import {
   MewsInstanceBrowserType,
   MewsInstanceType,
+  NewsApi,
   NewsInstanceRecord,
   NewsInstanceTag,
 } from "@/sources/NewsInstance";
-import { useGetResponse } from "@/sources/HttpUtil";
-import { parseHtml, parseRelativeDate } from "@/utils/lang";
 
 export class NewsRealtimeForZaoBao extends AbsNewsInstance {
   browser: MewsInstanceBrowserType = "pc";
@@ -18,19 +17,14 @@ export class NewsRealtimeForZaoBao extends AbsNewsInstance {
   type: MewsInstanceType = "realtime";
   website: string = "https://www.zaobao.com/";
 
-  async getOriginRecords(): Promise<Array<NewsInstanceRecord>> {
-    const response = await useGetResponse<ArrayBuffer>(
-      "https://www.zaochenbao.com/realtime/",
-      {
-        responseType: "arraybuffer",
-      },
-    );
+  async getOriginRecords(api: NewsApi): Promise<Array<NewsInstanceRecord>> {
+    const response = await api.http.text({
+      url: "https://www.zaochenbao.com/realtime/",
+      charset: "gb2312",
+    });
     const base = "https://www.zaochenbao.com";
-    const utf8String = window.preload.util.iconv.transferToUtf8(
-      response.data,
-      "gb2312",
-    );
-    const $ = parseHtml(utf8String);
+    const utf8String = response.data;
+    const $ = api.html.parse(utf8String);
     const $main = $.querySelectorAll("div.list-block>a.item");
     const news: NewsInstanceRecord[] = [];
     $main.forEach((a) => {
@@ -42,7 +36,7 @@ export class NewsRealtimeForZaoBao extends AbsNewsInstance {
           url: base + url,
           title,
           id: url,
-          date: parseRelativeDate(date, "Asia/Shanghai").valueOf(),
+          date: api.util.parseRelativeDate(date, "Asia/Shanghai").valueOf(),
         });
       }
     });
