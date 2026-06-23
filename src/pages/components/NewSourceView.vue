@@ -1,50 +1,83 @@
 <template>
-  <div :style="{transformOrigin: '50% 50%', backgroundColor: source.primaryColor}"
-       class="news-item">
+  <div
+    :style="{
+      transformOrigin: '50% 50%',
+      backgroundColor: source.primaryColor,
+    }"
+    class="news-item"
+  >
     <div class="news-item-header">
       <div class="news-item-header__left">
-        <span class="w-8 h-8 rounded-full bg-cover"
-              :style="{'background-image': `url(${source.logo})`}"></span>
+        <span
+          class="w-8 h-8 rounded-full bg-cover"
+          :style="{ 'background-image': `url(${source.logo})` }"
+        ></span>
         <span class="flex flex-col">
           <span class="flex items-center gap-2">
-          <span class="news-item-header__title" @click="openWebsite">{{ source.title }}</span>
-          <t-tag class="news-item-header__tag" v-if="source.tag" size="small"
-                 :style="{color: source.tag.color}">{{
-              source.tag.text
-            }}</t-tag>
-        </span>
-        <span class="news-item-header__date">{{ date }}</span></span>
+            <span class="news-item-header__title" @click="openWebsite">{{
+              source.title
+            }}</span>
+            <t-tag
+              class="news-item-header__tag"
+              v-if="source.tag"
+              size="small"
+              :style="{ color: source.tag.color }"
+              >{{ source.tag.text }}</t-tag
+            >
+          </span>
+          <span class="news-item-header__date">{{ date }}</span></span
+        >
       </div>
       <div class="news-item-header__opt">
         <div class="btn">
-          <refresh-icon size="16px" :class="{spin: loading}" @click="refresh"/>
+          <refresh-icon
+            size="16px"
+            :class="{ spin: loading }"
+            @click="refresh"
+          />
         </div>
-        <t-dropdown v-if="source.type === 'rss'" trigger="click" placement="bottom">
+        <t-dropdown
+          v-if="source.type === 'rss'"
+          trigger="click"
+          placement="bottom"
+        >
           <div class="btn">
-            <edit-icon size="16px"/>
+            <edit-icon size="16px" />
           </div>
           <t-dropdown-menu>
-            <t-dropdown-item @click="openPostRssSourceDialog((source as NewsInstanceForRss).props)">
+            <t-dropdown-item
+              @click="
+                openPostRssSourceDialog((source as NewsInstanceForRss).props)
+              "
+            >
               <template #prefix-icon>
-                <edit-icon/>
+                <edit-icon />
               </template>
               编辑
             </t-dropdown-item>
-            <t-dropdown-item class="color-td-error-color"
-                             @click="openDeleteRssSourceDialog((source as NewsInstanceForRss).props)">
+            <t-dropdown-item
+              class="color-td-error-color"
+              @click="
+                openDeleteRssSourceDialog((source as NewsInstanceForRss).props)
+              "
+            >
               <template #prefix-icon>
-                <delete-icon/>
+                <delete-icon />
               </template>
               删除
             </t-dropdown-item>
           </t-dropdown-menu>
         </t-dropdown>
         <div class="btn" @click="toggleFocus" v-else>
-          <star-filled-icon v-if="hasFocus" size="16px" style="color: var(--td-error-color)"/>
-          <star-icon v-else size="16px"/>
+          <star-filled-icon
+            v-if="hasFocus"
+            size="16px"
+            style="color: var(--td-error-color)"
+          />
+          <star-icon v-else size="16px" />
         </div>
         <div class="btn drag drag-handle">
-          <menu-application-icon size="16px"/>
+          <menu-application-icon size="16px" />
         </div>
       </div>
     </div>
@@ -58,32 +91,79 @@
                 <span class="date">{{ prettyDate(record.date) }}</span>
               </div>
               <div class="news-item-time__content" @click="open(index)">
-                <span class="news-item-time__title" :class="{read: record.read}">{{ record.title }}</span>
-                <span class="news-item-time__tip" v-if="record.tip">{{ record.tip }}</span>
+                <span
+                  class="news-item-time__title"
+                  :class="{ read: record.read }"
+                  >{{ record.title }}</span
+                >
+                <span class="news-item-time__tip" v-if="record.tip">{{
+                  record.tip
+                }}</span>
                 <span class="news-item-time__tag" v-if="record.tag">
-                  <img :src="record.tag.text" alt="标签" class="tag-img" v-if="record.tag.type === 'img'"/>
-                  <span v-else-if="record.tag.type === 'outline'" class="tag tag-outline"
-                        :style="{borderColor: record.tag.color, color: record.tag.color}">{{ record.tag.text }}
+                  <img
+                    :src="record.tag.text"
+                    alt="标签"
+                    class="tag-img"
+                    v-if="record.tag.type === 'img'"
+                  />
+                  <span
+                    v-else-if="record.tag.type === 'outline'"
+                    class="tag tag-outline"
+                    :style="{
+                      borderColor: record.tag.color,
+                      color: record.tag.color,
+                    }"
+                    >{{ record.tag.text }}
                   </span>
-                  <span v-else class="tag" :style="{backgroundColor: record.tag.color}">
+                  <span
+                    v-else
+                    class="tag"
+                    :style="{ backgroundColor: record.tag.color }"
+                  >
                     {{ record.tag.text }}
                   </span>
                 </span>
               </div>
             </div>
-            <div class="news-item-record" @click="open(index)" :title="record.hover" v-else>
+            <div
+              class="news-item-record"
+              @click="open(index)"
+              :title="record.hover"
+              v-else
+            >
               <div class="news-item-record__index">
                 {{ index + 1 }}
               </div>
               <div class="news-item-record__content">
-                <span class="news-item-record__title" :class="{read: record.read}">{{ record.title }}</span>
-                <span class="news-item-record__tip" v-if="record.tip">{{ record.tip }}</span>
+                <span
+                  class="news-item-record__title"
+                  :class="{ read: record.read }"
+                  >{{ record.title }}</span
+                >
+                <span class="news-item-record__tip" v-if="record.tip">{{
+                  record.tip
+                }}</span>
                 <span class="news-item-record__tag" v-if="record.tag">
-                  <img :src="record.tag.text" alt="标签" class="tag-img" v-if="record.tag.type === 'img'"/>
-                  <span v-else-if="record.tag.type === 'outline'" class="tag tag-outline"
-                        :style="{borderColor: record.tag.color, color: record.tag.color}">{{ record.tag.text }}
+                  <img
+                    :src="record.tag.text"
+                    alt="标签"
+                    class="tag-img"
+                    v-if="record.tag.type === 'img'"
+                  />
+                  <span
+                    v-else-if="record.tag.type === 'outline'"
+                    class="tag tag-outline"
+                    :style="{
+                      borderColor: record.tag.color,
+                      color: record.tag.color,
+                    }"
+                    >{{ record.tag.text }}
                   </span>
-                  <span v-else class="tag" :style="{backgroundColor: record.tag.color}">
+                  <span
+                    v-else
+                    class="tag"
+                    :style="{ backgroundColor: record.tag.color }"
+                  >
                     {{ record.tag.text }}
                   </span>
                 </span>
@@ -96,29 +176,44 @@
   </div>
 </template>
 <script lang="ts" setup>
-import {DeleteIcon, EditIcon, MenuApplicationIcon, RefreshIcon, StarFilledIcon, StarIcon} from "tdesign-icons-vue-next";
-import {NewsInstance, NewsInstanceSource} from "@/sources/NewsInstance";
-import {prettyDate} from "@/utils/lang/FormatUtil";
-import {myFocus} from "@/store/AppStore";
-import {openDeleteRssSourceDialog, openPostRssSourceDialog} from "@/pages/rss/dialog/PostRssSource";
-import {NewsInstanceForRss} from "@/sources/abs/NewsInstanceForRss";
+import {
+  DeleteIcon,
+  EditIcon,
+  MenuApplicationIcon,
+  RefreshIcon,
+  StarFilledIcon,
+  StarIcon,
+} from "tdesign-icons-vue-next";
+import { NewsInstance, NewsInstanceSource } from "@/sources/NewsInstance";
+import { prettyDate } from "@/utils/lang/FormatUtil";
+import { myFocus } from "@/store";
+import {
+  openDeleteRssSourceDialog,
+  openPostRssSourceDialog,
+} from "@/pages/rss/dialog/PostRssSource";
+import { NewsInstanceForRss } from "@/sources/abs/NewsInstanceForRss";
 
 const props = defineProps({
   source: {
     type: Object as PropType<NewsInstance>,
-    required: true
-  }
+    required: true,
+  },
 });
 
-const {records, lastUpdateTime, loading, refresh, open} = props.source!.renderSource() as NewsInstanceSource;
+const { records, lastUpdateTime, loading, refresh, open } =
+  props.source!.renderSource() as NewsInstanceSource;
 
 const hasFocus = computed(() => myFocus.value.indexOf(props.source!.id) > -1);
 
-const date = ref('很久很久以前更新');
+const date = ref("很久很久以前更新");
 
-const renderDate = () => date.value = (prettyDate(lastUpdateTime.value) + '更新');
+const renderDate = () =>
+  (date.value = prettyDate(lastUpdateTime.value) + "更新");
 
-useIntervalFn(renderDate, 1000 * 60, {immediate: true, immediateCallback: true});
+useIntervalFn(renderDate, 1000 * 60, {
+  immediate: true,
+  immediateCallback: true,
+});
 watch(lastUpdateTime, renderDate);
 
 function openWebsite() {
@@ -126,7 +221,7 @@ function openWebsite() {
 }
 
 function toggleFocus() {
-  const index = myFocus.value.findIndex(id => id === props.source!.id);
+  const index = myFocus.value.findIndex((id) => id === props.source!.id);
   if (index > -1) {
     myFocus.value.splice(index, 1);
   } else {
@@ -174,9 +269,8 @@ function toggleFocus() {
       color: var(--td-text-color-secondary);
     }
 
-
     &__tag {
-      background-color: var(--nn-news-tag-bg-color);
+      background-color: var(--fluent-reveal-bg);
       margin-left: 4px;
     }
 
@@ -213,7 +307,7 @@ function toggleFocus() {
     overflow: auto;
     height: 100%;
     border-radius: var(--td-radius-large);
-    background-color: var(--nn-news-container-bg-color);
+    background-color: var(--fluent-reveal-bg);
 
     .news-item-record {
       display: flex;
@@ -225,7 +319,7 @@ function toggleFocus() {
       line-height: 24px;
 
       &:hover {
-        background-color: var(--nn-news-item-bg-color-hover);
+        background-color: var(--fluent-acrylic-bg);
       }
 
       &:first-child {
@@ -239,7 +333,7 @@ function toggleFocus() {
       &__index {
         font-size: 0.875rem;
         line-height: 1.25rem;
-        background-color: var(--nn-news-item-bg-color-index);
+        background-color: var(--td-text-color-anti);
         border-radius: var(--td-radius-default);
         justify-content: center;
         align-items: center;
@@ -252,9 +346,7 @@ function toggleFocus() {
         margin-left: 6px;
       }
 
-
       &__title {
-
         &.read {
           color: var(--td-text-color-placeholder);
         }
@@ -270,7 +362,6 @@ function toggleFocus() {
         margin-left: 5px;
         height: 16px;
         font-size: var(--td-font-size-body-small);
-
 
         .tag {
           height: 16px;
@@ -337,13 +428,11 @@ function toggleFocus() {
         border-radius: var(--td-radius-default);
 
         &:hover {
-          background-color: var(--nn-news-item-bg-color-hover);
+          background-color: var(--fluent-acrylic-bg);
         }
       }
 
-
       &__title {
-
         &.read {
           color: var(--td-text-color-placeholder);
         }
@@ -359,7 +448,6 @@ function toggleFocus() {
         margin-left: 5px;
         height: 16px;
         font-size: var(--td-font-size-body-small);
-
 
         .tag {
           height: 16px;

@@ -1,53 +1,34 @@
-import {ref, Ref, shallowRef, toRaw, watch} from "vue";
-import MessageUtil from "@/utils/modal/MessageUtil";
-import {getItem, removeItem, setItem} from "@/utils/utools/DbStorageUtil";
+import {clone} from "@/utils/lang/ObjUtil";
+import {isNull} from "@/utils/lang";
+import {KeyValueUtil} from "@/utils/utools/KeyValueUtil";
 
-export interface UseUtoolsDbOptions {
-  flush?: 'pre' | 'post' | 'sync';
-  deep?: boolean;
-  shallow?: boolean;
-
-  onError?(e: any): void;
-}
+type initialValueFunc<T> = () => T
+type initialValue<T> = T | initialValueFunc<T>
 
 /**
  * 异步对象存储
  */
-export function useUtoolsDbStorage<T extends (string | number | boolean | object | null)>(
+export function useUtoolsDbStorage<T extends string | number | boolean | Record<string, any>>(
   key: string,
-  initialValue: T,
-  options: UseUtoolsDbOptions = {},
+  initial: initialValue<T>
 ): Ref<T> {
-  const {
-    flush = 'pre',
-    deep = true,
-    shallow,
-    onError = (e) => {
-      MessageUtil.error('数据保存失败', e)
-    },
-  } = options
-
-  const sourceValue = getItem(key);
-  const data = (shallow ? shallowRef : ref)((typeof sourceValue === 'undefined' || sourceValue === null) ? initialValue : sourceValue) as Ref<T>;
-
-  watch(
-    data,
-    () => {
-      try {
-        if (data.value == null)
-          removeItem(key)
-        else
-          setItem(key, toRaw(data.value))
-      } catch (e) {
-        onError(e)
+  return customRef((track, trigger) => ({
+    get() {
+      track()
+      let res = KeyValueUtil.getItem(key);
+      if (isNull(res)) {
+        return typeof initial === 'function' ? initial() : initial;
       }
+      return res;
     },
-    {
-      flush,
-      deep,
-    },
-  )
+    set(value) {
+      try {
+        KeyValueUtil.setItem(key, toRaw(value));
+      } catch (e) {
+        KeyValueUtil.setItem(key, clone(value, true));
+      }
+      trigger()
+    }
+  }))
 
-  return data as Ref<T>
 }
-

@@ -1,16 +1,20 @@
 import {
-  MewsInstanceBrowser, MewsInstanceBrowserType, MewsInstanceType,
+  MewsInstanceBrowser,
+  MewsInstanceBrowserType,
+  MewsInstanceType,
   NewsInstanceRecord,
   NewsInstanceRecordStore,
   NewsInstanceSource,
-  NewsInstanceTag
+  NewsInstanceTag,
 } from "@/sources/NewsInstance";
-import {getFromOneByAsync, saveOneByAsync} from "@/utils/utools/DbStorageUtil";
-import {LocalNameEnum} from "@/global/LocalNameEnum";
-import {map} from "@/utils/lang/ArrayUtil";
-import {ref} from 'vue';
+import {
+  getFromOneByAsync,
+  saveOneByAsync,
+} from "@/utils/utools/DbStorageUtil";
+import { LocalNameEnum } from "@/global/LocalNameEnum";
+import { map } from "@/utils/lang/ArrayUtil";
 import MessageUtil from "@/utils/modal/MessageUtil";
-import {AbsNewsInstanceForDb} from "@/sources/abs/AbsNewsInstanceForDb";
+import { AbsNewsInstanceForDb } from "@/sources/abs/AbsNewsInstanceForDb";
 
 export abstract class AbsNewsInstance extends AbsNewsInstanceForDb {
   abstract id: string;
@@ -22,7 +26,7 @@ export abstract class AbsNewsInstance extends AbsNewsInstanceForDb {
   abstract browser: MewsInstanceBrowserType;
   abstract type: MewsInstanceType;
 
-  private readonly lastUpdateTime: Ref<number>
+  private readonly lastUpdateTime: Ref<number>;
   private readonly records: Ref<Array<NewsInstanceRecord>>;
   private readonly loading: Ref<boolean>;
 
@@ -50,7 +54,7 @@ export abstract class AbsNewsInstance extends AbsNewsInstanceForDb {
     // 设置下一个更新任务
     setTimeout(() => {
       this.timeoutFn();
-    }, this.maxRefreshTime)
+    }, this.maxRefreshTime);
   }
 
   /**
@@ -64,18 +68,32 @@ export abstract class AbsNewsInstance extends AbsNewsInstanceForDb {
     // 获取缓存
     try {
       this.loading.value = true;
-      const cache = await getFromOneByAsync<NewsInstanceRecordStore>(LocalNameEnum.CACHE_NEWS + this.id)
+      const cache = await getFromOneByAsync<NewsInstanceRecordStore>(
+        LocalNameEnum.CACHE_NEWS + this.id,
+      );
       this.rev = cache.rev;
       if (cache.record) {
         this.records.value = cache.record.records;
         this.lastUpdateTime.value = cache.record.lastUpdateTime;
       }
       // TODO: 目前是15分钟，可以修改
-      setTimeout(() => {
-        this.loading.value = false;
-        this.timeoutFn();
-      }, Math.max(0, this.maxRefreshTime - (Date.now() - this.lastUpdateTime.value)));
-      console.log(`「${this.title}」下次更新时间`, (this.maxRefreshTime - (Date.now() - this.lastUpdateTime.value)) / 1000 / 60, '分钟')
+      setTimeout(
+        () => {
+          this.loading.value = false;
+          this.timeoutFn();
+        },
+        Math.max(
+          0,
+          this.maxRefreshTime - (Date.now() - this.lastUpdateTime.value),
+        ),
+      );
+      console.log(
+        `「${this.title}」下次更新时间`,
+        (this.maxRefreshTime - (Date.now() - this.lastUpdateTime.value)) /
+          1000 /
+          60,
+        "分钟",
+      );
     } catch (e) {
       MessageUtil.error(`新闻「${this.title}」初始化失败`, e);
     } finally {
@@ -89,28 +107,36 @@ export abstract class AbsNewsInstance extends AbsNewsInstanceForDb {
    * @returns 无返回值
    */
   private async saveCache(): Promise<void> {
-    this.rev = await saveOneByAsync<NewsInstanceRecordStore>(LocalNameEnum.CACHE_NEWS + this.id, {
-      lastUpdateTime: this.lastUpdateTime.value,
-      records: toRaw(this.records.value)
-    }, this.rev);
+    this.rev = await saveOneByAsync<NewsInstanceRecordStore>(
+      LocalNameEnum.CACHE_NEWS + this.id,
+      {
+        lastUpdateTime: this.lastUpdateTime.value,
+        records: toRaw(this.records.value),
+      },
+      this.rev,
+    );
   }
 
   private async refresh() {
     if (this.loading.value) return;
     this.loading.value = true;
     try {
-      console.log(`「${this.title}」开始刷新，上次刷新时间：` + this.lastUpdateTime.value);
+      console.log(
+        `「${this.title}」开始刷新，上次刷新时间：` + this.lastUpdateTime.value,
+      );
       const originRecords = await this.getOriginRecords();
       // 此处要做处理，已读信息不能丢失
-      const oleRecordMap = map(this.records.value, 'id');
-      this.records.value = originRecords.map(e => ({
+      const oleRecordMap = map(this.records.value, "id");
+      this.records.value = originRecords.map((e) => ({
         ...e,
-        read: oleRecordMap.get(e.id)?.read || false
-      }))
+        read: oleRecordMap.get(e.id)?.read || false,
+      }));
       this.lastUpdateTime.value = Date.now();
       // 缓存记录
       await this.saveCache();
-      console.log(`「${this.title}」刷新完成，本次更新时间：` + this.lastUpdateTime.value);
+      console.log(
+        `「${this.title}」刷新完成，本次更新时间：` + this.lastUpdateTime.value,
+      );
     } catch (e) {
       console.error(`资讯「${this.title}」刷新失败`, e);
     } finally {
@@ -124,40 +150,41 @@ export abstract class AbsNewsInstance extends AbsNewsInstanceForDb {
     // 打开方法
     const open = (index: number) => {
       let b: MewsInstanceBrowser;
-      if (this.browser === 'pc') {
-        b = {width: 1200, height: 800}
-      } else if (this.browser === 'mobile') {
+      if (this.browser === "pc") {
+        b = { width: 1200, height: 800 };
+      } else if (this.browser === "mobile") {
         b = {
           width: 414,
           height: 896,
-          userAgent: 'Mozilla/5.0 (Linux; Android 14; SM - S918U) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Mobile Safari/537.36'
-        }
+          userAgent:
+            "Mozilla/5.0 (Linux; Android 14; SM - S918U) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Mobile Safari/537.36",
+        };
       } else {
         b = this.browser;
       }
-      utools.ubrowser.goto(this.records.value[index].url, {
-        Referer: '',
-        userAgent: b.userAgent || navigator.userAgent,
-      })
+      utools.ubrowser
+        .goto(this.records.value[index].url, {
+          Referer: "",
+          userAgent: b.userAgent || navigator.userAgent,
+        })
         .run({
           width: b.width,
           height: b.height,
-        })
+        });
       if (this.records.value[index].read) {
         return;
       }
       this.records.value[index].read = true;
-      this.saveCache().catch(e => console.error('保存缓存失败', e));
-    }
+      this.saveCache().catch((e) => console.error("保存缓存失败", e));
+    };
     return {
       lastUpdateTime: this.lastUpdateTime,
       loading: this.loading,
       records: this.records,
       refresh: () => {
-        return this.refresh()
+        return this.refresh();
       },
-      open
-    }
+      open,
+    };
   }
-
 }

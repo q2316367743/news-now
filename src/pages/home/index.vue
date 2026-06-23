@@ -4,7 +4,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import HomeLoading from "@/pages/home/components/HomeLoading.vue";
+import HomeLoading from "@/pages/components/HomeLoading.vue";
 
 const route = useRoute();
 const router = useRouter();

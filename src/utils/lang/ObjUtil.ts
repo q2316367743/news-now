@@ -4,7 +4,7 @@
  * @param defaultValue 默认值
  */
 export function defaultIfNull<T>(value: T | null | undefined, defaultValue: T): T {
-    return value === null || typeof value === 'undefined' ? defaultValue : value;
+  return value === null || typeof value === 'undefined' ? defaultValue : value;
 }
 
 /**
@@ -14,18 +14,45 @@ export function defaultIfNull<T>(value: T | null | undefined, defaultValue: T): 
  * @param defaultValue
  */
 export function ifObjectIsNull<T extends Record<string, any>, A extends T[K], K extends keyof T>(value: T | null | undefined, attr: K, defaultValue: A): A {
-    if (value) {
-        return value[attr] ?? defaultValue;
-    } else {
-        return defaultValue;
-    }
+  if (value) {
+    return value[attr] ?? defaultValue;
+  } else {
+    return defaultValue;
+  }
 }
 
-export function clone(obj: any, deep = false) {
-    if (deep) {
-        return JSON.parse(JSON.stringify(obj));
+
+/**
+ * 深拷贝对象
+ * @param obj
+ */
+export function deepClone<T>(obj: T): T {
+  if (obj === null || typeof obj !== 'object') {
+    return obj
+  }
+
+  if (Array.isArray(obj)) {
+    const arrClone = [] as any[]
+    for (const item of obj) {
+      arrClone.push(deepClone(item))
     }
-    return structuredClone(obj);
+    return arrClone as T
+  }
+
+  const objClone = {} as { [key: string]: any }
+  for (const key in obj) {
+    if (Object.hasOwn(obj, key)) {
+      objClone[key] = deepClone((obj as { [key: string]: any })[key])
+    }
+  }
+  return objClone as T
+}
+
+export function clone<T>(obj: T, deep = false) {
+  if (deep) {
+    return deepClone(obj);
+  }
+  return structuredClone(obj);
 }
 
 /**

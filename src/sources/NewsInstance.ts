@@ -2,7 +2,7 @@ export interface NewsInstanceRecordTag {
   color?: string;
   text: string;
   ing?: boolean;
-  type?: 'default' | 'outline' | 'img';
+  type?: "default" | "outline" | "img";
 }
 
 export interface NewsInstanceRecord {
@@ -57,8 +57,8 @@ export interface MewsInstanceBrowser {
   userAgent?: string;
 }
 
-export type MewsInstanceBrowserType = MewsInstanceBrowser | 'pc' | 'mobile';
-export type MewsInstanceType = 'hot' | 'realtime' | 'rss';
+export type MewsInstanceBrowserType = MewsInstanceBrowser | "pc" | "mobile";
+export type MewsInstanceType = "hot" | "realtime" | "rss";
 
 export interface NewsInstance {
   id: string;
@@ -73,9 +73,8 @@ export interface NewsInstance {
   // 浏览器
   browser: MewsInstanceBrowserType;
 
-  type: MewsInstanceType
+  type: MewsInstanceType;
 
   // 渲染源
   renderSource(): NewsInstanceSource;
-
 }

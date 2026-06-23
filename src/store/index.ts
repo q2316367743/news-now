@@ -1,3 +1,2 @@
-export * from './AppStore';
-
-export * from './modules/RssStore';
+export * from "./components/GlobalStore";
+export * from "./components/RssStore";

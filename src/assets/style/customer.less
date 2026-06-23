@@ -1,20 +1,33 @@
-:root{
-  --nn-app-header-bg-color: rgba(255, 255, 255, 0.35);
-  --nn-news-container-bg-color: rgba(255, 255, 255, 0.55);
-  --nn-news-item-bg-color-hover: rgba(255, 255, 255, 0.35);
-  --nn-news-item-bg-color-index: rgba(255, 255, 255, 0.35);
-  --nn-news-tag-bg-color: rgba(255, 255, 255, 0.55);
-}
-:root[theme-mode="dark"] {
-  --nn-app-header-bg-color: rgba(0, 0, 0, 0.35);
-  --nn-news-container-bg-color: rgba(0, 0, 0, 0.55);
-  --nn-news-item-bg-color-hover: rgba(0, 0, 0, 0.35);
-  --nn-news-item-bg-color-index: rgba(0, 0, 0, 0.35);
-  --nn-news-tag-bg-color: rgba(0, 0, 0, 0.55);
-}
-
 .ellipsis {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+/*滚动条整体部分*/
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  transition: background-color 0.3s;
+  background-color: var(--td-scroll-track-color);
+}
+
+::-webkit-scrollbar-thumb {
+  border: 0 solid transparent;
+  background-clip: content-box;
+  background-color: var(--td-scrollbar-color);
+  border-radius: 11px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--td-scrollbar-hover-color);
+}
+
+.t-menu {
+  border-right: none !important;
+}
+
+html, body {
+  padding: 0;
+  margin: 0;
 }

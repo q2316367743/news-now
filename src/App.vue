@@ -3,15 +3,15 @@
     <div class="main-container" ref="containerRef">
       <header class="main-header">
         <div class="logo flex">
-          <img alt="logo" src="/logo.png" class="w-36px h-36px"/>
+          <img alt="logo" src="/logo.png" class="w-36px h-36px" />
           <div class="ml-4px">
             <span>您的</span>
-            <br/>
+            <br />
             <span style="color: var(--td-error-color)">专属</span>
             <span>资讯管家</span>
           </div>
         </div>
-        <navigator/>
+        <navigator />
         <t-space size="small">
           <t-button
             theme="primary"
@@ -19,29 +19,34 @@
             shape="circle"
             @click="scrollToTop"
             class="back-top-btn"
-            :style="{opacity: showBackTop ? 1 : 0}"
+            :style="{ opacity: showBackTop ? 1 : 0 }"
           >
             <template #icon>
-              <backtop-icon/>
+              <backtop-icon />
             </template>
           </t-button>
           <t-dropdown placement="bottom" trigger="click">
-            <t-button theme="primary" variant="text" shape="circle" style="margin-bottom: 7px;">
+            <t-button
+              theme="primary"
+              variant="text"
+              shape="circle"
+              style="margin-bottom: 7px"
+            >
               <template #icon>
-                <moon-icon v-if="isDark"/>
-                <sunny-icon v-else/>
+                <moon-icon v-if="isDark" />
+                <sunny-icon v-else />
               </template>
             </t-button>
             <t-dropdown-menu>
               <t-dropdown-item @click="toggleColorMode('dark')">
                 <template #prefix-icon>
-                  <moon-icon/>
+                  <moon-icon />
                 </template>
                 暗黑
               </t-dropdown-item>
               <t-dropdown-item @click="toggleColorMode('light')">
                 <template #prefix-icon>
-                  <sunny-icon/>
+                  <sunny-icon />
                 </template>
                 明亮
               </t-dropdown-item>
@@ -50,7 +55,11 @@
               </t-dropdown-item>
             </t-dropdown-menu>
           </t-dropdown>
-          <t-dropdown placement="bottom-right" trigger="click" :min-column-width="144">
+          <t-dropdown
+            placement="bottom-right"
+            trigger="click"
+            :min-column-width="144"
+          >
             <t-button
               theme="primary"
               variant="text"
@@ -58,20 +67,19 @@
               class="back-top-btn"
             >
               <template #icon>
-                <more-icon/>
+                <more-icon />
               </template>
             </t-button>
             <t-dropdown-menu>
               <t-dropdown-item @click="openGithub">
                 <template #prefix-icon>
-                  <logo-github-icon/>
+                  <logo-github-icon />
                 </template>
                 Star on Github
               </t-dropdown-item>
               <t-dropdown-item @click="openRewardDialog">
                 <template #prefix-icon>
-                  <heart-icon style="color: var(--td-error-color
-                  )"/>
+                  <heart-icon style="color: var(--td-error-color)" />
                 </template>
                 赏赞
               </t-dropdown-item>
@@ -80,16 +88,22 @@
         </t-space>
       </header>
       <main class="py-16px">
-        <router-view/>
+        <router-view />
       </main>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
-import {BacktopIcon, HeartIcon, LogoGithubIcon, MoonIcon, MoreIcon, SunnyIcon} from "tdesign-icons-vue-next";
-import {isDark, toggleColorMode} from '@/store'
-import {openRewardDialog} from "@/pages/components/RewardDialog";
-import {initialize} from "@/sources";
+import {
+  BacktopIcon,
+  HeartIcon,
+  LogoGithubIcon,
+  MoonIcon,
+  MoreIcon,
+  SunnyIcon,
+} from "tdesign-icons-vue-next";
+import { isDark, toggleColorMode } from "@/store";
+import { openRewardDialog } from "@/pages/components/RewardDialog";
 
 const route = useRoute();
 const router = useRouter();
@@ -110,7 +124,7 @@ const scrollToTop = () => {
   if (containerRef.value) {
     containerRef.value?.scrollTo({
       top: 0,
-      behavior: 'smooth'
+      behavior: "smooth",
     });
   }
 };
@@ -118,27 +132,27 @@ const scrollToTop = () => {
 // 组件挂载时添加滚动监听
 onMounted(() => {
   if (containerRef.value) {
-    containerRef.value.addEventListener('scroll', handleScroll);
+    containerRef.value.addEventListener("scroll", handleScroll);
   }
-  initialize();
   // 跳转
   nextTick(() => {
-    if (route.path === '/') {
+    if (route.path === "/") {
       router.push({
-        path: "/tab/hot"
-      })
+        path: "/tab/hot",
+      });
     }
-  })
+  });
 });
 
 // 组件卸载时移除滚动监听
 onUnmounted(() => {
   if (containerRef.value) {
-    containerRef.value.removeEventListener('scroll', handleScroll);
+    containerRef.value.removeEventListener("scroll", handleScroll);
   }
 });
 
-const openGithub = () => utools.shellOpenExternal('https://github.com/q2316367743/utools-news-now')
+const openGithub = () =>
+  utools.shellOpenExternal("https://github.com/q2316367743/utools-news-now");
 </script>
 <style scoped lang="less">
 .main {
@@ -181,7 +195,6 @@ const openGithub = () => utools.shellOpenExternal('https://github.com/q231636774
         }
       }
     }
-
   }
 }
 </style>

@@ -2,23 +2,23 @@ import Optional from "@/utils/lang/Optional";
 import MessageUtil from "@/utils/modal/MessageUtil";
 
 function showMessage(error: string, message?: string | (() => void), callback?: () => void) {
-    if (callback) {
-        message = Optional.ofNullable(message).orElse(error);
-        MessageUtil.error(message as string);
-        // 异常抛出前进行回调
-        callback();
-        throw new Error(message as string);
-    }
-    if (typeof message === 'string') {
-        message = Optional.ofNullable(message).orElse(error);
-        MessageUtil.error(message);
-        throw new Error(message);
-    } else if (typeof message === 'function') {
-        message();
-        throw new Error(error);
-    } else {
-        throw new Error(error);
-    }
+  if (callback) {
+    message = Optional.ofNullable(message).orElse(error);
+    MessageUtil.error(message as string);
+    // 异常抛出前进行回调
+    callback();
+    throw new Error(message as string);
+  }
+  if (typeof message === 'string') {
+    message = Optional.ofNullable(message).orElse(error);
+    MessageUtil.error(message);
+    throw new Error(message);
+  } else if (typeof message === 'function') {
+    message();
+    throw new Error(error);
+  } else {
+    throw new Error(error);
+  }
 }
 
 /**
@@ -39,9 +39,9 @@ function notNull(express: any, message: string): void;
 function notNull(express: any, callback: () => void): void;
 function notNull(express: any, message: string, callback: () => void): void;
 function notNull(object: any, message?: string | (() => void), callback?: () => void) {
-    if (object === 'undefined') {
-        showMessage("断言对象不能undefined", message, callback);
-    }
+  if (object === 'undefined') {
+    showMessage("断言对象不能undefined", message, callback);
+  }
 }
 
 /**
@@ -49,40 +49,40 @@ function notNull(object: any, message?: string | (() => void), callback?: () => 
  */
 export default {
 
-    /**
-     * 断言表达式为真
-     * @param express 表达式
-     * @param message 为假时提示消息
-     */
-    isTrue(express: boolean, message?: string | (() => void)) {
-        if (!express) {
-            showMessage("断言表达式为真", message);
-        }
-    },
+  /**
+   * 断言表达式为真
+   * @param express 表达式
+   * @param message 为假时提示消息
+   */
+  isTrue(express: boolean, message?: string | (() => void)) {
+    if (!express) {
+      showMessage("断言表达式为真", message);
+    }
+  },
 
-    /**
-     * 断言表达式为假
-     * @param express 表达式
-     * @param message 为真时提示消息
-     */
-    isFalse(express: boolean, message?: string | (() => void)) {
-        if (express) {
-            showMessage("断言表达式为假", message);
-        }
-    },
+  /**
+   * 断言表达式为假
+   * @param express 表达式
+   * @param message 为真时提示消息
+   */
+  isFalse(express: boolean, message?: string | (() => void)) {
+    if (express) {
+      showMessage("断言表达式为假", message);
+    }
+  },
 
-    notNull,
+  notNull,
 
 
-    /**
-     * 断言表达式为假
-     * @param text 表达式
-     * @param message 为真时提示消息
-     */
-    notEmpty(text?: string, message?: string | (() => void)) {
-        if (typeof text === 'undefined' ||  text === '') {
-            showMessage("断言表达式为假", message);
-        }
-    },
+  /**
+   * 断言表达式为假
+   * @param text 表达式
+   * @param message 为真时提示消息
+   */
+  notEmpty(text?: string, message?: string | (() => void)) {
+    if (typeof text === 'undefined' || text === '') {
+      showMessage("断言表达式为假", message);
+    }
+  },
 
 }

@@ -1,6 +1,11 @@
-import {AbsNewsInstance} from "@/sources/abs/AbsNewsInstance";
-import {MewsInstanceBrowserType, MewsInstanceType, NewsInstanceRecord, NewsInstanceTag} from "@/sources/NewsInstance";
-import {rss2json} from "@/utils/lang/rss2json";
+import { AbsNewsInstance } from "@/sources/abs/AbsNewsInstance";
+import {
+  MewsInstanceBrowserType,
+  MewsInstanceType,
+  NewsInstanceRecord,
+  NewsInstanceTag,
+} from "@/sources/NewsInstance";
+import { rss2json } from "@/utils/file";
 
 export interface NewsInstanceForRssProps {
   id: string;
@@ -17,14 +22,14 @@ export class NewsInstanceForRss extends AbsNewsInstance {
   id: string;
   logo: string;
   primaryColor: string;
-  tag: NewsInstanceTag | false = false
+  tag: NewsInstanceTag | false = false;
   title: string;
-  type: MewsInstanceType = 'rss';
+  type: MewsInstanceType = "rss";
   website: string;
 
   public readonly props: NewsInstanceForRssProps;
 
-  private readonly source: string
+  private readonly source: string;
 
   constructor(props: NewsInstanceForRssProps) {
     super();
@@ -40,16 +45,17 @@ export class NewsInstanceForRss extends AbsNewsInstance {
 
   async getOriginRecords(): Promise<Array<NewsInstanceRecord>> {
     const info = await rss2json(this.source);
-    return info?.items?.map((item) => {
-      return {
-        id: item.id || item.link,
-        title: item.title,
-        url: item.link,
-        read: false,
-        hover: item.description,
-        date: item.created
-      }
-    }) || [];
+    return (
+      info?.items?.map((item) => {
+        return {
+          id: item.id || item.link,
+          title: item.title,
+          url: item.link,
+          read: false,
+          hover: item.description,
+          date: item.created,
+        };
+      }) || []
+    );
   }
-
 }

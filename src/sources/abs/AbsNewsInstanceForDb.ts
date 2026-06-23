@@ -1,11 +1,16 @@
 import {
-  MewsInstanceBrowserType, MewsInstanceType,
+  MewsInstanceBrowserType,
+  MewsInstanceType,
   NewsInstance,
   NewsInstanceSource,
-  NewsInstanceTag
+  NewsInstanceTag,
 } from "@/sources/NewsInstance";
-import {DbRecord, getFromOneByAsync, saveOneByAsync} from "@/utils/utools/DbStorageUtil";
-import {LocalNameEnum} from "@/global/LocalNameEnum";
+import {
+  DbRecord,
+  getFromOneByAsync,
+  saveOneByAsync,
+} from "@/utils/utools/DbStorageUtil";
+import { LocalNameEnum } from "@/global/LocalNameEnum";
 
 /**
  * 新闻实体 - 存储相关
@@ -23,11 +28,14 @@ export abstract class AbsNewsInstanceForDb implements NewsInstance {
   abstract renderSource(): NewsInstanceSource;
 
   protected async getItem<T>(key: string): Promise<DbRecord<T | null>> {
-    return getFromOneByAsync<T>(LocalNameEnum.DB_NEWS + key)
+    return getFromOneByAsync<T>(LocalNameEnum.DB_NEWS + key);
   }
 
-  protected async setItem<T>(key: string, value: T, rev?: string): Promise<string | undefined> {
+  protected async setItem<T>(
+    key: string,
+    value: T,
+    rev?: string,
+  ): Promise<string | undefined> {
     return saveOneByAsync<T>(LocalNameEnum.DB_NEWS + key, value, rev);
   }
-
 }

@@ -1,4 +1,4 @@
-export const Constant = {
+export default {
     // 插件的ID
     uid: '',
     // 项目名称，英文名称

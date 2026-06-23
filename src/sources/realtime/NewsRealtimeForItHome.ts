@@ -1,8 +1,8 @@
 import {AbsNewsInstance} from "@/sources/abs/AbsNewsInstance";
 import {MewsInstanceBrowserType, MewsInstanceType, NewsInstanceRecord, NewsInstanceTag} from "@/sources/NewsInstance";
 import {useGetText} from "@/sources/HttpUtil";
-import {parseHtml} from "@/utils/lang/HtmlUtil";
-import {parseRelativeDate} from "@/utils/lang/DateUtil";
+import {parseHtml} from "@/utils/lang";
+import {parseRelativeDate} from "@/utils/lang";
 
 export class NewsRealtimeForItHome extends AbsNewsInstance {
   browser: MewsInstanceBrowserType = 'pc';

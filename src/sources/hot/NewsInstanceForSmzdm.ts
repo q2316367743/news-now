@@ -1,7 +1,7 @@
 import {AbsNewsInstance} from "@/sources/abs/AbsNewsInstance";
 import {MewsInstanceBrowserType, MewsInstanceType, NewsInstanceRecord, NewsInstanceTag} from "@/sources/NewsInstance";
 import {useGetText} from "@/sources/HttpUtil";
-import {parseHtml} from "@/utils/lang/HtmlUtil";
+import {parseHtml} from "@/utils/lang";
 
 export class NewsInstanceForSmzdm extends AbsNewsInstance {
   browser: MewsInstanceBrowserType = 'pc';

@@ -1,7 +1,7 @@
 import {AbsNewsInstance} from "@/sources/abs/AbsNewsInstance";
 import {MewsInstanceBrowserType, MewsInstanceType, NewsInstanceRecord, NewsInstanceTag} from "@/sources/NewsInstance";
 import {useGetText} from "@/sources/HttpUtil";
-import {parseRelativeDate} from "@/utils/lang/DateUtil";
+import {parseRelativeDate} from "@/utils/lang";
 
 interface Jin10Item {
   id: string

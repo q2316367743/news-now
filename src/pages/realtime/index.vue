@@ -12,7 +12,7 @@
 import {moveArrayElement, useSortable} from "@vueuse/integrations/useSortable";
 import {SortableEvent} from "sortablejs";
 import { REALTIME_SOURCES} from "@/sources";
-import { realtimeSortMap} from "@/store/AppStore";
+import { realtimeSortMap} from "@/store";
 import NewSourceView from "@/pages/components/NewSourceView.vue";
 
 

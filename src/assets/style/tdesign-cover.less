@@ -1,0 +1,676 @@
+// ============================================
+// Fluent Design 风格覆盖 TDesign 组件样式
+// ============================================
+
+// ============ 全局基础 ============
+* {
+  transition-property: background-color, border-color, box-shadow;
+  transition-duration: var(--fluent-transition-normal);
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+// ============ 输入框 Input ============
+.t-input {
+  border-radius: var(--fluent-radius-smooth) !important;
+  border: 1px solid var(--fluent-border-subtle) !important;
+  background-color: var(--td-bg-color-container) !important;
+  transition: all var(--fluent-transition-fast);
+
+  &:hover {
+    border-color: var(--td-gray-color-6) !important;
+  }
+
+  &.t-is-focused {
+    border-color: var(--fluent-accent-color) !important;
+    box-shadow: var(--fluent-focus-ring) !important;
+  }
+
+  &.t-is-disabled {
+    background-color: var(--td-bg-color-component-disabled) !important;
+  }
+
+  .t-input__prefix,
+  .t-input__suffix {
+    color: var(--td-text-color-secondary);
+  }
+
+  .t-input__inner {
+    &::placeholder {
+      color: var(--td-text-color-placeholder);
+    }
+  }
+}
+
+// ============ 选择器 Select ============
+.t-select {
+  .t-input {
+    border-radius: var(--fluent-radius-smooth);
+  }
+
+  &.t-is-focused {
+    .t-input {
+      border-color: var(--fluent-accent-color);
+      box-shadow: var(--fluent-focus-ring);
+    }
+  }
+}
+
+.t-select-option {
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color var(--fluent-transition-fast);
+
+  &:hover {
+    background-color: var(--fluent-item-hover);
+  }
+
+  &.t-is-selected {
+    background-color: var(--fluent-item-selected);
+    color: var(--fluent-accent-color);
+    font-weight: 500;
+  }
+}
+
+// ============ 卡片 Card ============
+.t-card {
+  border-radius: var(--fluent-radius-card) !important;
+  border: 1px solid var(--fluent-card-border) !important;
+  background-color: var(--fluent-card-bg) !important;
+  box-shadow: var(--fluent-card-shadow) !important;
+  transition: all var(--fluent-transition-normal);
+
+  &:hover {
+    box-shadow: var(--fluent-card-shadow-hover) !important;
+  }
+
+  .t-card__header {
+    border-bottom: 1px solid var(--fluent-border-subtle);
+  }
+
+  .t-card__body {
+    padding: 16px;
+  }
+}
+
+// ============ 对话框 Dialog ============
+
+.t-dialog__mask {
+  background-color: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(4px);
+}
+
+// ============ 抽屉 Drawer ============
+.t-drawer {
+  .t-drawer__header {
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid var(--fluent-border-subtle);
+    margin-bottom: 0;
+
+    .t-drawer__title {
+      font-size: 18px;
+      font-weight: 600;
+    }
+  }
+
+  .t-drawer__body {
+    padding: 16px 24px;
+  }
+
+  .t-drawer__footer {
+    padding: 16px 24px 20px;
+    border-top: 1px solid var(--fluent-border-subtle);
+  }
+
+  .t-drawer__mask {
+    background-color: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(4px);
+  }
+}
+
+// ============ 菜单 Menu ============
+.t-menu {
+  backdrop-filter: var(--fluent-acrylic-blur);
+  border-right: 1px solid var(--fluent-sidebar-border) !important;
+
+  .t-menu__item {
+    border-radius: var(--fluent-radius-smooth) !important;
+    transition: all var(--fluent-transition-fast);
+    position: relative;
+
+    &:hover {
+      background-color: var(--fluent-item-hover) !important;
+    }
+
+    &.t-menu__item--active {
+      background-color: var(--fluent-item-selected) !important;
+      color: var(--fluent-accent-color) !important;
+      font-weight: 500;
+
+      &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 3px;
+        height: 20px;
+        background: var(--fluent-item-selected-border);
+        border-radius: 0 2px 2px 0;
+      }
+    }
+
+    .t-menu__item-text {
+      font-size: 14px;
+    }
+  }
+
+  .t-menu__divider {
+    margin: 8px 16px;
+    border-color: var(--fluent-border-subtle);
+  }
+}
+
+// ============ 分页 Pagination ============
+.t-pagination {
+  .t-pagination__item {
+    border-radius: var(--fluent-radius-smooth) !important;
+    min-width: 32px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    cursor: pointer;
+    transition: all var(--fluent-transition-fast);
+
+    &:hover {
+      background-color: var(--fluent-item-hover);
+    }
+
+    &.t-is-current {
+      background: var(--fluent-gradient-primary) !important;
+      color: #fff !important;
+      font-weight: 500;
+      border-color: transparent !important;
+    }
+  }
+}
+
+// ============ 开关 Switch ============
+.t-switch {
+  &.t-is-checked {
+    .t-switch__content {
+      background: var(--fluent-gradient-primary) !important;
+    }
+  }
+
+  .t-switch__content {
+    border-radius: 12px;
+    transition: all var(--fluent-transition-normal);
+  }
+
+  .t-switch__node {
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  }
+}
+
+// ============ 复选框 Checkbox ============
+.t-checkbox {
+  .t-checkbox__input {
+    border-radius: 4px;
+    border: 1px solid var(--td-gray-color-6);
+    transition: all var(--fluent-transition-fast);
+
+    &.is-checked {
+      background: var(--fluent-gradient-primary) !important;
+      border-color: transparent;
+    }
+  }
+
+  &:hover .t-checkbox__input {
+    border-color: var(--fluent-accent-color);
+  }
+}
+
+// ============ 单选框 Radio ============
+.t-radio {
+  .t-radio__input {
+    transition: all var(--fluent-transition-fast);
+
+    &.is-checked {
+      .t-radio__input--circle {
+        background: var(--fluent-accent-color);
+      }
+    }
+  }
+
+  &:hover .t-radio__input {
+    .t-radio__input--circle {
+      border-color: var(--fluent-accent-color);
+    }
+  }
+}
+
+// ============ 标签页 Tabs ============
+.t-tabs {
+  .t-tabs__header {
+    border-bottom: 1px solid var(--fluent-border-subtle);
+  }
+
+  .t-tabs__bar {
+    background: var(--fluent-gradient-primary) !important;
+    height: 2px;
+  }
+
+  .t-tabs__item {
+    transition: all var(--fluent-transition-fast);
+    border-radius: var(--fluent-radius-smooth) var(--fluent-radius-smooth) 0 0;
+
+    &:hover {
+      color: var(--fluent-accent-color);
+    }
+
+    &.t-is-active {
+      color: var(--fluent-accent-color);
+      font-weight: 500;
+    }
+  }
+
+}
+
+// ============ 消息 Message ============
+.t-message {
+  border-radius: var(--fluent-radius-smooth) !important;
+  box-shadow: var(--fluent-elevation-3) !important;
+  padding: 12px 16px !important;
+
+  &.t-message--success {
+    background-color: var(--td-success-color-1);
+    border: 1px solid var(--td-success-color-3);
+  }
+
+  &.t-message--error {
+    background-color: var(--td-error-color-1);
+    border: 1px solid var(--td-error-color-3);
+  }
+
+  &.t-message--warning {
+    background-color: var(--td-warning-color-1);
+    border: 1px solid var(--td-warning-color-3);
+  }
+
+  &.t-message--info {
+    background-color: var(--fluent-accent-light);
+    border: 1px solid var(--fluent-accent-color);
+  }
+}
+
+// ============ 通知 Notification ============
+.t-notification {
+  border-radius: var(--fluent-radius-card) !important;
+  box-shadow: var(--fluent-elevation-3) !important;
+  border: 1px solid var(--fluent-border-subtle);
+  padding: 16px !important;
+  max-width: 400px;
+
+  .t-notification__title {
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .t-notification__message {
+    font-size: 13px;
+    color: var(--td-text-color-secondary);
+    margin-top: 4px;
+  }
+}
+
+// ============ 加载 Loading ============
+.t-loading {
+
+  &.t-loading--inherit {
+    color: var(--fluent-accent-color);
+  }
+}
+
+// ============ 日期选择器 DatePicker ============
+.t-datepicker {
+  .t-input {
+    border-radius: var(--fluent-radius-smooth);
+  }
+}
+
+.t-date-picker__panel {
+  border-radius: var(--fluent-radius-card);
+  border: 1px solid var(--fluent-border-subtle);
+  box-shadow: var(--fluent-elevation-3);
+
+  .t-date-picker__header {
+    border-bottom: 1px solid var(--fluent-border-subtle);
+  }
+
+  .t-date-picker__cell {
+    &.t-is-current {
+      .t-date-picker__cell-inner {
+        background: var(--fluent-gradient-primary) !important;
+        color: #fff;
+        border-radius: 50%;
+      }
+    }
+
+    &:hover .t-date-picker__cell-inner {
+      background-color: var(--fluent-item-hover);
+      border-radius: 50%;
+    }
+  }
+}
+
+// ============ 下拉菜单 Dropdown ============
+.t-popup {
+  .t-popup__content {
+    border: 1px solid var(--fluent-border-subtle) !important;
+    box-shadow: var(--fluent-elevation-3) !important;
+    border-radius: var(--fluent-radius-card) !important;
+  }
+}
+
+.t-dropdown {
+  .t-dropdown__menu {
+    border-radius: var(--fluent-radius-card);
+    padding: 4px 0;
+  }
+
+  .t-dropdown__item {
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background-color var(--fluent-transition-fast);
+
+    &:hover {
+      background-color: var(--fluent-item-hover);
+    }
+
+    &.t-dropdown__item--active {
+      background-color: var(--fluent-item-selected);
+      color: var(--fluent-accent-color);
+    }
+
+    &.t-dropdown__item--divided {
+      border-top: 1px solid var(--fluent-border-subtle);
+    }
+  }
+}
+
+// ============ 表单 Form ============
+.t-form {
+  .t-form__label {
+    font-weight: 500;
+    color: var(--td-text-color-primary);
+  }
+
+  .t-form__item {
+    margin-bottom: 20px;
+  }
+
+  .t-form__help {
+    font-size: 12px;
+    color: var(--td-text-color-secondary);
+  }
+}
+
+// ============ 分割线 Divider ============
+.t-divider {
+  border-color: var(--fluent-border-subtle) !important;
+  margin: 16px 0;
+}
+
+// ============ 链接 Link ============
+.t-link {
+  color: var(--fluent-accent-color);
+  text-decoration: none;
+  transition: all var(--fluent-transition-fast);
+}
+
+// ============ 头像 Avatar ============
+.t-avatar {
+  border: 2px solid var(--td-bg-color-container);
+  box-shadow: var(--fluent-elevation-1);
+}
+
+// ============ 徽章 Badge ============
+.t-badge {
+  .t-badge--dot {
+    border-radius: 50%;
+  }
+
+  .t-badge--circle,
+  .t-badge--round {
+    border-radius: var(--fluent-radius-round);
+  }
+}
+
+// ============ 空状态 Empty ============
+.t-empty {
+  .t-empty__mask {
+    opacity: 0.5;
+  }
+}
+
+// ============ 进度条 Progress ============
+.t-progress {
+  .t-progress__bar {
+    border-radius: var(--fluent-radius-round);
+    background-color: var(--td-bg-color-component);
+  }
+
+  .t-progress__inner {
+    border-radius: var(--fluent-radius-round);
+    background: var(--fluent-gradient-primary);
+  }
+}
+
+// ============ 穿梭框 Transfer ============
+.t-transfer {
+  .t-transfer__panel {
+    border: 1px solid var(--fluent-border-subtle);
+    border-radius: var(--fluent-radius-card);
+  }
+
+  .t-transfer__panel-header {
+    border-bottom: 1px solid var(--fluent-border-subtle);
+    padding: 12px 16px;
+    font-weight: 600;
+  }
+
+  .t-transfer__panel-body .t-checkbox {
+    padding: 8px 12px;
+
+    &:hover {
+      background-color: var(--fluent-item-hover);
+    }
+  }
+}
+
+// ============ 树 Tree ============
+.t-tree {
+  .t-tree__item {
+    border-radius: var(--fluent-radius-smooth);
+
+    &:hover {
+      background-color: var(--fluent-item-hover);
+    }
+
+    &.t-is-active {
+      background-color: var(--fluent-item-selected);
+      color: var(--fluent-accent-color);
+    }
+
+    .t-tree__label {
+      &:hover {
+        background-color: transparent !important;
+      }
+
+      &.t-is-active {
+        background-color: transparent;
+      }
+    }
+
+    .t-tree__icon {
+      &:hover {
+        background-color: var(--fluent-item-selected) !important;
+      }
+    }
+  }
+}
+
+// ============ 时间轴 Timeline ============
+.t-time-line {
+  .t-time-line-item__dot {
+    border-radius: 50%;
+    background: var(--fluent-accent-color);
+  }
+
+  .t-time-line-item__line {
+    background-color: var(--td-gray-color-4);
+  }
+}
+
+// ============ 水印 Watermark ============
+.t-watermark {
+  color: rgba(0, 0, 0, 0.06);
+}
+
+// ============ 暗色主题覆盖 ============
+:root[theme-mode="dark"] {
+  .t-card {
+    background-color: var(--fluent-card-bg) !important;
+  }
+
+  .t-table {
+    background: var(--td-bg-color-container);
+  }
+
+  .t-transfer__panel {
+    background: var(--td-bg-color-container);
+  }
+}
+
+// ============ Fluent 特有组件样式 ============
+
+// Acrylic 毛玻璃效果
+.fluent-acrylic {
+  background: var(--fluent-acrylic-bg);
+  backdrop-filter: var(--fluent-acrylic-blur);
+  -webkit-backdrop-filter: var(--fluent-acrylic-blur);
+}
+
+// Reveal 光效边框
+.fluent-reveal {
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent);
+    transition: left 0.5s;
+  }
+
+  &:hover::before {
+    left: 100%;
+  }
+}
+
+// Fluent 风格卡片
+.fluent-card {
+  background: var(--fluent-card-bg);
+  border: 1px solid var(--fluent-card-border);
+  border-radius: var(--fluent-radius-card);
+  box-shadow: var(--fluent-card-shadow);
+  padding: 16px;
+  transition: all var(--fluent-transition-normal);
+
+  &:hover {
+    box-shadow: var(--fluent-card-shadow-hover);
+    transform: translateY(-2px);
+  }
+}
+
+// Fluent 风格按钮
+.fluent-button {
+  background: var(--fluent-gradient-primary);
+  border: none;
+  border-radius: var(--fluent-radius-smooth);
+  color: #fff;
+  padding: 8px 20px;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: var(--fluent-elevation-1);
+  transition: all var(--fluent-transition-fast);
+
+  &:hover {
+    box-shadow: var(--fluent-elevation-2);
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: var(--fluent-elevation-1);
+  }
+}
+
+// Fluent 风格输入框
+.fluent-input {
+  border: 1px solid var(--fluent-border-subtle);
+  border-radius: var(--fluent-radius-smooth);
+  padding: 8px 12px;
+  background: var(--td-bg-color-container);
+  transition: all var(--fluent-transition-fast);
+
+  &:focus {
+    border-color: var(--fluent-accent-color);
+    box-shadow: var(--fluent-focus-ring);
+    outline: none;
+  }
+}
+
+// Fluent 风格导航栏
+.fluent-nav {
+  background: var(--fluent-sidebar-bg);
+  backdrop-filter: var(--fluent-acrylic-blur);
+  -webkit-backdrop-filter: var(--fluent-acrylic-blur);
+  border-right: 1px solid var(--fluent-sidebar-border);
+}
+
+// Fluent 风格列表项
+.fluent-list-item {
+  padding: 10px 16px;
+  border-radius: var(--fluent-radius-smooth);
+  cursor: pointer;
+  transition: all var(--fluent-transition-fast);
+
+  &:hover {
+    background-color: var(--fluent-item-hover);
+  }
+
+  &.selected {
+    background-color: var(--fluent-item-selected);
+    border-left: 3px solid var(--fluent-item-selected-border);
+    color: var(--fluent-accent-color);
+    font-weight: 500;
+  }
+}
+
+
+.t-default-menu, .t-layout__sider, .t-layout, .t-tabs, .t-layout__header, .t-tabs__operations {
+  background-color: transparent !important;
+}
+
+.t-list {
+  background-color: var(--kb-bg-color-container) !important;
+}
