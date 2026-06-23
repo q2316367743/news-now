@@ -93,6 +93,7 @@ export async function requestText(
     data,
     url,
     method = "GET",
+    params,
   } = config;
   const _config: AxiosRequestConfig = {
     baseURL,
@@ -101,6 +102,7 @@ export async function requestText(
     timeout,
     headers,
     data,
+    params,
     responseType: "arraybuffer",
   };
 

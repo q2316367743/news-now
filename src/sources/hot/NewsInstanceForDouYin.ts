@@ -6,15 +6,45 @@ import {
   NewsInstanceRecord,
 } from "@/sources/NewsInstance";
 
-interface Res {
-  data: {
-    word_list: {
-      sentence_id: string;
-      word: string;
-      event_time: string;
-      hot_value: string;
-    }[];
-  };
+interface RootObject {
+  status: number;
+  message: string;
+  data: Datum[];
+  timestamp: number;
+  date: string;
+}
+
+interface Datum {
+  article_detail_count?: number;
+  aweme_infos?: any;
+  can_extend_detail: boolean;
+  discuss_video_count: number;
+  display_style: number;
+  drift_info?: any;
+  event_time: number;
+  group_id: string;
+  hot_value: number;
+  hotlist_param: string;
+  label: number;
+  position: number;
+  related_words?: any;
+  sentence_id: string;
+  sentence_tag: number;
+  video_count: number;
+  word: string;
+  word_cover: Wordcover;
+  word_sub_board?: number[];
+  word_type: number;
+  title: string;
+  url: string;
+  active_time: string;
+  cover: string;
+  room_count?: number;
+}
+
+interface Wordcover {
+  uri: string;
+  url_list: string[];
 }
 
 export class NewsInstanceForDouYin extends AbsNewsInstance {
@@ -28,26 +58,16 @@ export class NewsInstanceForDouYin extends AbsNewsInstance {
   type: MewsInstanceType = "hot";
 
   async getOriginRecords(api: NewsApi): Promise<Array<NewsInstanceRecord>> {
-    const url =
-      "https://www.douyin.com/aweme/v1/web/hot/search/list/?device_platform=webapp&aid=6383&channel=channel_pc_web&detail_list=1";
-    let cookie = new Array<string>();
-    try {
-      cookie =
-        (
-          await api.http.head(
-            "https://www.douyin.com/passport/general/login_guiding_strategy/?aid=6383",
-          )
-        ).headers["set-cookie"] || [];
-    } catch (e) {
-      console.error(e);
-    }
-    const res = await api.http.json<Res>({
-      url,
-      headers: {
-        cookie: cookie.join("; "),
+    const resp = await api.http.json<RootObject>(
+      {
+        url: "https://api.xhus.cn/api/rdouyin",
+        params: {
+          encode: 'json'
+        }
       },
-    });
-    return res.data.data.word_list.map((k) => {
+    );
+
+    return resp.data.data.map((k) => {
       return {
         id: k.sentence_id,
         title: k.word,

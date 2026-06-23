@@ -15,7 +15,7 @@ const route = useRoute();
 const router = useRouter();
 
 // 返回顶部功能
-const containerRef = ref<HTMLElement | null>(null);
+const containerRef = ref<HTMLElement>();
 const showBackTop = ref(false);
 
 // 监听滚动事件
