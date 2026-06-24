@@ -63,7 +63,7 @@ export const HOT_SOURCES = shallowRef<Array<NewsInstance>>(
   //   (e) => typeof hotSortMap.value[e.id] !== "undefined",
   // ),
     .sort((a, b) => {
-      return (hotSortMap.value[a.id] || 0) - (hotSortMap.value[b.id] || 0);
+      return (hotSortMap.value[a.id] || 0) - (hotSortMap.value[b.id]  || 0);
     })
 );
 export const REALTIME_SOURCES = shallowRef<Array<NewsInstance>>(

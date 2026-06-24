@@ -86,8 +86,10 @@
                 <span
                   class="news-item-time__title"
                   :class="{ read: record.read }"
-                  >{{ record.title }}</span
+                  :title="record.title"
                 >
+                  {{ trimText(record.title) }}
+                </span>
                 <span class="news-item-time__tip" v-if="record.tip">{{
                   record.tip
                 }}</span>
@@ -130,7 +132,8 @@
                 <span
                   class="news-item-record__title"
                   :class="{ read: record.read }"
-                  >{{ record.title }}</span
+                  :title="record.title"
+                  >{{ trimText(record.title) }}</span
                 >
                 <span class="news-item-record__tip" v-if="record.tip">{{
                   record.tip
@@ -207,6 +210,9 @@ function openWebsite() {
   utools.shellOpenExternal(props.source!.website);
 }
 
+const trimText = (text: string, len = 36) => {
+  return text.length > len ? text.slice(0, len) + "..." : text;
+};
 </script>
 <style scoped lang="less">
 .news-item {
@@ -368,7 +374,7 @@ function openWebsite() {
     .news-item-time {
       display: flex;
       flex-direction: column;
-      border-radius: var(--td-radius-default);
+      border-radius: 0 var(--td-radius-default) var(--td-radius-default) 0;
       transition: background-color 0.3s ease-in-out;
       cursor: pointer;
       font-size: var(--td-font-size-title-medium);

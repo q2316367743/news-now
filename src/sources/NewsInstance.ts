@@ -62,7 +62,7 @@ export interface MewsInstanceBrowser {
 }
 
 export type MewsInstanceBrowserType = MewsInstanceBrowser | "pc" | "mobile";
-export type MewsInstanceType = "hot" | "realtime";
+export type MewsInstanceType = "hot" | "realtime" | 'rss';
 
 export type HashAlgorithm =
   | "md5"
