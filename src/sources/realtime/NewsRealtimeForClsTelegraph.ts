@@ -4,7 +4,6 @@ import {
   MewsInstanceType,
   NewsApi,
   NewsInstanceRecord,
-  NewsInstanceTag,
 } from "@/sources/NewsInstance";
 
 interface Item {
@@ -28,7 +27,7 @@ export class NewsRealtimeForClsTelegraph extends AbsNewsInstance {
   id: string = "/realtime/cls/telegraph";
   logo: string = "./icons/cls.png";
   primaryColor: string = "#ed7576";
-  tag: NewsInstanceTag = {
+  tag = {
     text: "电报",
     color: "#ef363a",
   };

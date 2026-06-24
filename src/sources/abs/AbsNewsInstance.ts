@@ -38,13 +38,14 @@ export abstract class AbsNewsInstance extends AbsNewsInstanceForDb {
   abstract browser: MewsInstanceBrowserType;
   abstract type: MewsInstanceType;
 
+  maxRefreshTime = 1000 * 60 * 15;
+
   private readonly lastUpdateTime: Ref<number>;
   private readonly records: Ref<Array<NewsInstanceRecord>>;
   private readonly loading: Ref<boolean>;
 
   private rev: string | undefined = undefined;
   private isInitialized = false;
-  private readonly maxRefreshTime = 1000 * 60 * 15;
 
   private readonly api: NewsApi;
 
@@ -61,7 +62,7 @@ export abstract class AbsNewsInstance extends AbsNewsInstanceForDb {
         post: usePost,
         json: requestJson,
         text: requestText,
-        head: useHead
+        head: useHead,
       },
       html: {
         parse: parseHtml,

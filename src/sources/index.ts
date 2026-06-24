@@ -24,6 +24,7 @@ import { NewsRealtimeForItHome } from "@/sources/realtime/NewsRealtimeForItHome"
 import { NewsRealtimeForClsTelegraph } from "@/sources/realtime/NewsRealtimeForClsTelegraph";
 import { NewsRealtimeForGeLongHui } from "@/sources/realtime/NewsRealtimeForGeLongHui";
 import { NewsRealtimeForJin10 } from "@/sources/realtime/NewsRealtimeForJin10";
+import { hotSortMap, realtimeSortMap } from "@/store";
 
 export const SOURCES: Array<NewsInstance> = [
   new NewsInstanceForBaidu(),
@@ -57,9 +58,20 @@ export const SOURCES: Array<NewsInstance> = [
 ];
 
 export const HOT_SOURCES = shallowRef<Array<NewsInstance>>(
-  SOURCES.filter((e) => e.type === "hot"),
+  SOURCES.filter((e) => e.type === "hot")
+  //   .filter(
+  //   (e) => typeof hotSortMap.value[e.id] !== "undefined",
+  // ),
+    .sort((a, b) => {
+      return (hotSortMap.value[a.id] || 0) - (hotSortMap.value[b.id] || 0);
+    })
 );
 export const REALTIME_SOURCES = shallowRef<Array<NewsInstance>>(
-  SOURCES.filter((e) => e.type === "realtime"),
+  SOURCES.filter((e) => e.type === "realtime")
+  //   .filter(
+  //   (e) => typeof realtimeSortMap.value[e.id] !== "undefined",
+  // ),
+  .sort((a, b) => {
+    return (realtimeSortMap.value[a.id] || 0) - (realtimeSortMap.value[b.id] || 0);
+  })
 );
-export const FOCUS_SOURCE = shallowRef<Array<NewsInstance>>([]);

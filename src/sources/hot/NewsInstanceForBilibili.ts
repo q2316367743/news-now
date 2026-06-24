@@ -7,7 +7,6 @@ import {
   NewsInstanceRecordTag,
   NewsInstanceTag,
 } from "@/sources/NewsInstance";
-import { useGetJson } from "@/sources/HttpUtil";
 import { proxyPicture } from "@/plugin/server";
 
 interface WapRes {

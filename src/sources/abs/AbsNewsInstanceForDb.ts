@@ -24,6 +24,7 @@ export abstract class AbsNewsInstanceForDb implements NewsInstance {
   abstract title: string;
   abstract website: string;
   abstract type: MewsInstanceType;
+  abstract maxRefreshTime?: number;
 
   abstract renderSource(): NewsInstanceSource;
 

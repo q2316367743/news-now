@@ -62,7 +62,7 @@ export interface MewsInstanceBrowser {
 }
 
 export type MewsInstanceBrowserType = MewsInstanceBrowser | "pc" | "mobile";
-export type MewsInstanceType = "hot" | "realtime" | "rss";
+export type MewsInstanceType = "hot" | "realtime";
 
 export type HashAlgorithm =
   | "md5"
@@ -134,7 +134,13 @@ export interface NewsInstance {
   // 浏览器
   browser: MewsInstanceBrowserType;
 
+  // 类型
   type: MewsInstanceType;
+
+  /**
+   * 最大刷新时间
+   */
+  maxRefreshTime?: number;
 
   // 渲染源
   renderSource(): NewsInstanceSource;

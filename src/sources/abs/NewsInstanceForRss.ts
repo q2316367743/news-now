@@ -3,7 +3,6 @@ import {
   MewsInstanceBrowserType,
   MewsInstanceType,
   NewsInstanceRecord,
-  NewsInstanceTag,
 } from "@/sources/NewsInstance";
 import { rss2json } from "@/utils/file";
 
@@ -15,6 +14,7 @@ export interface NewsInstanceForRssProps {
   website: string;
   source: string;
   browser: MewsInstanceBrowserType;
+  type: MewsInstanceType;
 }
 
 export class NewsInstanceForRss extends AbsNewsInstance {
@@ -24,7 +24,7 @@ export class NewsInstanceForRss extends AbsNewsInstance {
   primaryColor: string;
   tag = undefined;
   title: string;
-  type: MewsInstanceType = "rss";
+  type: MewsInstanceType;
   website: string;
 
   public readonly props: NewsInstanceForRssProps;
@@ -41,6 +41,7 @@ export class NewsInstanceForRss extends AbsNewsInstance {
     this.browser = props.browser;
     this.source = props.source;
     this.props = props;
+    this.type = this.props.type || "hot";
   }
 
   async getOriginRecords(): Promise<Array<NewsInstanceRecord>> {

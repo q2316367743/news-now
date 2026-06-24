@@ -173,12 +173,9 @@ import {
   EditIcon,
   MenuApplicationIcon,
   RefreshIcon,
-  StarFilledIcon,
-  StarIcon,
 } from "tdesign-icons-vue-next";
 import { NewsInstance, NewsInstanceSource } from "@/sources/NewsInstance";
 import { prettyDate } from "@/utils/lang/FormatUtil";
-import { myFocus } from "@/store";
 import {
   openDeleteRssSourceDialog,
   openPostRssSourceDialog,
