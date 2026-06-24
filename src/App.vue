@@ -3,7 +3,11 @@
     <div class="main-container" ref="containerRef">
       <MainHeader :show-back-top="showBackTop" @scroll-to-top="scrollToTop" />
       <main class="py-16px px-40px pt-72px">
-        <router-view />
+        <router-view v-slot="{ Component }">
+          <keep-alive :include="['TabHot', 'TabRealtime', 'TabRadio']">
+            <component :is="Component" />
+          </keep-alive>
+        </router-view>
       </main>
     </div>
   </div>

@@ -21,7 +21,7 @@ export class NewsInstanceForJueJin extends AbsNewsInstance {
   id: string = "/hot/juejin";
   logo: string = "./icons/juejin.png";
   primaryColor: string = "#518bd7";
-  tag: NewsInstanceTag | false = false;
+  tag = undefined;
   title: string = "稀土掘金";
   website: string = "https://juejin.cn";
   type: MewsInstanceType = "hot";

@@ -32,7 +32,7 @@ export abstract class AbsNewsInstance extends AbsNewsInstanceForDb {
   abstract id: string;
   abstract logo: string;
   abstract primaryColor: string;
-  abstract tag: NewsInstanceTag | boolean;
+  abstract tag?: NewsInstanceTag;
   abstract title: string;
   abstract website: string;
   abstract browser: MewsInstanceBrowserType;

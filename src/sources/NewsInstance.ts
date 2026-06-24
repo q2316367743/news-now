@@ -126,7 +126,7 @@ export interface NewsInstance {
   logo: string;
   title: string;
   // 标签
-  tag: NewsInstanceTag | boolean;
+  tag?: NewsInstanceTag;
   // 主题色
   primaryColor: string;
   // 站点

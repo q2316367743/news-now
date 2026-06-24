@@ -4,7 +4,6 @@ import {
   MewsInstanceType,
   NewsApi,
   NewsInstanceRecord,
-  NewsInstanceTag,
 } from "@/sources/NewsInstance";
 
 interface Res {
@@ -31,7 +30,7 @@ export class NewsInstanceForCoolApk extends AbsNewsInstance {
   id = "/hot/coolapk";
   logo = "./icons/coolapk.png";
   primaryColor: string = "#99d0a8";
-  tag: NewsInstanceTag | false = false;
+  tag = undefined;
   title: string = "酷安";
   website: string = "https://coolapk.com/";
   type: MewsInstanceType = "hot";

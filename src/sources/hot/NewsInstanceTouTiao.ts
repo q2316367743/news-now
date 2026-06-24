@@ -5,7 +5,6 @@ import {
   NewsApi,
   NewsInstanceRecord,
   NewsInstanceRecordTag,
-  NewsInstanceTag,
 } from "@/sources/NewsInstance";
 
 interface Res {
@@ -27,7 +26,7 @@ export class NewsInstanceTouTiao extends AbsNewsInstance {
   id: string = "/hot/toutiao";
   logo: string = "./icons/toutiao.png";
   primaryColor: string = "#e9a3a5";
-  tag: NewsInstanceTag | false = false;
+  tag = undefined;
   title: string = "今日头条";
   website: string = "https://www.toutiao.com/";
   type: MewsInstanceType = "hot";

@@ -4,7 +4,6 @@ import {
   MewsInstanceType,
   NewsApi,
   NewsInstanceRecord,
-  NewsInstanceTag,
 } from "@/sources/NewsInstance";
 
 interface Item {
@@ -28,7 +27,7 @@ export class NewsInstanceForStreetwalker extends AbsNewsInstance {
   id: string = "/hot/wallstreetcn";
   logo: string = "./icons/wallstreetcn.png";
   primaryColor: string = "#a2b7e7";
-  tag: NewsInstanceTag | false = false;
+  tag = undefined;
   title: string = "华尔街见闻";
   website: string = "https://wallstreetcn.com";
   type: MewsInstanceType = "hot";

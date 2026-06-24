@@ -12,7 +12,7 @@ export class NewsRealtimeForItHome extends AbsNewsInstance {
   id: string = "/realtime/ithome";
   logo: string = "./icons/ithome.png";
   primaryColor: string = "#eb9b9c";
-  tag: NewsInstanceTag | false = false;
+  tag = undefined;
   title: string = "IT之家";
   type: MewsInstanceType = "realtime";
   website: string = "https://www.ithome.com";

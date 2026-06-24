@@ -4,7 +4,6 @@ import {
   MewsInstanceType,
   NewsApi,
   NewsInstanceRecord,
-  NewsInstanceTag,
 } from "@/sources/NewsInstance";
 
 export class NewsInstanceForIFeng extends AbsNewsInstance {
@@ -12,7 +11,7 @@ export class NewsInstanceForIFeng extends AbsNewsInstance {
   id: string = "/hot/ifeng";
   logo: string = "./icons/ifeng.png";
   primaryColor: string = "#f87b7b";
-  tag: NewsInstanceTag | false = false;
+  tag = undefined;
   title: string = "凤凰网";
   website: string = "https://www.ifeng.com";
   type: MewsInstanceType = "hot";

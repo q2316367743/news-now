@@ -12,7 +12,7 @@ export class NewsInstanceForGithub extends AbsNewsInstance {
   id: string = "/hot/github";
   logo: string = "./icons/github.png";
   primaryColor: string = "#b4b5bc";
-  tag: NewsInstanceTag | false = {
+  tag: NewsInstanceTag = {
     text: "Today",
     color: "#c3c4ca",
   };

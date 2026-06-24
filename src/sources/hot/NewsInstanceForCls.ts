@@ -27,7 +27,7 @@ export class NewsInstanceForCls extends AbsNewsInstance {
   id: string = "/hot/cls";
   logo: string = "./icons/cls.png";
   primaryColor: string = "#eaa0a1";
-  tag: NewsInstanceTag | false = {
+  tag: NewsInstanceTag = {
     text: "热门",
     color: "#f38587",
   };

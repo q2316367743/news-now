@@ -23,7 +23,7 @@ export class NewsInstanceForNowCoder extends AbsNewsInstance {
   id: string = "/hot/nowcoder";
   logo: string = "./icons/nowcoder.png";
   primaryColor: string = "#00DCB3";
-  tag: NewsInstanceTag | false = false;
+  tag = undefined;
   title: string = "牛客网";
   website: string = "https://www.nowcoder.com";
   type: MewsInstanceType = "hot";

@@ -22,7 +22,7 @@ export class NewsInstanceForRss extends AbsNewsInstance {
   id: string;
   logo: string;
   primaryColor: string;
-  tag: NewsInstanceTag | false = false;
+  tag = undefined;
   title: string;
   type: MewsInstanceType = "rss";
   website: string;

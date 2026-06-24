@@ -28,7 +28,7 @@ export class NewsRealtimeForStreetwalker extends AbsNewsInstance {
   id: string = "/realtime/wallstreetcn/live";
   logo: string = "./icons/wallstreetcn.png";
   primaryColor: string = "#7499ed";
-  tag: NewsInstanceTag | false = {
+  tag: NewsInstanceTag = {
     text: "实时快讯",
     color: "#257bed",
   };

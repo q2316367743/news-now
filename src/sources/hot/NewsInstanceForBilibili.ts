@@ -51,7 +51,7 @@ export class NewsInstanceForBilibili extends AbsNewsInstance {
   id: string = "/hot/bilibili";
   logo: string = "./icons/bilibili.png";
   primaryColor: string = "#a1b9e8";
-  tag: NewsInstanceTag | false = {
+  tag: NewsInstanceTag = {
     text: "热搜",
     color: "#20b0e3",
   };

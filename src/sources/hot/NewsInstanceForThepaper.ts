@@ -4,7 +4,6 @@ import {
   MewsInstanceType,
   NewsApi,
   NewsInstanceRecord,
-  NewsInstanceTag,
 } from "@/sources/NewsInstance";
 
 interface Res {
@@ -22,7 +21,7 @@ export class NewsInstanceForThepaper extends AbsNewsInstance {
   id: string = "/hot/thepaper";
   logo: string = "./icons/thepaper.png";
   primaryColor: string = "#b4b3b9";
-  tag: NewsInstanceTag | false = false;
+  tag = undefined;
   title: string = "澎湃新闻";
   website: string = "https://www.thepaper.cn/";
   type: MewsInstanceType = "hot";

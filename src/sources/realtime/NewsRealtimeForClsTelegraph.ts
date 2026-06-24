@@ -28,7 +28,7 @@ export class NewsRealtimeForClsTelegraph extends AbsNewsInstance {
   id: string = "/realtime/cls/telegraph";
   logo: string = "./icons/cls.png";
   primaryColor: string = "#ed7576";
-  tag: NewsInstanceTag | false = {
+  tag: NewsInstanceTag = {
     text: "电报",
     color: "#ef363a",
   };

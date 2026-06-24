@@ -19,13 +19,16 @@
 <script lang="ts" setup>
 import { HOT_SOURCES } from "@/sources";
 import NewSourceView from "@/pages/components/NewSourceView.vue";
-// @ts-ignore
 import {
   useSortable,
   moveArrayElement,
 } from "@vueuse/integrations/useSortable";
 import { SortableEvent } from "sortablejs";
 import { hotSortMap } from "@/store";
+
+defineOptions({
+  name: "TabHot"
+})
 
 const el = ref();
 

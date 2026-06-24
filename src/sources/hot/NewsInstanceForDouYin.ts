@@ -52,20 +52,18 @@ export class NewsInstanceForDouYin extends AbsNewsInstance {
   id = "/hot/douyin";
   logo = "./icons/douyin.png";
   primaryColor = "#b4b7be";
-  tag = false;
+  tag = undefined;
   title = "抖音";
   website = "https://www.douyin.com";
   type: MewsInstanceType = "hot";
 
   async getOriginRecords(api: NewsApi): Promise<Array<NewsInstanceRecord>> {
-    const resp = await api.http.json<RootObject>(
-      {
-        url: "https://api.xhus.cn/api/rdouyin",
-        params: {
-          encode: 'json'
-        }
+    const resp = await api.http.json<RootObject>({
+      url: "https://api.xhus.cn/api/rdouyin",
+      params: {
+        encode: "json",
       },
-    );
+    });
 
     return resp.data.data.map((k) => {
       return {

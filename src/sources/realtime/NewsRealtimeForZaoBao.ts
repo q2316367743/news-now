@@ -4,7 +4,6 @@ import {
   MewsInstanceType,
   NewsApi,
   NewsInstanceRecord,
-  NewsInstanceTag,
 } from "@/sources/NewsInstance";
 
 export class NewsRealtimeForZaoBao extends AbsNewsInstance {
@@ -12,7 +11,7 @@ export class NewsRealtimeForZaoBao extends AbsNewsInstance {
   id: string = "/realtime/zaobao";
   logo: string = "./icons/zaobao.png";
   primaryColor: string = "#e45353";
-  tag: NewsInstanceTag | false = false;
+  tag = undefined;
   title: string = "联合早报";
   type: MewsInstanceType = "realtime";
   website: string = "https://www.zaobao.com/";

@@ -16,7 +16,6 @@ declare module 'vue' {
     EmptyResult: typeof import('./src/components/Result/EmptyResult.vue')['default']
     InfoResult: typeof import('./src/components/Result/InfoResult.vue')['default']
     LoadingResult: typeof import('./src/components/Result/LoadingResult.vue')['default']
-    Navigator: typeof import('./src/components/Navigator/Navigator.vue')['default']
     PageLayout: typeof import('./src/components/PageLayout/PageLayout.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

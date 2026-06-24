@@ -4,7 +4,6 @@ import {
   MewsInstanceType,
   NewsApi,
   NewsInstanceRecord,
-  NewsInstanceTag,
 } from "@/sources/NewsInstance";
 
 interface Res {
@@ -25,7 +24,7 @@ export class NewsInstanceForTeiBa extends AbsNewsInstance {
   id: string = "/hot/tieba";
   logo: string = "./icons/tieba.png";
   primaryColor: string = "#8abdf2";
-  tag: NewsInstanceTag | false = {
+  tag = {
     text: "热议",
     color: "#1565bf",
   };

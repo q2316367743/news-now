@@ -1,10 +1,10 @@
 <template>
   <div class="home">
-    <home-loading/>
+    <home-loading />
   </div>
 </template>
 <script lang="ts" setup>
-import HomeLoading from "@/pages/components/HomeLoading.vue";
+import HomeLoading from "@/pages/home/components/HomeLoading.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -13,7 +13,7 @@ onMounted(() => {
   if (route.query.redirect) {
     router.replace(route.query.redirect as string);
   }
-})
+});
 </script>
 <style scoped lang="less">
 .home {

@@ -21,11 +21,11 @@ export class NewsInstanceForBaidu extends AbsNewsInstance {
   id = "/hot/baidu";
   logo = "./icons/baidu.png";
   primaryColor = "#a1bceb";
-  tag = false;
   title = "百度热搜";
   website = "https://top.baidu.com/board";
   browser: MewsInstanceBrowserType = "mobile";
   type: MewsInstanceType = "hot";
+  tag = undefined
 
   constructor() {
     super(); // 此时 id 已经被赋值

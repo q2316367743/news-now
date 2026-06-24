@@ -4,7 +4,6 @@ import {
   MewsInstanceType,
   NewsApi,
   NewsInstanceRecord,
-  NewsInstanceTag,
 } from "@/sources/NewsInstance";
 
 interface Res {
@@ -19,7 +18,7 @@ export class NewsInstanceForSspai extends AbsNewsInstance {
   id: string = "/hot/sspai";
   logo: string = "./icons/sspai.png";
   primaryColor: string = "#e9a0a1";
-  tag: NewsInstanceTag | false = false;
+  tag = undefined;
   title: string = "少数派";
   website: string = "https://sspai.com";
   type: MewsInstanceType = "hot";

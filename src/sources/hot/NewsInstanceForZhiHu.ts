@@ -33,7 +33,7 @@ export class NewsInstanceForZhiHu extends AbsNewsInstance {
   id = "/hot/zhihu";
   logo = "./icons/zhihu.png";
   primaryColor = "#A1BCEB";
-  tag = false;
+  tag = undefined;
   title = "知乎";
   website = "https://www.zhihu.com/";
   type: MewsInstanceType = "hot";

@@ -1,25 +1,30 @@
-import {AbsNewsInstance} from "@/sources/abs/AbsNewsInstance";
-import {MewsInstanceBrowserType, MewsInstanceType, NewsApi, NewsInstanceRecord, NewsInstanceTag} from "@/sources/NewsInstance";
+import { AbsNewsInstance } from "@/sources/abs/AbsNewsInstance";
+import {
+  MewsInstanceBrowserType,
+  MewsInstanceType,
+  NewsApi,
+  NewsInstanceRecord,
+} from "@/sources/NewsInstance";
 
 interface Jin10Item {
-  id: string
-  time: string
-  type: number
+  id: string;
+  time: string;
+  type: number;
   data: {
-    pic?: string
-    title?: string
-    source?: string
-    content?: string
-    source_link?: string
-    vip_title?: string
-    lock?: boolean
-    vip_level?: number
-    vip_desc?: string
-  }
-  important: number
-  tags: string[]
-  channel: number[]
-  remark: any[]
+    pic?: string;
+    title?: string;
+    source?: string;
+    content?: string;
+    source_link?: string;
+    vip_title?: string;
+    lock?: boolean;
+    vip_level?: number;
+    vip_desc?: string;
+  };
+  important: number;
+  tags: string[];
+  channel: number[];
+  remark: any[];
 }
 
 export class NewsRealtimeForJin10 extends AbsNewsInstance {
@@ -27,7 +32,7 @@ export class NewsRealtimeForJin10 extends AbsNewsInstance {
   id: string = "/realtime/jin10";
   logo: string = "./icons/jin10.png";
   primaryColor: string = "#88a3e6";
-  tag: NewsInstanceTag | false = false;
+  tag = undefined;
   title: string = "金十数据";
   type: MewsInstanceType = "realtime";
   website: string = "https://www.jin10.com/";

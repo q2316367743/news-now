@@ -8,11 +8,6 @@ export const routes: Array<RouteRecordRaw> = [
     component: () => import("@/pages/home/index.vue"),
   },
   {
-    name: "关注",
-    path: "/tab/focus",
-    component: () => import("@/pages/focus/index.vue"),
-  },
-  {
     name: "最热",
     path: "/tab/hot",
     component: () => import("@/pages/hot/index.vue"),
@@ -23,9 +18,19 @@ export const routes: Array<RouteRecordRaw> = [
     component: () => import("@/pages/realtime/index.vue"),
   },
   {
-    name: "RSS",
-    path: "/tab/rss",
-    component: () => import("@/pages/rss/index.vue"),
+    name: "听广播",
+    path: "/tab/radio",
+    component: () => import("@/pages/radio/index.vue"),
+  },
+  {
+    name: "基础设置",
+    path: "/setting/base",
+    component: () => import("@/pages/setting/base/index.vue"),
+  },
+  {
+    name: "新闻设置",
+    path: "/setting/news",
+    component: () => import("@/pages/setting/news/index.vue"),
   },
 ];
 

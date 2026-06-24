@@ -20,7 +20,7 @@ export abstract class AbsNewsInstanceForDb implements NewsInstance {
   abstract id: string;
   abstract logo: string;
   abstract primaryColor: string;
-  abstract tag: NewsInstanceTag | boolean;
+  abstract tag?: NewsInstanceTag;
   abstract title: string;
   abstract website: string;
   abstract type: MewsInstanceType;

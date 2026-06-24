@@ -68,14 +68,6 @@
             </t-dropdown-item>
           </t-dropdown-menu>
         </t-dropdown>
-        <div class="btn" @click="toggleFocus" v-else>
-          <star-filled-icon
-            v-if="hasFocus"
-            size="16px"
-            style="color: var(--td-error-color)"
-          />
-          <star-icon v-else size="16px" />
-        </div>
         <div class="btn drag drag-handle">
           <menu-application-icon size="16px" />
         </div>
@@ -203,8 +195,6 @@ const props = defineProps({
 const { records, lastUpdateTime, loading, refresh, open } =
   props.source!.renderSource() as NewsInstanceSource;
 
-const hasFocus = computed(() => myFocus.value.indexOf(props.source!.id) > -1);
-
 const date = ref("很久很久以前更新");
 
 const renderDate = () =>
@@ -220,14 +210,6 @@ function openWebsite() {
   utools.shellOpenExternal(props.source!.website);
 }
 
-function toggleFocus() {
-  const index = myFocus.value.findIndex((id) => id === props.source!.id);
-  if (index > -1) {
-    myFocus.value.splice(index, 1);
-  } else {
-    myFocus.value.push(props.source!.id);
-  }
-}
 </script>
 <style scoped lang="less">
 .news-item {

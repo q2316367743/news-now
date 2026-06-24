@@ -23,11 +23,9 @@ const route = useRoute();
 const activeKey = ref("/tab/hot");
 
 const options = [
-  // { label: "关注", value: "/tab/focus" },
   { label: "最热", value: "/tab/hot" },
   { label: "实时", value: "/tab/realtime" },
-  { label: "RSS", value: "/tab/rss" },
-  { label: "听广播", value: "/tab/listen" },
+  { label: "听广播", value: "/tab/radio" },
 ];
 
 // 处理导航点击事件
@@ -47,6 +45,8 @@ watch(
     );
     if (matchedOption) {
       activeKey.value = matchedOption.value;
+    } else {
+      activeKey.value = "";
     }
   },
   { immediate: true },

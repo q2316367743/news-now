@@ -4,7 +4,6 @@ import {
   MewsInstanceType,
   NewsApi,
   NewsInstanceRecord,
-  NewsInstanceTag,
 } from "@/sources/NewsInstance";
 
 export class NewsInstanceForSmzdm extends AbsNewsInstance {
@@ -12,7 +11,7 @@ export class NewsInstanceForSmzdm extends AbsNewsInstance {
   id: string = "/hot/smzdm";
   logo: string = "./icons/smzdm.png";
   primaryColor: string = "#E9A3A4";
-  tag: NewsInstanceTag | false = false;
+  tag = undefined;
   title: string = "什么值得买";
   website: string = "https://www.smzdm.com";
   type: MewsInstanceType = "hot";

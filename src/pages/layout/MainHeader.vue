@@ -9,7 +9,7 @@
         <span>资讯管家</span>
       </div>
     </div>
-    <navigator />
+    <main-navigator />
     <t-space size="small">
       <t-button
         theme="primary"
@@ -65,15 +65,27 @@
           class="back-top-btn"
         >
           <template #icon>
-            <more-icon />
+            <setting-icon />
           </template>
         </t-button>
         <t-dropdown-menu>
+          <t-dropdown-item @click="clickSettingNews">
+            <template #prefix-icon>
+              <article-icon />
+            </template>
+            新闻管理
+          </t-dropdown-item>
+          <t-dropdown-item @click="clickSettingBase">
+            <template #prefix-icon>
+              <setting1-icon />
+            </template>
+            基础设置
+          </t-dropdown-item>
           <t-dropdown-item @click="openGithub">
             <template #prefix-icon>
               <logo-github-icon />
             </template>
-            Star on Github
+            Github
           </t-dropdown-item>
           <t-dropdown-item @click="openRewardDialog">
             <template #prefix-icon>
@@ -90,21 +102,33 @@
 import { isDark, toggleColorMode } from "@/store";
 import { openRewardDialog } from "@/pages/components/RewardDialog";
 import {
+  ArticleIcon,
   BacktopIcon,
   HeartIcon,
   LogoGithubIcon,
   MoonIcon,
-  MoreIcon,
+  Setting1Icon,
+  SettingIcon,
   SunnyIcon,
 } from "tdesign-icons-vue-next";
+import MainNavigator from "@/pages/layout/MainNavigator.vue";
 
 defineProps({
   showBackTop: Boolean,
 });
 defineEmits(["scrollToTop"]);
 
+const router = useRouter();
+
 const openGithub = () =>
   utools.shellOpenExternal("https://github.com/q2316367743/utools-news-now");
+
+const clickSettingNews = () => {
+  router.push({ path: "/setting/news" });
+};
+const clickSettingBase = () => {
+  router.push({ path: "/setting/base" });
+};
 </script>
 <style scoped lang="less">
 .main-header {

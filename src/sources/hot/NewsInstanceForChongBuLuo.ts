@@ -12,7 +12,7 @@ export class NewsInstanceForChongBuLuo extends AbsNewsInstance {
   id: string = "/hot/chongbuluo";
   logo: string = "./icons/chongbuluo.png";
   primaryColor: string = "#96c97b";
-  tag: NewsInstanceTag | false = false;
+  tag = undefined;
   title: string = "虫部落";
   website: string = "https://www.chongbuluo.com/forum.php?mod=guide&view=hot";
   type: MewsInstanceType = "hot";
